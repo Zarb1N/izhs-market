@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=375" />
+    <link rel="stylesheet" href="/style.css">
+    <title>Vite App</title>
+    <style>
+      *::-webkit-scrollbar {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body class="paragraph">
+    <div 
+      id="scaled-wrapper"
+      style="
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        z-index: 1;
+        overflow: hidden;
+      "
+    >
+      <div id="app" style="
+        width: 375px;
+        box-sizing: border-box;
+        display: inline-block;
+        transform-origin: 0 0;
+        z-index: -1;
+        width: 375px;
+      "></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+  <script>
+    const scaledWrapper = document.querySelector('#scaled-wrapper')
+    const scaledContent = document.querySelector('#app')
+    const pageWidth = scaledWrapper.clientWidth
+    const pageHeight = scaledContent.clientHeight
+    const koef = pageWidth / 375
+    scaledContent.style.transform = `scale(${koef}, ${koef})`
+    scaledContent.style.height = `calc(100vh / ${koef})`
+  </script>
+</html>

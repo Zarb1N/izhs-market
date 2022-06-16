@@ -1,0 +1,53 @@
+@import url('./styles/reset.css');
+@import url('./styles/colors.css');
+@import url('./styles/Mont.css');
+@import url('./styles/fonts.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700;8..144,800&display=swap');
+
+.without-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+*::-webkit-scrollbar {
+  display: none !important;
+  opacity: 0;
+}
+.ruble-character::after {
+  content: ' ₽';
+}
+ul {
+  /*
+  list-style: url('../src/assets/bulleted-list__circle-marker.svg');
+  padding-left: 11px;
+  */
+  list-style: none !important;
+}
+li {
+  display: flex;
+  align-items: top;
+  gap: 5px;
+}
+li::before {
+  content: "";
+  min-width: 4px;
+  min-height: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: black;
+  margin-top: .3rem;
+}
+.header {
+  width: 100%;
+  background: linear-gradient(273.3deg, #82B9F0 0%, #96C7F9 100%);
+  padding: 20px 14px 15px 14px;
+  display: flex;
+  gap: 10px;
+}
+.inner-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.status-bar {
+  height: 44px;
+  width: 100%;
+}

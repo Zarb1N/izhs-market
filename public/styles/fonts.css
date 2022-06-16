@@ -1,0 +1,30 @@
+body {
+  font-family: 'Roboto Flex', sans-serif;
+  color: var(--dark-text);
+}
+sup {
+  vertical-align: super !important;
+}
+
+
+.title--primary {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 31px;
+}
+.title--secondary {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 23px;
+}
+.paragraph {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 140%;
+}
+.underline-dashed {
+  padding-right: 2px;
+  display: inline-block;
+  border-bottom: 1px dashed black;
+  border-image: linear-gradient(to right, black 0%, black 30%, white 30%, white 70%, black 70%, black 100%, rgba(255, 255, 255, 0) 0%) 8 round;
+}
