@@ -2,18 +2,18 @@
   <div class="ros-registry menu-subpage">
     <div class="ros-registry__header">
       <div class="ros-registry__description">Акцептуйте 2 оферты, чтобы использовать ИЖС Genius и строить дом</div>
-      <img 
+      <img
         class="ros-registry__genius-icon"
         src="../../assets/genius-feature.svg"
       >
     </div>
     <div class="ros-registry__short-questions-and-answers">
-      <div 
+      <div
         class="ros-registry__short-question-and-answer"
         v-for="(qa, index) in questionsAndAnswers"
         :key="index"
       >
-        <img 
+        <img
           class="ros-registry__icon"
           :src="generalStore.getImageURL(`emojis/${qa.icon}.svg`)"
         />
@@ -33,7 +33,7 @@
           }"
       >
         <div class="ros-registry__short-question-and-answer">
-          <img 
+          <img
             class="ros-registry__icon"
             :src="generalStore.getImageURL(`emojis/shooting-star.svg`)"
           />
@@ -43,7 +43,7 @@
             <div class="external-link">Шаблон договора на земельный участок</div>
           </div>
         </div>
-        
+
       </ExtensionCard>
       <ExtensionCard
         title="для регистрации собственности на построенный дом"
@@ -56,7 +56,7 @@
         }"
       >
         <div class="ros-registry__short-question-and-answer">
-          <img 
+          <img
             class="ros-registry__icon"
             :src="generalStore.getImageURL(`emojis/shooting-star.svg`)"
           />
@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ExtensionCard from '../../components/ExtensionCard.vue'
 
@@ -82,7 +82,7 @@ export default defineComponent({
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     questionsAndAnswers: [
       {
         icon: 'shooting-star',

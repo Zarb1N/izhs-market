@@ -2,7 +2,7 @@
   <IonContent>
     <div class="set">
       <div class="set__header">
-        <div 
+        <div
           class="set__back-btn"
           @click="() => {$router.push('/catalog')}"
         >
@@ -13,7 +13,7 @@
       </div>
       <div class="set__body">
         <div class="set__houses">
-          <div 
+          <div
             class="set__house"
             v-for="(house, index) in generalStore.allHouses"
             :key="index"
@@ -39,7 +39,7 @@
         }"
         v-show="isContextMenu"
         :options="
-          generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(generalStore.choosedHouseId) === -1 
+          generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(generalStore.choosedHouseId) === -1
             ? generalStore.housePreviewContextActions
             : generalStore.favouriteHousePreviewContextActions
         "
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ProductPreview from "../../components/ProductPreview.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
@@ -64,7 +64,7 @@ export default defineComponent({
     'filters'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
   }),

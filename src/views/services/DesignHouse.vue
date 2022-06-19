@@ -4,12 +4,12 @@
       <div class="design-house">
     <Card title="Как это работает">
       <div
-        class="numbered-list" 
+        class="numbered-list"
         v-for="(item, index) in howItWorksPoints"
         :key="index"
       >
         <div class="numbered-list__item">
-          <img 
+          <img
             class="numbered-list__item-marker"
             :src="generalStore.getImageURL(`numbered-list/${index + 1}-in-circle.svg`)"
           >
@@ -19,8 +19,8 @@
     </Card>
     <div class="design-house__card">
       <div class="design-house__card-title">
-        Стоимость — 12 000₽ 
-        <img 
+        Стоимость — 12 000₽
+        <img
           src="../../assets/icons/question-mark-in-circle.svg"
           @click="(event) => showPopupHint(event, '')"
         />
@@ -31,7 +31,7 @@
       <div class="design-house__card-body">
         <div class="paragraph">СтройПроект совместно с ИЖС</div>
         <div class="staff">
-          <img 
+          <img
             class="staff__image"
             src="../../assets/default-woman-2.png"
           />
@@ -46,7 +46,7 @@
       <Contacts/>
     </Card>
     <div class="design-house__example">
-      <img 
+      <img
         class="design-house__example-icon"
         src="../../assets/emojis/bookmark-tabs.svg"
       />
@@ -68,20 +68,20 @@
   </div>
     </IonContent>
   </IonPage>
-  
+
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import PopupHint from "@/components/PopupHint.vue";
 import TgWaContacts from "@/parts/TgWaContacts.vue";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     isPopupHint: false,
     popupHintText: 'За дом площадью 120 м2 <br/> или 1000 рублей за 1 м2 ',
     clickCoordinates: {x: 0, y: 0},
@@ -94,7 +94,6 @@ export default defineComponent({
   methods: {
     showPopupHint(event : any, text: string) {
       event.preventDefault()
-      console.log(event.x, event.y)
       this.clickCoordinates = {
         x: event.x,
         y: event.y
@@ -158,7 +157,7 @@ IonHeader, IonToolbar, IonTitle, IonContent, IonPage
   display: flex;
   align-items: center;
   gap: 3px;
-} 
+}
 .design-house__card-body {
   margin-top: 5px;
   display: flex;

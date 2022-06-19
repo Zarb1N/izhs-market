@@ -6,7 +6,7 @@
         <div class="home__top-actions-row">
           <div class="home__add-us-to-your-projects">+ Добавьте нас в свой проект</div>
           <div class="home__fixed-action-buttons">
-            <img 
+            <img
               class="home__add-btn"
               :src="generalStore.getImageURL('icons/dialog-cloud.svg')"
             />
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="home__stories without-scrollbar">
-          <StoryPreview 
+          <StoryPreview
             v-for="(story, index) in general.allStories"
             :isUnread="generalStore.deviceState.stories_id && generalStore.deviceState.stories_id.indexOf(story.id) === -1"
             :data="story"
@@ -31,7 +31,7 @@
           <div class="home-section__description">
             Строительство через приложение проходит быстрее и легче
           </div>
-          <MyIzsCarousel /> 
+          <MyIzsCarousel />
         </div>
 
         <div class="home__section home-section" v-if="false">
@@ -46,7 +46,7 @@
           </div>
           <div class="home-section__button"></div>
         </div>
-        
+
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Genius</div>
@@ -74,12 +74,12 @@
             <div class="home-section__quantity"></div>
           </div>
           <div class="home-section__description">
-            Воспользуйтесь сервисами с кэшбеком до 100% 
+            Воспользуйтесь сервисами с кэшбеком до 100%
           </div>
           <div class="home-section__button"></div>
         </div>
 
-        <div 
+        <div
           class="home__section home-section"
           v-for="(set, index) in generalStore.filters.compilations"
           :key="index"
@@ -90,11 +90,11 @@
             <div class="home-section__quantity">{{set.count_houses}}</div>
           </div>
           <div class="home-section__description">{{set.budge}}</div>
-          <Flicking 
+          <Flicking
             class="home-section__houses-carousel"
             :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
+              align: {camera: '20', panel: '0'},
+              bound: false,
               threshold: 0
             }"
           >
@@ -107,7 +107,7 @@
               style="width: 200px"
             />
           </Flicking>
-          <div 
+          <div
             class="home-section__button"
             @click="(event) => {$router.push(`/catalog/custom-set/${set.id}`)}"
           >Просмотреть подборку</div>
@@ -121,11 +121,11 @@
           <div class="home-section__description">
             Приобщайтесь к работам архитекторов со всего мира
           </div>
-          <Flicking 
+          <Flicking
             class="home-section__houses-carousel"
             :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
+              align: {camera: '20', panel: '0'},
+              bound: false,
               threshold: 0
             }"
           >
@@ -144,23 +144,23 @@
           <div class="home-section__header">
             <div class="home-section__title">Подборки </div>
           </div>
-          <div 
+          <div
             class="home-section__description"
             style="display: flex; justify-content: space-between; align-items: flex-start;"
           >
             <div>
               Обновляет и курирует архитектор Екатерина Шувалова
             </div>
-            <img 
+            <img
               class="home-section__person-image"
               src="@/assets/default-woman-3.png"
             />
           </div>
-          <Flicking 
+          <Flicking
             class="home-section__houses-carousel"
             :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
+              align: {camera: '20', panel: '0'},
+              bound: false,
               threshold: 0
             }"
           >
@@ -193,7 +193,7 @@ import { defineComponent } from 'vue'
 import FeaturesCards from '@/parts/FeaturesCards.vue'
 import StoryPreview from '@/components/StoryPreview.vue'
 import ProductPreview from '@/components/ProductPreview.vue'
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 import ModalWindow from '../components/ModalWindow.vue'
 import RegionChoosing from '../parts/RegionChoosing.vue'
 import ContextMenu from '../components/ContextMenu.vue'
@@ -209,7 +209,7 @@ import SetCard from '@/components/SetCard.vue'
 
 declare interface IHouse {
   readonly id : string | number
-  [key: string]: string | number | object  
+  [key: string]: string | number | object
 }
 
 export default defineComponent({
@@ -218,8 +218,8 @@ export default defineComponent({
     choosedRegion: 'Московский регион',
     allHouses: [] as Array<IHouse>,
     selectedHouses: [] as Array<{[key: string]: any}>,
-    general: useGeneralStore(),
-    generalStore: useGeneralStore(),
+    general: useStore(),
+    generalStore: useStore(),
     choosedStyle: {} as {[key: string]: any},
     allStories: [] as Array<{[key: string]: string}>,
     partnersHouses: [] as Array<{[key: string]: string}>,
@@ -250,12 +250,11 @@ export default defineComponent({
         this.selectedHouses = this.general.allHouses.filter( (house : any) => {
           return style.id === house.architecture_id
         })
-      } 
+      }
     },
     openContextMenu(event : any, id : string) {
       this.generalStore.choosedHouseId = Number(id)
       event.preventDefault()
-      console.log(event)
       this.clickCoordinates = {
         x: event.clientX,
         y: event.clientY
@@ -344,7 +343,7 @@ export default defineComponent({
 }
 .home__fixed-action-buttons {
   right: 20px;
-  position: fixed; 
+  position: fixed;
   margin-top: 20px;
   margin-bottom: 20px;
   display: grid;
@@ -483,7 +482,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
-.my-izs__card--construction > div:nth-child(1) > div:nth-child(1), 
+.my-izs__card--construction > div:nth-child(1) > div:nth-child(1),
 .my-izs__card--landscape > div:nth-child(1) > div:nth-child(1) {
   font-weight: 500;
   font-size: 20px;
@@ -491,7 +490,7 @@ export default defineComponent({
   color: var(--white-text);
   margin-bottom: 8px;
 }
-.my-izs__card--construction div:nth-child(1) div:nth-child(2), 
+.my-izs__card--construction div:nth-child(1) div:nth-child(2),
 .my-izs__card--landscape div:nth-child(1) div:nth-child(2) {
   font-weight: 500;
   font-size: 12px;
@@ -499,7 +498,7 @@ export default defineComponent({
   color: var(--lightgray-text);
   margin-bottom: 34px;
 }
-.my-izs__card--construction div:nth-child(1) img, 
+.my-izs__card--construction div:nth-child(1) img,
 .my-izs__card--landscape div:nth-child(1) img {
   align-self: center;
   height: 94px;

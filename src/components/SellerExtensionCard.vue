@@ -1,35 +1,35 @@
 <template>
   <div class="s-e-card">
-    <div 
+    <div
       class="s-e-card__header"
       @click="isOpen = !isOpen"
 
     >
-      <img 
+      <img
         class="s-e-card__seller-icon"
         :src="seller[0].builder_info.image.url"
       />
       <div class="s-e-card__main-info">
         <div class="s-e-card__seller-name">{{seller[0].builder_info.name}}</div>
         <div class="s-e-card__prices-range paragraph">
-          От 
-          <span class="ruble-character">{{generalStore.formatNumber(priceRange[0])}}</span> 
-          до 
+          От
+          <span class="ruble-character">{{generalStore.formatNumber(priceRange[0])}}</span>
+          до
           <span class="ruble-character">{{generalStore.formatNumber(priceRange[1])}}</span>
         </div>
       </div>
-      <img 
+      <img
         class="s-e-card__open-body-btn"
         src="../assets/icons/arrow-bottom.svg"
         :class="isOpen ? 's-e-card__open-body-btn--top' : 's-e-card__open-body-btn--bottom'"
       />
     </div>
-    <div 
+    <div
       class="s-e-card__body without-scrollbar"
       :class="isOpen ? 's-e-card__body--opened' : 's-e-card__body--closed'"
     >
       <div class="s-e-card__offers">
-        <div 
+        <div
           class="s-e-card__offer"
           v-for="(offer, index) in seller"
           :key="index"
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="s-e-card__employee">
-        <img 
+        <img
           class="s-e-card__employee-image"
           :src="generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].image.url"
         />
@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
@@ -72,13 +72,13 @@ export default defineComponent({
   data: () => ({
     isOpen: false,
     priceRange: [] as Array<number>,
-    generalStore: useGeneralStore()
+    generalStore: useStore()
   }),
   methods: {
     calculatePriceRange() {
       const prices: Array<number> = Object.keys(this.seller).map( (key: string) => this.seller[key].price)
       this.priceRange = [
-        Math.min(...prices), 
+        Math.min(...prices),
         Math.max(...prices)
       ]
     },
@@ -130,7 +130,7 @@ export default defineComponent({
   line-height: 18px;
 }
 .s-e-card__prices-range {
-  
+
 }
 .s-e-card__open-body-btn {
   transition: .5s all;
@@ -175,7 +175,7 @@ export default defineComponent({
 }
 .s-e-card__offer-header > div {
   white-space: nowrap;
-} 
+}
 .s-e-card__offer-header-divider {
   width: 2px;
   height: 80%;

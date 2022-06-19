@@ -1,6 +1,6 @@
 <template>
   <IonPage>
-    <RouterView 
+    <RouterView
       :house="generalStore.houseInfo"
       :prices="prices"
       :builders="builders"
@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 
 export default defineComponent({
   name: 'House',
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     prices: {} as {[key: string]: string | object},
     builders: {},
     cashback: [] as Array<{}>,
@@ -65,7 +65,6 @@ export default defineComponent({
           }
         });
         this.builders = data;
-        console.log(this.builders)
       }
     },
     async getClubBenefits(clubIds: Array<number | string>) {
@@ -77,7 +76,7 @@ export default defineComponent({
              this.cashback.push(item)
            })
          }
-      }) 
+      })
     },
   },
   computed: {

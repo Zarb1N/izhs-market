@@ -3,7 +3,7 @@
       <div class="house__header">
         <div class="house__header-overlay-wrapper">
           <!-- <div class="house__header-overlay">
-          <div 
+          <div
             class="house__header-back-btn"
             @click="$router.go(-1)"
           >
@@ -27,25 +27,25 @@
         </div> -->
         </div>
         <div class="house__header-carousel">
-          <Flicking 
+          <Flicking
             v-if="house.images"
             :options="{
-              circular: true, 
+              circular: true,
               threshold: 0,
               interruptable: false,
             }"
             @will-change="(event) => {currentSlide = event.index}"
           >
-            <div 
+            <div
               class="house__header-carousel-slide"
-              v-for="index in Array(house.images.length).keys()" 
+              v-for="index in Array(house.images.length).keys()"
               :key="index"
               @click="() => {$router.push(`/house/${$route.params.id}/gallery`)}"
-            > 
-              <img 
+            >
+              <img
                 class="house__header-carousel-image"
-                :src="house.images[index].url" 
-              > 
+                :src="house.images[index].url"
+              >
             </div>
           </Flicking>
         </div>
@@ -54,59 +54,59 @@
 
     <div class="house__body">
       <div class="house__navigation-items without-scrollbar">
-        <div 
+        <div
           class="house__navigation-item"
           v-for="button in navigationItems"
           :key="button.goTo"
           :class="
-            button.goTo === subpage 
+            button.goTo === subpage
               ? 'house__navigation-item--choosed'
               : 'house__navigation-item--unchoosed'
           "
           @click="subpage = button.goTo"
         >{{button.text}}</div>
-      </div> 
+      </div>
 
       <div class="house__general-features">
         <div class="house__house-name-and-genius-row">
           <div class="house__house-name title--primary">{{house.name || 'Загружается'}}</div>
-          <img 
+          <img
             class="house__genius-feature"
             :src="generalStore.getImageURL('genius-feature.svg')"
             @click="$router.push('/menu/my-state')"
           />
         </div>
         <div class="house__area-and-price-row">
-          <div class="house__area">{{house.square}} м2</div> | 
+          <div class="house__area">{{house.square}} м2</div> |
           <div class="house__price">
-            <span class="ruble-character">{{generalStore.formatNumber(prices.min)}}</span> 
-            — 
+            <span class="ruble-character">{{generalStore.formatNumber(prices.min)}}</span>
+            —
             <span class="ruble-character">{{generalStore.formatNumber(prices.max)}}</span></div>
         </div>
       </div>
 
       <Prices
         v-show="subpage === 'prices'"
-        :data="house" 
+        :data="house"
         :sellers="builders"
       />
       <ConstructionStages
         v-show="subpage === 'construction-stages'"
-        :data="house" 
+        :data="house"
         :sellers="builders"
       />
       <Information
         v-show="subpage === 'information'"
-        :data="house" 
+        :data="house"
         :sellers="builders"
       />
       <Discussion
         v-show="subpage === 'discussion'"
-        :data="house" 
+        :data="house"
         :sellers="builders"
       />
     </div>
-    <div 
+    <div
       class="house__primary-button"
       v-show="!isApplicationHouse"
       @click="$router.push(`/house/${$route.params.id}/application`)"
@@ -121,7 +121,7 @@
       }"
       v-show="isContextMenu"
       :options="
-        generalStore.deviceState.favourites_houses_id.indexOf(Number($route.params.id)) === -1 
+        generalStore.deviceState.favourites_houses_id.indexOf(Number($route.params.id)) === -1
           ? generalStore.housePreviewContextActions
           : generalStore.favouriteHousePreviewContextActions
       "
@@ -134,7 +134,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
 import ContextMenu from "@/components/ContextMenu.vue";
@@ -152,7 +152,7 @@ export default defineComponent({
     'builders'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
     navigationItems: [
@@ -197,7 +197,7 @@ export default defineComponent({
     },
     isApplicationHouse() {
       if (
-        this.generalStore.deviceState.applications_houses_id 
+        this.generalStore.deviceState.applications_houses_id
         && this.$route.params.id === this.generalStore.deviceState.applications_houses_id.toString()
       ) {
         return true
@@ -241,13 +241,13 @@ export default defineComponent({
   padding: 20px;
 }
 .house__header-carousel-slide {
-  width: 100%; 
+  width: 100%;
   height: 100%;
   border-radius: 24px;
   overflow: hidden;
 }
 .house__header-carousel-image {
-  height: calc(225px + 20px); 
+  height: calc(225px + 20px);
   width: 100%;
 }
 .house__header-overlay-wrapper {
@@ -281,7 +281,7 @@ export default defineComponent({
 .house__header-back-btn img {
   height: 22px;
   width: 22px;
-} 
+}
 .house__header-open-stream-btn {
   width: 47px;
   height: 32px;

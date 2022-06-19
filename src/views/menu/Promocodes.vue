@@ -2,11 +2,11 @@
   <div class="promocodes menu-subpage">
     <Card color="gray" style="margin-bottom: 30px">
       <div class="promocodes__search-card">
-        <div 
+        <div
           class="promocodes__input-field"
           :class="isError && 'promocodes__input-field--error'"
         >
-          <input 
+          <input
             class="promocodes__input"
             type="text"
             placeholder="Введите промокод"
@@ -14,12 +14,12 @@
             v-model="inputContent"
           >
           <div class="promocodes__error-message">{{errorMessage}}</div>
-          <img 
+          <img
             class="promocodes__error-icon"
             src="../../assets/icons/exclamation-point-in-circle--red.svg"
           />
         </div>
-        <div 
+        <div
           class="promocodes__submit-button"
           @click="() => {inputContent.length > 0 && tryToGetPromocodeTicket(inputContent)}"
         >Добавить</div>
@@ -29,7 +29,7 @@
       v-if="userPromocodes.length === 0"
     >
       <div class="promocodes__empty-plug">
-          <img 
+          <img
             class="promocodes__empty-plug-icon"
             src="../../assets/emojis/admission-tickets.svg"
           />
@@ -39,7 +39,7 @@
     <div v-else>
       <div class="promocodes__title">Добавленные промокоды:</div>
       <div class="promocodes__tickets">
-        <div 
+        <div
           class="promocodes__ticket"
           v-for="ticket in userPromocodes"
           :key="ticket.id"
@@ -55,14 +55,14 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     isError: false,
     inputContent: '',
     errorMessage: '' as string,
@@ -81,7 +81,7 @@ export default defineComponent({
         this.errorMessage = 'нельзя дважды применить промокод'
       }
       else {
-        this.generalStore.deviceState.promocodes_id.push(data.id)        
+        this.generalStore.deviceState.promocodes_id.push(data.id)
         // this.userTickets.push(data)
         fetch(`${this.generalStore.server}/states/${this.generalStore.deviceId}`, {
           method: 'PATCH',
@@ -161,7 +161,7 @@ export default defineComponent({
   position: absolute;
 }
 .promocodes__submit-button {
-  background: var(--green); 
+  background: var(--green);
   min-width: 90px !important;
   height: 37px;
   color: #ECF4F3;

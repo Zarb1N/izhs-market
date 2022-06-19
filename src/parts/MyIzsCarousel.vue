@@ -1,15 +1,15 @@
 <template>
   <div class="home-section__carousel">
     <Flicking :options="{
-      align: {camera: '20', panel: '0'}, 
-      bound: false, 
+      align: {camera: '20', panel: '0'},
+      bound: false,
       threshold: 0
     }">
-      <div 
+      <div
         class="my-izs__card my-izs__card--my-state"
       >
         <div></div>
-        <img src="" alt=""> 
+        <img src="" alt="">
         <div>
           <div>
             <div>Genius</div>
@@ -17,7 +17,7 @@
           </div>
           <div>Начать стройку можно с участком или без него</div>
         </div>
-        <div 
+        <div
           class="my-izs__button"
         >Подробнее</div>
       </div>
@@ -27,20 +27,20 @@
           <div>Ваша стройка еще не началась</div>
           <!-- <img src="" alt="">  -->
         </div>
-        <div 
+        <div
           class="my-izs__button"
         >Подробнее</div>
-      </div> 
+      </div>
       <div class="my-izs__card my-izs__card--landscape">
         <div>
           <div>Landscape</div>
           <div>Ваша стройка еще не началась</div>
         </div>
-        <div 
+        <div
           class="my-izs__button"
           @click="() => {$router.push('/landscape')}"
         >Подробнее</div>
-      </div> 
+      </div>
       <div class="my-izs__card my-izs__card--izs-index">
         <div>
           <div>ИЖС Индекс</div>
@@ -72,7 +72,7 @@
           <div>Посмотрите <br/> на другие <br/> стройки у <br/> застройщика</div>
           <img src="@/assets/temporary/check-mark.svg"/>
         </div>
-      </div> 
+      </div>
       <div class="settings-card">
         <img src="@/assets/icons/gear.svg">
       </div>
@@ -81,14 +81,14 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
 
   components: {
@@ -180,7 +180,7 @@ export default defineComponent({
 }
 .my-izs__card--construction {
   background: url('@/assets/features-cards/construction.svg') no-repeat right bottom;
-} 
+}
 .my-izs__card--landscape {
   background: url('@/assets/features-cards/landscape.svg') no-repeat bottom;
 }
@@ -192,7 +192,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
-.my-izs__card--construction > div:nth-child(1) > div:nth-child(1), 
+.my-izs__card--construction > div:nth-child(1) > div:nth-child(1),
 .my-izs__card--landscape > div:nth-child(1) > div:nth-child(1) {
   font-weight: 750;
   font-size: 20px;
@@ -200,7 +200,7 @@ export default defineComponent({
   color: #F9F9F9;
   margin-bottom: 8px;
 }
-.my-izs__card--construction div:nth-child(1) div:nth-child(2), 
+.my-izs__card--construction div:nth-child(1) div:nth-child(2),
 .my-izs__card--landscape div:nth-child(1) div:nth-child(2) {
   font-weight: 750;
   font-size: 12px;
@@ -209,7 +209,7 @@ export default defineComponent({
   font-stretch: 151;
   margin-bottom: 34px;
 }
-.my-izs__card--construction div:nth-child(1) img, 
+.my-izs__card--construction div:nth-child(1) img,
 .my-izs__card--landscape div:nth-child(1) img {
   align-self: center;
   height: 94px;
@@ -231,7 +231,7 @@ export default defineComponent({
   font-size: 12px;
   line-height: 125%;
   color: var(--lightgray-text)
-} 
+}
 .my-izs__card--izs-index > div:nth-child(2) {
   display: grid;
   grid-template-columns: auto 20px;

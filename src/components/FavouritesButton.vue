@@ -1,12 +1,12 @@
 <template>
   <div class="favourites-btn">
     <div class="favourites-btn__quantity-circle-wrapper">
-      <div 
+      <div
         class="favourites-btn__quantity-circle"
         v-show="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.length"
       >{{generalStore.deviceState.favourites_houses_id.length}}</div>
     </div>
-    <img 
+    <img
       class="favourites-btn__icon"
       :src="generalStore.getImageURL('icons/heart--black.svg')"
     />
@@ -14,12 +14,12 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 
@@ -29,7 +29,7 @@ export default defineComponent({
 .favourites-btn__quantity-circle-wrapper {
   position: relative;
   height: 0;
-  width: 0;  
+  width: 0;
   left: calc(32px - 14px);
 }
 .favourites-btn__quantity-circle {

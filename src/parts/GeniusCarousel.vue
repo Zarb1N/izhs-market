@@ -1,20 +1,20 @@
 <template>
   <div class="home-section__carousel">
-    <Flicking 
+    <Flicking
       :options="{
-        align: {camera: '20', panel: '0'}, 
+        align: {camera: '20', panel: '0'},
         threshold: 0,
       }"
       @will-change="(event) => {currentIndex = event.index}"
     >
-      <div 
+      <div
         class="genius-card"
         :style="{background: card.color}"
         v-for="(card, index) of cards"
         :key="index"
       >
         <div class="genius-card__top-content">
-          <div 
+          <div
             class="genius-card__description"
             v-html="card.description"
           ></div>
@@ -24,13 +24,13 @@
             </svg>
           </div>
         </div>
-        <div 
+        <div
           class="genius-card__details-btn"
           @click="$router.push(card.goTo)"
         >Подробнее</div>
       </div>
     </Flicking>
-    <Pagination 
+    <Pagination
       :items="cards.length"
       :currentItem="currentIndex"
     />
@@ -41,12 +41,12 @@
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import CarouselPagination from "@/components/CarouselPagination.vue";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     cards: [
       {
         description: 'Занимайтесь семьей <br/> и делами, пока <br/> строится дом вашей <br/> мечты',

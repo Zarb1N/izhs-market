@@ -2,12 +2,12 @@
   <div class="contracts menu-subpage">
     <div class="contracts__description">Акцептуйте 2 оферты, чтобы использовать ИЖС Genius и строить дом</div>
     <div class="contracts__short-questions-and-answers">
-      <div 
+      <div
         class="contracts__short-question-and-answer"
         v-for="(qa, index) in questionsAndAnswers"
         :key="index"
       >
-        <img 
+        <img
           class="contracts__icon"
           :src="generalStore.getImageURL(`emojis/${qa.icon}.svg`)"
         />
@@ -29,7 +29,7 @@
         :headerHeight="'58px'"
       >
         <div class="contracts__short-question-and-answer">
-          <img 
+          <img
             class="contracts__icon"
             :src="generalStore.getImageURL(`emojis/shooting-star.svg`)"
           />
@@ -40,7 +40,7 @@
             <div class="external-link">Полный текст аферты</div>
           </div>
         </div>
-        
+
       </ExtensionCard>
       <ExtensionCard
         title="Оферта от застройщика на строительство"
@@ -54,7 +54,7 @@
         :theme="'gray-white'"
       >
         <div class="contracts__short-question-and-answer">
-          <img 
+          <img
             class="contracts__icon"
             :src="generalStore.getImageURL(`emojis/shooting-star.svg`)"
           />
@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ExtensionCard from '../../components/ExtensionCard.vue'
 
@@ -79,7 +79,7 @@ export default defineComponent({
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     questionsAndAnswers: [
       {
         icon: 'shooting-star',

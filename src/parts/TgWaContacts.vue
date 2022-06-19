@@ -1,20 +1,20 @@
 <template>
   <div class="contacts">
-    <a 
+    <a
       class="contact"
       :href="generalStore.telegramSupport"
     >
-      <img 
+      <img
         class="contact-icon"
         :src="generalStore.getImageURL('telegram.svg')"
       />
       <div class="contact-name">Написать в Telegram</div>
     </a>
-    <a 
+    <a
       class="contact"
       :href="generalStore.whatsappSupport"
     >
-      <img 
+      <img
         class="contact-icon"
         :src="generalStore.getImageURL('whatsapp.svg')"
       />
@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 </script>

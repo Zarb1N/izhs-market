@@ -1,9 +1,9 @@
 <template>
-  <div 
+  <div
     class="error"
     :class="isActive ? 'error--active' : 'error--disactive'"
   >
-    <img 
+    <img
       class="error__icon"
       :src="generalStore.getImageURL('emojis/man-mechanic.svg')"
     />
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -20,7 +20,7 @@ export default defineComponent({
     'isActive'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 </script>

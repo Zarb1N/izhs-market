@@ -1,17 +1,17 @@
 <template>
   <IonApp id="vue-app">
     <IonContent>
-      <ErrorNotification 
+      <ErrorNotification
         :isActive="generalStore.errorNotification"
       />
-      <FullscreenLoader v-show="generalStore.isLoading"/> 
-      <UpdateNotification 
+      <FullscreenLoader v-show="generalStore.isLoading"/>
+      <UpdateNotification
         :isActive="isUpdate"
         @close="isUpdate = false"
       />
       <RequiredUpdateNotification :isActive="isMandatoryUpdate"/>
       <IonTabs>
-        <IonRouterOutlet/> 
+        <IonRouterOutlet/>
 
         <!--<IonTabBar slot="bottom">
           <IonTabButton
@@ -22,10 +22,10 @@
             :href="item.goTo"
             :tab="item.title"
           >
-            <img 
+            <img
               class="tabbar__item-icon"
               :src="getImageURL(item.iconName, item.goTo)"
-            /> 
+            />
             <IonLabel class="tabbar__item-name">{{item.title}}</IonLabel>
           </IonTabButton>
         </IonTabBar>
@@ -35,7 +35,7 @@
           id="app__tabbar"
           :items="navigationItems"
           v-show="isTabbar"
-        /> 
+        />
       </IonTabs>
     </IonContent>
   </IonApp>
@@ -46,7 +46,7 @@
 import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 import {
   IonTabBar,
   IonTabButton,
@@ -74,10 +74,9 @@ import RequiredUpdateNotification from './components/RequiredUpdateNotification.
 App.addListener('backButton', () => {
   router.back()
 });
-console.log(router.currentRoute)
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     isUpdate: false,
     isMandatoryUpdate: false,
     navigationItems: [
@@ -101,7 +100,7 @@ export default defineComponent({
         title: 'Стройка',
         goTo: '/my-project'
       },
-      
+
       {
         iconName: 'human',
         title: 'Меню',
@@ -131,7 +130,7 @@ export default defineComponent({
          ])
       }
       this.generalStore.isLoading = false
-    }, 
+    },
     async getSystemParameters() {
       const res = await fetch(`${this.generalStore.server}/system`)
       const data = await res.json()
@@ -144,7 +143,6 @@ export default defineComponent({
       const deviceId = await this.getDeviceId()
       const res = await fetch(`${this.generalStore.server}/states/${deviceId}`)
       const data = await res.json()
-      console.log(data)
       if (data === null) {
         this.createAnAccount(deviceId)
       }
@@ -163,7 +161,7 @@ export default defineComponent({
     },
     async getDeviceInfo() {
       const data = await Device.getInfo()
-      this.generalStore.deviceInfo = data 
+      this.generalStore.deviceInfo = data
       if (this.generalStore.deviceInfo.operatingSystem == 'android') {
         this.generalStore.linkToAppInStore = 'https://play.google.com/store/apps/details?id=izs.market'
       }
@@ -239,12 +237,11 @@ export default defineComponent({
           : this.isUpdate = true
       }
     }
-  },  
+  },
   computed: {
     isTabbar() {
       const tabbarTitles = this.navigationItems.map(item => item.title)
       const actualPath = this.$route.matched.map((item: {[key: string]: any}) => item.name)
-      // console.log(actualPath)
       const allowedRouters = ['Архитектурный набор', 'Подборка']
       const restrictedRouters = ['Проверить участок', 'Построить дом', 'Спроектировать дом']
       for (let title of tabbarTitles) {
@@ -268,7 +265,7 @@ export default defineComponent({
   mounted() {
     this.loadRequirementData()
     // this.hideStatusBar()
-  },    
+  },
   components: {
     Tabbar,
     FullscreenLoader,

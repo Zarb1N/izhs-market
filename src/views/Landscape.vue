@@ -9,26 +9,26 @@
     <div class="landscape__body">
       <div class="landscape__carousel">
         <div class="landscape__carousel-items">
-          <Flicking 
-            :options="{ 
+          <Flicking
+            :options="{
               threshold: 0,
-              circular: true, 
+              circular: true,
             }"
             @will-change="(event) => {currentSlide = event.index}"
           >
-            <div 
+            <div
               class="landscape__carousel-item-wrapper"
               v-for="(style, index) in landscapeStyles"
               :key="index"
             >
               <div class="landscape__carousel-item landscape-style">
                 <div class="landscape-style__will-be-annonced">
-                  <img 
+                  <img
                     src="../assets/will-be-annonced-string.svg"
                   >
                 </div>
                 <div class="landscape-style__content">
-                  <img 
+                  <img
                     class="landscape-style__image"
                     :src="generalStore.getImageURL(`${style.image}.png`)"
                   />
@@ -39,7 +39,7 @@
             </div>
           </Flicking>
           <div class="landscape__carousel-pagination">
-            <div 
+            <div
               class="landscape__carousel-pagination-bullet"
               v-for="(style, index) in landscapeStyles"
               :key="index"
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="landcape__manager-card manager-card">
-        <img 
+        <img
           class="manager-card__image"
           src="../assets/default-woman-1.png"
         />
@@ -60,11 +60,11 @@
   </div>
     </IonContent>
   </IonPage>
-  
+
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
@@ -73,7 +73,7 @@ import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 export default defineComponent({
   name: 'Landscape',
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     currentSlide: 0,
     landscapeStyles: [
       {
@@ -138,7 +138,7 @@ export default defineComponent({
   width: 347px;
   margin: 0px 14px;
   box-sizing: content-box;
-  padding-bottom: 10px;  
+  padding-bottom: 10px;
   margin-bottom: 10px;
 }
 .landscape__carousel-item {

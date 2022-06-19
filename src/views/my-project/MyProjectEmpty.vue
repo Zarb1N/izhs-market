@@ -1,7 +1,7 @@
 <template>
   <div class="my-project--empty">
     <div class="my-project__description">Здесь можно отслеживать ход вашего проекта, для этого выберете дом и отправьте заявку</div>
-    <img 
+    <img
       class="my-project__image"
       :src="generalStore.getImageURL('house-card.png')"
       />
@@ -9,11 +9,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core"
-import { useGeneralStore } from "@/stores/general"
+import { useStore } from "@/stores/general"
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   mounted() {
     if (this.generalStore.deviceState.applications_houses_id) {
