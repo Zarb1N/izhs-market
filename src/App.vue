@@ -1,15 +1,24 @@
 <template>
   <IonApp id="vue-app">
     <IonContent>
-      <ErrorNotification 
-        :isActive="generalStore.errorNotification"
-      />
+      <ErrorNotification :isActive="generalStore.errorNotification"/>
       <FullscreenLoader v-show="generalStore.isLoading"/> 
       <UpdateNotification 
         :isActive="isUpdate"
         @close="isUpdate = false"
       />
       <RequiredUpdateNotification :isActive="isMandatoryUpdate"/>
+      <BottomPopup 
+        :isActive="appState.isContactsPopup"
+        @close="appState.isContactsPopup = false"
+      >
+        <template v-slot:title>Связаться в мессенжерах</template>
+        <HelpContacts/>
+      </BottomPopup>
+      <AddUsToProjectPopups 
+        :isActive="appState.isAddingProjectApplication"
+        @close="appState.isAddingProjectApplication = false"
+      />
       <IonTabs>
         <IonRouterOutlet/> 
 
@@ -47,6 +56,7 @@ import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
 import { useGeneralStore } from '@/stores/general'
+import { useAppState } from '@/stores/appState'
 import {
   IonTabBar,
   IonTabButton,
@@ -69,6 +79,10 @@ import router from './router'
 import ErrorNotification from './components/ErrorNotification.vue'
 import UpdateNotification from './components/UpdateNotification.vue'
 import RequiredUpdateNotification from './components/RequiredUpdateNotification.vue'
+import BottomPopup from '@/components/BottomPopup.vue'
+import HelpContacts from '@/components/HelpContacts.vue'
+import CenterPopup from '@/components/CenterPopup.vue'
+import AddUsToProject from '@/parts/AddUsToProject.vue'
 
 
 App.addListener('backButton', () => {
@@ -78,6 +92,7 @@ console.log(router.currentRoute)
 export default defineComponent({
   data: () => ({
     generalStore: useGeneralStore(),
+    appState: useAppState(),
     isUpdate: false,
     isMandatoryUpdate: false,
     navigationItems: [
@@ -121,7 +136,8 @@ export default defineComponent({
         this.getPromocodes(),
         this.getSystemParameters(),
         this.getDeviceInfo(),
-        this.getHousesByCountries()
+        this.getHousesByCountries(),
+        this.getWidgets()
       ])
       await this.getArchitechtureStyles()
       if (this.generalStore.deviceState.applications_houses_id) {
@@ -144,7 +160,6 @@ export default defineComponent({
       const deviceId = await this.getDeviceId()
       const res = await fetch(`${this.generalStore.server}/states/${deviceId}`)
       const data = await res.json()
-      console.log(data)
       if (data === null) {
         this.createAnAccount(deviceId)
       }
@@ -164,9 +179,11 @@ export default defineComponent({
     async getDeviceInfo() {
       const data = await Device.getInfo()
       this.generalStore.deviceInfo = data 
+      console.log(data)
       if (this.generalStore.deviceInfo.operatingSystem == 'android') {
         this.generalStore.linkToAppInStore = 'https://play.google.com/store/apps/details?id=izs.market'
       }
+
     },
     async hideStatusBar() {
       await StatusBar.hide();
@@ -224,6 +241,10 @@ export default defineComponent({
     async getPromocodes() {
       const res = await fetch(`${this.generalStore.server}/promocodes`)
       this.generalStore.allPromocodes = await res.json()
+    },
+    async getWidgets() {
+      const res = await fetch(`${this.generalStore.server}/widgets`)
+      this.generalStore.widgets = await res.json()
     },
     getImageURL(iconName : string, goTo : string) {
       const path = new URL(
@@ -283,7 +304,11 @@ export default defineComponent({
     IonApp,
     ErrorNotification,
     UpdateNotification,
-    RequiredUpdateNotification
+    RequiredUpdateNotification,
+    BottomPopup,
+    HelpContacts,
+    CenterPopup,
+    AddUsToProjectPopups: AddUsToProject,
   }
 })
 </script>

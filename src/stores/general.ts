@@ -66,7 +66,8 @@ export const useGeneralStore : any = defineStore({
     houseInfo: {} as {[key: string]: any},
     services: [],
     servicesGroups: [],
-    countries: []
+    countries: [],
+    widgets: []
   }),
   actions: {
     formatNumber: (val: number, decimalsNumber = 0) => {

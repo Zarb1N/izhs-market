@@ -53,13 +53,10 @@ export default defineComponent({
   }),
   methods: {
     interactWithFavoritesList(houseId : number | string) {
-      console.log('heh')
-      console.log(this.generalStore.deviceState.favourites_houses_id)
       this.generalStore.choosedHouseId = houseId
       !this.isFavorite
         ? this.generalStore.addToFavorites()
         : this.generalStore.removeFromFavourites()
-      console.log(this.generalStore.deviceState.favourites_houses_id)
     }
   },
   computed: {
@@ -80,7 +77,6 @@ export default defineComponent({
     }
   },
   mounted() {
-    console.log(this.data)
   },
   components: {
     Flicking,

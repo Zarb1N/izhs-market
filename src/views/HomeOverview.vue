@@ -4,11 +4,15 @@
       <div class="home">
         <div class="home__status-bar status-bar"></div>
         <div class="home__top-actions-row">
-          <div class="home__add-us-to-your-projects">+ Добавьте нас в свой проект</div>
+          <div 
+            class="home__add-us-to-your-projects"
+            @click="appState.isAddingProjectApplication = true"
+          >+ Добавьте нас в свой проект</div>
           <div class="home__fixed-action-buttons">
             <img 
               class="home__add-btn"
               :src="generalStore.getImageURL('icons/dialog-cloud.svg')"
+              @click="appState.isContactsPopup = true"
             />
             <FavouritesButton class="home__favourites-btn"/>
           </div>
@@ -206,6 +210,8 @@ import "@egjs/vue3-flicking/dist/flicking.css";
 import MyIzsCarousel from '../parts/MyIzsCarousel.vue'
 import GeniusCarousel from '../parts/GeniusCarousel.vue'
 import SetCard from '@/components/SetCard.vue'
+import BottomPopup from '@/components/BottomPopup.vue'
+import { useAppState } from '@/stores/appState'
 
 declare interface IHouse {
   readonly id : string | number
@@ -220,6 +226,7 @@ export default defineComponent({
     selectedHouses: [] as Array<{[key: string]: any}>,
     general: useGeneralStore(),
     generalStore: useGeneralStore(),
+    appState: useAppState(),
     choosedStyle: {} as {[key: string]: any},
     allStories: [] as Array<{[key: string]: string}>,
     partnersHouses: [] as Array<{[key: string]: string}>,
@@ -304,6 +311,7 @@ export default defineComponent({
     MyIzsCarousel,
     GeniusCarousel,
     SetCard,
+    BottomPopup,
   }
 })
 </script>
@@ -315,7 +323,7 @@ export default defineComponent({
 }
 /* */
 .home {
-  background: rgba(245, 245, 245, 0.94);
+  background: #F5F5F5;
   backdrop-filter: blur(26px);
   padding: 0px 20px;
   padding-bottom: 50px;
@@ -339,8 +347,6 @@ export default defineComponent({
   line-height: 125%;
   text-align: center;
   color: #090909;
-  font-stretch: 151;
-  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 .home__fixed-action-buttons {
   right: 20px;
@@ -378,7 +384,7 @@ export default defineComponent({
 }
 .home-section__title {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 950;
   font-size: 26px;
   line-height: 120%;
 }
@@ -395,7 +401,6 @@ export default defineComponent({
   font-size: 14px;
   line-height: 140%;
 }
-
 .home-section__button {
   background: #090909;
   width: 100%;
