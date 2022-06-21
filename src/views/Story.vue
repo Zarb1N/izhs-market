@@ -125,14 +125,15 @@ export default defineComponent({
   margin-top: -10px;
 }
 .slide__description {
-  font-weight: bold;
-  font-size: 28px;
-  line-height: 36px;
-  padding: 0px 14px;
+  width: 310px;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 120%;
+  padding: 0px 0px 0px 14px;
 }
 .slide__action-btn {
   width: 100%;
-  background: #36BC9D;
+  background: #FE7B5E;
   height: 56px;
   text-decoration: none;
   display: flex;
@@ -144,7 +145,7 @@ export default defineComponent({
   text-align: center;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #151918;
+  color: #F9F9F9;
   position: absolute;
   bottom: 0;
 }
@@ -156,6 +157,6 @@ export default defineComponent({
   overflow: hidden;
 }
 .story .timeline>.slice>.progress {
-  background: #439A86 !important;
+  background: #FE7B5E !important;
 }
 </style>
