@@ -91,6 +91,7 @@
           <div class="home-section__description">
             Создайте европейскую красоту на вашем участке
           </div>
+          <LandscapeCarousel/>
         </div>
 
         <div class="home__section home-section">
@@ -233,6 +234,7 @@ import GeniusCarousel from '../parts/GeniusCarousel.vue'
 import SetCard from '@/components/SetCard.vue'
 import BottomPopup from '@/components/BottomPopup.vue'
 import { useAppState } from '@/stores/appState'
+import LandscapeCarousel from '@/parts/LandscapeCarousel.vue'
 
 declare interface IHouse {
   readonly id : string | number
@@ -331,7 +333,8 @@ export default defineComponent({
     GeniusCarousel,
     SetCard,
     BottomPopup,
-}
+    LandscapeCarousel
+  }
 })
 </script>
 
