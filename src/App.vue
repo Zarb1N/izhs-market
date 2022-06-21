@@ -12,7 +12,7 @@
         :isActive="appState.isContactsPopup"
         @close="appState.isContactsPopup = false"
       >
-        <template v-slot:title>Связаться в мессенжерах</template>
+        <template v-slot:title><div style="font-size: 20px; font-weight: 750">Связаться в мессенжерах</div></template>
         <HelpContacts/>
       </BottomPopup>
       <AddUsToProjectPopups 
