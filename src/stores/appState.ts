@@ -4,6 +4,6 @@ export const useAppState : any = defineStore({
   state: () => ({
     isContactsPopup: false,
     isAddingProjectApplication: false,
-    isRegionChoosing: true,
+    isRegionChoosing: false,
   }),
 })

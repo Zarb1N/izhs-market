@@ -3,7 +3,7 @@
     <div class="set__header">
       <div 
         class="set__back-btn"
-        @click="() => {$router.push('/catalog')}"
+        @click="() => {$router.go(-1)}"
       >
         <img :src="generalStore.getImageURL('icons/back-arrow.svg')">
         <div>Каталог</div>
@@ -101,6 +101,7 @@ export default defineComponent({
 <style scoped>
 .set {
   width: 100%;
+  margin-bottom: 100px;
 }
 .set__back-btn {
   display: grid;

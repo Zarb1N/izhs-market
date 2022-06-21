@@ -43,17 +43,33 @@
           <MyIzsCarousel /> 
         </div>
 
-        <div class="home__section home-section" v-if="false">
+        <div 
+          class="home__section home-section"
+          v-if="weekProjects"
+        >
           <div class="home-section__header">
             <div class="home-section__title">Проекты недели</div>
-            <div class="home-section__header-slot"></div>
+            <div class="home-section__header-slot">{{weekProjects.houses_in_sets.length}}</div>
           </div>
-          <div class="home-section__description">
-            {{
-
-            }}
+          <div 
+            class="home-section__description"
+            v-html="weekProjects.budge"
+          >
           </div>
-          <div class="home-section__button"></div>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="house in weekProjects.houses_in_sets.slice(0, 6)"
+              :key="house.id"
+              :data="house"
+              :cardBudge="weekProjects.budge_card"
+              style="width: 189px"
+              @goToHouse="$router.push(`/house/${house.id}/overview`)"
+            /> 
+          </div>
+          <div 
+            class="home-section__button"
+            @click="(event) => {$router.push(`/catalog/custom-set/${weekProjects.id}`)}"
+          >Посмотреть подборку</div>
         </div>
         
         <div class="home__section home-section">
@@ -274,6 +290,12 @@ export default defineComponent({
   computed: {
     windowWidth() {
       return window.innerWidth
+    },
+    weekProjects() {
+      if (this.generalStore.filters.compilations.filter(item => item.name === 'Проекты недели').length !== 0) {
+        return this.generalStore.filters.compilations.filter(item => item.name === 'Проекты недели')[0]
+      }
+      return false
     }
   },
   created() {
@@ -309,7 +331,7 @@ export default defineComponent({
     GeniusCarousel,
     SetCard,
     BottomPopup,
-  }
+}
 })
 </script>
 
@@ -522,5 +544,14 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.home-section__horizontal-scroll {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
+  display: grid;
+  grid-template-columns: repeat(6, min-content);
+  overflow-x: auto;
+  gap: 16px;
 }
 </style>
