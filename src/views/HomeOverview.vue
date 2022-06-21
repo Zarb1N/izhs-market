@@ -30,7 +30,12 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Мой ИЖС</div>
-            <div class="home-section__quantity"></div>
+            <div 
+              class="home-section__header-slot geo-pin"
+              @click="appState.isRegionChoosing = true"
+            >
+              <img src="@/assets/icons/geo-pin-in-circle.svg"/>
+            </div>
           </div>
           <div class="home-section__description">
             Строительство через приложение проходит быстрее и легче
@@ -41,7 +46,7 @@
         <div class="home__section home-section" v-if="false">
           <div class="home-section__header">
             <div class="home-section__title">Проекты недели</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
             {{
@@ -54,7 +59,7 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Genius</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
               Занимайтесь семьей и делами, пока строится дом вашей мечты
@@ -65,7 +70,7 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Landscape</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
             Создайте европейскую красоту на вашем участке
@@ -75,7 +80,7 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Сервисы</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
             Воспользуйтесь сервисами с кэшбеком до 100% 
@@ -91,7 +96,7 @@
         >
           <div class="home-section__header">
             <div class="home-section__title">{{set.name}}</div>
-            <div class="home-section__quantity">{{set.count_houses}}</div>
+            <div class="home-section__header-slot">{{set.count_houses}}</div>
           </div>
           <div class="home-section__description">{{set.budge}}</div>
           <Flicking 
@@ -120,7 +125,7 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">По странам мира</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
             Приобщайтесь к работам архитекторов со всего мира
@@ -221,7 +226,6 @@ declare interface IHouse {
 export default defineComponent({
   name: 'Home',
   data: () => ({
-    choosedRegion: 'Московский регион',
     allHouses: [] as Array<IHouse>,
     selectedHouses: [] as Array<{[key: string]: any}>,
     general: useGeneralStore(),
@@ -234,13 +238,6 @@ export default defineComponent({
     isChoosingRegion: false,
     isContextMenu: false,
     clickCoordinates: {x: 0, y: 0},
-    regions: [
-      'Московский регион',
-      'Санкт-Петербург',
-      'Новосибирск',
-      'Екатеринбург',
-      'Краснодар и Сочи'
-    ],
   }),
   methods: {
     async getPartnersHouses() {
@@ -388,7 +385,7 @@ export default defineComponent({
   font-size: 26px;
   line-height: 120%;
 }
-.home-section__quantity {
+.home-section__header-slot {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -516,5 +513,14 @@ export default defineComponent({
 .home-section__houses-carousel-item {
   margin-right: 16px;
   width: 189px;
+}
+.geo-pin {
+  width: 40px;
+  height: 28px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

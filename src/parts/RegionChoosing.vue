@@ -1,15 +1,19 @@
 <template>
-  <div class="region-choosing">
-    <div class="region-choosing__title">Регион</div>
+  <CenterPopup 
+    class="region-choosing"
+    :isActive="isActive"
+    @close="$emit('close')"
+  >
+    <template v-slot:title><div class="region-choosing__title">Регион</div></template>
     <div class="region-choosing__current-region">
       <div class="region-choosing__region-name">{{choosedRegion}}</div>
       <img 
         class="region-choosing__check-icon"
-        src="../assets/icons/green-check-in-circle.svg"
+        src="@/assets/icons/green-check-in-circle.svg"
       >
     </div>
     <div class="region-choosing__divider"></div>
-    <div class="region-choosing__hint">Пока недоступные регионы</div>
+    <div class="region-choosing__hint">Пока недоступные регионы:</div>
     <div class="region-choosing__unable-regions">
       <div 
         class="region-choosing__region-name"
@@ -18,23 +22,36 @@
         v-show="region !== choosedRegion"
       >{{region}}</div>
     </div>
-  </div>
+  </CenterPopup>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import CenterPopup from "@/components/CenterPopup.vue";
 
 export default defineComponent({
   props: [
-    'choosedRegion',
-    'regions'
-  ]
+    'isActive'
+  ],
+  data: () => ({
+    choosedRegion: 'Московский регион',
+    regions: [
+      'Московский регион',
+      'Санкт-Петербург',
+      'Новосибирск',
+      'Екатеринбург',
+      'Краснодар и Сочи'
+    ],
+  }),
+  components: {
+    CenterPopup,
+  }
 })
 
 
 </script>
 
-<style>
+<style scoped>
 .region-choosing {
 
 }
@@ -43,9 +60,9 @@ export default defineComponent({
   font-weight: bold;
   font-size: 18px;
   line-height: 23px;
-  margin-bottom: 10px;
 }
 .region-choosing__current-region {
+  margin-top: 13px;
   height: 20px;
   display: flex;
   justify-content: space-between;
@@ -65,15 +82,17 @@ export default defineComponent({
 }
 
 .region-choosing__hint {
-  font-weight: normal;
+  font-weight: 500;
   font-size: 12px;
-  line-height: 15px;
-  color: #94919F;
-  margin-bottom: 15px;
+  line-height: 120%;
+  color: #000000;
 }
 .region-choosing__unable-regions {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 15px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 120%;
+  color: #94919F;
 }
 </style>

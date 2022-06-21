@@ -19,6 +19,10 @@
         :isActive="appState.isAddingProjectApplication"
         @close="appState.isAddingProjectApplication = false"
       />
+      <RegionChoosing
+        :isActive="appState.isRegionChoosing"
+        @close="appState.isRegionChoosing = false"
+      /> 
       <IonTabs>
         <IonRouterOutlet/> 
 
@@ -83,6 +87,7 @@ import BottomPopup from '@/components/BottomPopup.vue'
 import HelpContacts from '@/components/HelpContacts.vue'
 import CenterPopup from '@/components/CenterPopup.vue'
 import AddUsToProject from '@/parts/AddUsToProject.vue'
+import RegionChoosing from '@/parts/RegionChoosing.vue'
 
 
 App.addListener('backButton', () => {
@@ -309,6 +314,7 @@ export default defineComponent({
     HelpContacts,
     CenterPopup,
     AddUsToProjectPopups: AddUsToProject,
+    RegionChoosing,
   }
 })
 </script>
