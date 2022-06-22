@@ -1,5 +1,7 @@
+@import url('./fonts/RobotoFlex-VariableFont_GRAD,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf');
+
 body {
-  font-family: 'Roboto Flex', sans-serif;
+  font-family: 'Roboto Flex';
   color: var(--dark-text);
 }
 sup {

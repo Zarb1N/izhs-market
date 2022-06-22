@@ -168,3 +168,58 @@ export default defineComponent({
   gap: 4px;
 }
 </style>
+<!-- For all catalog subpages -->
+<style>
+.set {
+  width: 100%;
+  padding: 30px 0px 100px 0px;
+
+}
+.set__header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background: white;
+  z-index: 100;
+  height: 42px;
+  padding-top: 44px;
+  box-sizing: content-box;
+  display: grid;
+  grid-template-columns: min-content;
+
+}
+.set__back-btn {
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  align-items: center;
+  gap: 5px;
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #090909;
+  font-stretch: 151;
+  padding: 9px;
+}
+.set__title {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.set__body {
+  margin-top: 83px;
+  width: 100%;
+  padding: 0px 20px;
+}
+.set__houses {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 159px);
+  gap: 17px;
+}
+.set__house {
+  width: 100%;
+} 
+</style>

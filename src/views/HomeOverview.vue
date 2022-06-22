@@ -4,11 +4,15 @@
       <div class="home">
         <div class="home__status-bar status-bar"></div>
         <div class="home__top-actions-row">
-          <div class="home__add-us-to-your-projects">+ Добавьте нас в свой проект</div>
+          <div 
+            class="home__add-us-to-your-projects"
+            @click="appState.isAddingProjectApplication = true"
+          >+ Добавьте нас в свой проект</div>
           <div class="home__fixed-action-buttons">
             <img 
               class="home__add-btn"
               :src="generalStore.getImageURL('icons/dialog-cloud.svg')"
+              @click="appState.isContactsPopup = true"
             />
             <FavouritesButton class="home__favourites-btn"/>
           </div>
@@ -26,7 +30,12 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Мой ИЖС</div>
-            <div class="home-section__quantity"></div>
+            <div 
+              class="home-section__header-slot geo-pin"
+              @click="appState.isRegionChoosing = true"
+            >
+              <img src="@/assets/icons/geo-pin-in-circle.svg"/>
+            </div>
           </div>
           <div class="home-section__description">
             Строительство через приложение проходит быстрее и легче
@@ -34,23 +43,39 @@
           <MyIzsCarousel /> 
         </div>
 
-        <div class="home__section home-section" v-if="false">
+        <div 
+          class="home__section home-section"
+          v-if="weekProjects"
+        >
           <div class="home-section__header">
             <div class="home-section__title">Проекты недели</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot">{{weekProjects.houses_in_sets.length}}</div>
           </div>
-          <div class="home-section__description">
-            {{
-
-            }}
+          <div 
+            class="home-section__description"
+            v-html="weekProjects.budge"
+          >
           </div>
-          <div class="home-section__button"></div>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="house in weekProjects.houses_in_sets.slice(0, 6)"
+              :key="house.id"
+              :data="house"
+              :cardBudge="weekProjects.budge_card"
+              style="width: 189px"
+              @goToHouse="$router.push(`/house/${house.id}/overview`)"
+            /> 
+          </div>
+          <div 
+            class="home-section__button"
+            @click="(event) => {$router.push(`/catalog/custom-set/${weekProjects.id}`)}"
+          >Посмотреть подборку</div>
         </div>
         
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Genius</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
               Занимайтесь семьей и делами, пока строится дом вашей мечты
@@ -61,83 +86,46 @@
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Landscape</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
             Создайте европейскую красоту на вашем участке
           </div>
+          <LandscapeCarousel/>
         </div>
 
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Сервисы</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
             Воспользуйтесь сервисами с кэшбеком до 100% 
           </div>
-          <div class="home-section__button"></div>
+          <ServicesCarousel/>
         </div>
 
         <div 
           class="home__section home-section"
-          v-for="(set, index) in generalStore.filters.compilations"
-          :key="index"
-          v-show="set.preview_main"
+          v-if="generalStore.viewedHouses.length"
         >
           <div class="home-section__header">
-            <div class="home-section__title">{{set.name}}</div>
-            <div class="home-section__quantity">{{set.count_houses}}</div>
-          </div>
-          <div class="home-section__description">{{set.budge}}</div>
-          <Flicking 
-            class="home-section__houses-carousel"
-            :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
-              threshold: 0
-            }"
-          >
-            <Product
-              class="home-section__houses-carousel-item"
-              v-for="house in set.houses_in_sets.slice(0,6)"
-              :key="house.id"
-              :data="house"
-              :cardBudge="set.budge_card"
-              style="width: 200px"
-            />
-          </Flicking>
-          <div 
-            class="home-section__button"
-            @click="(event) => {$router.push(`/catalog/custom-set/${set.id}`)}"
-          >Просмотреть подборку</div>
-        </div>
-
-        <div class="home__section home-section">
-          <div class="home-section__header">
-            <div class="home-section__title">По странам мира</div>
-            <div class="home-section__quantity"></div>
+            <div class="home-section__title">Вы смотрели</div>
+            <div class="home-section__header-slot"></div>
           </div>
           <div class="home-section__description">
-            Приобщайтесь к работам архитекторов со всего мира
+            Найдите проект в истории просмотров
           </div>
-          <Flicking 
-            class="home-section__houses-carousel"
-            :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
-              threshold: 0
-            }"
-          >
-            <SetCard
-              class="home-section__houses-carousel-item"
-              v-for="set in generalStore.countries"
-              :key="set.id"
-              style="width: 200px"
-              :backgroundImagePath="set.image && set.image.url"
-              :title="set.name"
-            />
-          </Flicking>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="house in generalStore.viewedHouses"
+              :key="house.id"
+              :data="house"
+              :cardBudge="weekProjects.budge_card"
+              style="width: 189px"
+              @goToHouse="$router.push(`/house/${house.id}/overview`)"
+            /> 
+          </div>
         </div>
 
         <div class="home__section home-section">
@@ -156,31 +144,115 @@
               src="@/assets/default-woman-3.png"
             />
           </div>
-          <Flicking 
-            class="home-section__houses-carousel"
-            :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
-              threshold: 0
-            }"
-          >
-            <div
+          <div class="home-section__horizontal-scroll">
+            <SetSmallCard
               class="home-section__set-preview-small"
               v-for="set in generalStore.filters.compilations"
               :key="set.id"
-              :style="{
-                width: '189px',
-                backgroundImage: `url(${set.image && set.image.url})`,
-                height: '276px',
-                marginRight: '16px',
-                borderRadius: '18px'
-              }"
-              v-show="!set.preview_main"
-            >
-              {{set.name}}
-              {{set.count_houses}}
-            </div>
-          </Flicking>
+              v-show="!set.preview_main && set.name !== 'Проекты недели'"
+              :set="set"
+              @openSetPage="(setId) => {$router.push(`/catalog/custom-set/${setId}`)}"
+            />
+          </div>
+        </div>
+
+        <div 
+          class="home__section home-section"
+          v-for="(set, index) in generalStore.filters.compilations"
+          :key="index"
+          v-show="set.preview_main"
+        >
+          <div class="home-section__header">
+            <div class="home-section__title">{{set.name}}</div>
+            <div class="home-section__header-slot">{{set.count_houses}}</div>
+          </div>
+          <div class="home-section__description">{{set.budge}}</div>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="house in set.houses_in_sets.slice(0,6)"
+              :key="house.id"
+              :data="house"
+              :cardBudge="set.budge_card"
+              style="width: 200px"
+            />
+          </div>
+          <div 
+            class="home-section__button"
+            @click="(event) => {$router.push(`/catalog/custom-set/${set.id}`)}"
+          >Просмотреть подборку</div>
+        </div>
+
+        <div class="home__section home-section">
+          <div class="home-section__header">
+            <div class="home-section__title">По странам мира</div>
+            <div class="home-section__header-slot"></div>
+          </div>
+          <div class="home-section__description">
+            Приобщайтесь к работам архитекторов со всего мира
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <SetCard
+              v-for="set in generalStore.countries"
+              :key="set.id"
+              style="width: 200px"
+              :backgroundImagePath="set.image && set.image.url"
+              :title="set.name"
+              :quantity="set.country_count"
+              description="Двустрочное <br/> описание"
+              @goToSetPage="(countryId) => {$router.push(`/catalog/countries-set/${countryId}`)}"
+              :set="set"
+            />
+          </div>
+        </div>
+
+        <div class="home__section home-section">
+          <div class="home-section__header">
+            <div class="home-section__title">По застройщикам</div>
+            <div class="home-section__header-slot"></div>
+          </div>
+          <div class="home-section__description">
+            Найти проект дома по застройщикам
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <SetCard
+              v-for="set in generalStore.builders"
+              :key="set.id"
+              style="width: 200px"
+              :backgroundImagePath="set.image && set.image.url"
+              :title="set.name"
+              :quantity="set.builders_count"
+              description="Двустрочное <br/> описание"
+              @goToSetPage="(countryId) => {$router.push(`/catalog/builders-set/${countryId}`)}"
+              :set="set"
+              v-show="set.builders_count"
+            />
+          </div>
+        </div>
+
+        <div class="home__section home-section">
+          <div class="home-section__header">
+            <div class="home-section__title">Свежайшие без цен</div>
+            <div class="home-section__header-slot"></div>
+          </div>
+          <div class="home-section__description">
+            Оставьте заявку и получите цены от двух застройщиков с высоким рейтингом
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="
+                house in generalStore.allHouses
+                  .filter( (house) => house.price_history
+                    .reduce( (acc, curr) => acc.price + curr.price) === 0)
+                  .slice(0,6)"
+              :key="house.id"
+              :data="house"
+              style="width: 189px"
+            />
+          </div>
+          <div 
+            class="home-section__button"
+            @click="(event) => {$router.push(`/catalog/without-price`)}"
+          >Просмотреть подборку</div>
         </div>
 
       </div>
@@ -206,6 +278,11 @@ import "@egjs/vue3-flicking/dist/flicking.css";
 import MyIzsCarousel from '../parts/MyIzsCarousel.vue'
 import GeniusCarousel from '../parts/GeniusCarousel.vue'
 import SetCard from '@/components/SetCard.vue'
+import BottomPopup from '@/components/BottomPopup.vue'
+import { useAppState } from '@/stores/appState'
+import LandscapeCarousel from '@/parts/LandscapeCarousel.vue'
+import ServicesCarousel from '@/parts/ServicesCarousel.vue'
+import SetSmallCard from '@/components/SetSmallCard.vue'
 
 declare interface IHouse {
   readonly id : string | number
@@ -215,11 +292,11 @@ declare interface IHouse {
 export default defineComponent({
   name: 'Home',
   data: () => ({
-    choosedRegion: 'Московский регион',
     allHouses: [] as Array<IHouse>,
     selectedHouses: [] as Array<{[key: string]: any}>,
     general: useGeneralStore(),
     generalStore: useGeneralStore(),
+    appState: useAppState(),
     choosedStyle: {} as {[key: string]: any},
     allStories: [] as Array<{[key: string]: string}>,
     partnersHouses: [] as Array<{[key: string]: string}>,
@@ -227,13 +304,6 @@ export default defineComponent({
     isChoosingRegion: false,
     isContextMenu: false,
     clickCoordinates: {x: 0, y: 0},
-    regions: [
-      'Московский регион',
-      'Санкт-Петербург',
-      'Новосибирск',
-      'Екатеринбург',
-      'Краснодар и Сочи'
-    ],
   }),
   methods: {
     async getPartnersHouses() {
@@ -270,6 +340,12 @@ export default defineComponent({
   computed: {
     windowWidth() {
       return window.innerWidth
+    },
+    weekProjects() {
+      if (this.generalStore.filters.compilations.filter(item => item.name === 'Проекты недели').length !== 0) {
+        return this.generalStore.filters.compilations.filter(item => item.name === 'Проекты недели')[0]
+      }
+      return false
     }
   },
   created() {
@@ -304,6 +380,10 @@ export default defineComponent({
     MyIzsCarousel,
     GeniusCarousel,
     SetCard,
+    BottomPopup,
+    LandscapeCarousel,
+    ServicesCarousel,
+    SetSmallCard,
   }
 })
 </script>
@@ -315,7 +395,7 @@ export default defineComponent({
 }
 /* */
 .home {
-  background: rgba(245, 245, 245, 0.94);
+  background: #F5F5F5;
   backdrop-filter: blur(26px);
   padding: 0px 20px;
   padding-bottom: 50px;
@@ -339,8 +419,6 @@ export default defineComponent({
   line-height: 125%;
   text-align: center;
   color: #090909;
-  font-stretch: 151;
-  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 .home__fixed-action-buttons {
   right: 20px;
@@ -378,11 +456,11 @@ export default defineComponent({
 }
 .home-section__title {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 950;
   font-size: 26px;
   line-height: 120%;
 }
-.home-section__quantity {
+.home-section__header-slot {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -395,7 +473,6 @@ export default defineComponent({
   font-size: 14px;
   line-height: 140%;
 }
-
 .home-section__button {
   background: #090909;
   width: 100%;
@@ -511,5 +588,23 @@ export default defineComponent({
 .home-section__houses-carousel-item {
   margin-right: 16px;
   width: 189px;
+}
+.geo-pin {
+  width: 40px;
+  height: 28px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-section__horizontal-scroll {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
+  display: grid;
+  grid-template-columns: repeat(6, min-content);
+  overflow-x: auto;
+  gap: 16px;
 }
 </style>

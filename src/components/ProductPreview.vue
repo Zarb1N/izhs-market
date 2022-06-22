@@ -10,7 +10,8 @@
   >
     <div class="product__top">
       <div 
-        class="product__new-house-feature"
+        class="product__badge"
+        v-show="cardBudge"
         @click="$emit('goToHouse')"
       >{{cardBudge}}</div>
       <img 
@@ -53,13 +54,10 @@ export default defineComponent({
   }),
   methods: {
     interactWithFavoritesList(houseId : number | string) {
-      console.log('heh')
-      console.log(this.generalStore.deviceState.favourites_houses_id)
       this.generalStore.choosedHouseId = houseId
       !this.isFavorite
         ? this.generalStore.addToFavorites()
         : this.generalStore.removeFromFavourites()
-      console.log(this.generalStore.deviceState.favourites_houses_id)
     }
   },
   computed: {
@@ -80,7 +78,6 @@ export default defineComponent({
     }
   },
   mounted() {
-    console.log(this.data)
   },
   components: {
     Flicking,
@@ -108,17 +105,16 @@ export default defineComponent({
     font-size: 16px;
     line-height: 120%;
     color: #F9F9F9;
-    font-stretch: 151;
   }
   .product__top {
     display: grid;
-    grid-template-columns: repeat(2, min-content);
+    grid-template-columns: min-content 16px;
     grid-template-rows: 18px auto;
     justify-content: space-between;
     gap: 8px;
   }
 
-  .product__new-house-feature {
+  .product__badge {
     background: #F9F9F9;
     border-radius: 20px;
     padding: 4px 8px;
@@ -128,6 +124,9 @@ export default defineComponent({
     color: #090909;
     width: min-content;
     white-space: nowrap;
+  }
+  .product__favorites-btn {
+    grid-column: 2 / 3;
   }
   .product__area, .product__price {
     font-weight: normal;

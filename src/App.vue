@@ -1,36 +1,34 @@
 <template>
   <IonApp id="vue-app">
     <IonContent>
-      <ErrorNotification 
-        :isActive="generalStore.errorNotification"
-      />
+      <ErrorNotification :isActive="generalStore.errorNotification"/>
       <FullscreenLoader v-show="generalStore.isLoading"/> 
       <UpdateNotification 
         :isActive="isUpdate"
         @close="isUpdate = false"
       />
       <RequiredUpdateNotification :isActive="isMandatoryUpdate"/>
+      <BottomPopup 
+        :isActive="appState.isContactsPopup"
+        @close="appState.isContactsPopup = false"
+      >
+        <template v-slot:title><div style="font-size: 20px; font-weight: 750">Связаться в мессенжерах</div></template>
+        <HelpContacts/>
+      </BottomPopup>
+      <AddUsToProjectPopups 
+        :isActive="appState.isAddingProjectApplication"
+        @close="appState.isAddingProjectApplication = false"
+      />
+      <RegionChoosing
+        :isActive="appState.isRegionChoosing"
+        @close="appState.isRegionChoosing = false"
+      /> 
+      <ServiceApplication
+        :isActive="appState.isServiceApplicationPopup"
+        @close="appState.isServiceApplicationPopup = false"
+      />
       <IonTabs>
         <IonRouterOutlet/> 
-
-        <!--<IonTabBar slot="bottom">
-          <IonTabButton
-            class="tabbar__item"
-            v-for="(item) in navigationItems"
-            :key="item.goTo"
-            :class="$route.matched.map(route => route.name).includes(item.title) ? 'tabbar__item--choosed' : 'tabbar__item--unchoosed'"
-            :href="item.goTo"
-            :tab="item.title"
-          >
-            <img 
-              class="tabbar__item-icon"
-              :src="getImageURL(item.iconName, item.goTo)"
-            /> 
-            <IonLabel class="tabbar__item-name">{{item.title}}</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-        -->
-
         <Tabbar
           id="app__tabbar"
           :items="navigationItems"
@@ -47,6 +45,7 @@ import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
 import { useGeneralStore } from '@/stores/general'
+import { useAppState } from '@/stores/appState'
 import {
   IonTabBar,
   IonTabButton,
@@ -69,6 +68,12 @@ import router from './router'
 import ErrorNotification from './components/ErrorNotification.vue'
 import UpdateNotification from './components/UpdateNotification.vue'
 import RequiredUpdateNotification from './components/RequiredUpdateNotification.vue'
+import BottomPopup from '@/components/BottomPopup.vue'
+import HelpContacts from '@/components/HelpContacts.vue'
+import CenterPopup from '@/components/CenterPopup.vue'
+import AddUsToProject from '@/parts/AddUsToProject.vue'
+import RegionChoosing from '@/parts/RegionChoosing.vue'
+import ServiceApplication from '@/parts/ServiceApplication.vue'
 
 
 App.addListener('backButton', () => {
@@ -78,6 +83,7 @@ console.log(router.currentRoute)
 export default defineComponent({
   data: () => ({
     generalStore: useGeneralStore(),
+    appState: useAppState(),
     isUpdate: false,
     isMandatoryUpdate: false,
     navigationItems: [
@@ -121,9 +127,12 @@ export default defineComponent({
         this.getPromocodes(),
         this.getSystemParameters(),
         this.getDeviceInfo(),
-        this.getHousesByCountries()
+        this.getCountries(),
+        this.getWidgets(),
+        this.getBuilders()
       ])
       await this.getArchitechtureStyles()
+      this.createViewedHousesArray()
       if (this.generalStore.deviceState.applications_houses_id) {
          await Promise.all([
            this.getApplicationHouse(),
@@ -144,12 +153,12 @@ export default defineComponent({
       const deviceId = await this.getDeviceId()
       const res = await fetch(`${this.generalStore.server}/states/${deviceId}`)
       const data = await res.json()
-      console.log(data)
       if (data === null) {
         this.createAnAccount(deviceId)
       }
       else {
         this.generalStore.deviceState = data
+        console.log(this.generalStore.deviceState)
       }
     },
     async getHouses() {
@@ -164,9 +173,11 @@ export default defineComponent({
     async getDeviceInfo() {
       const data = await Device.getInfo()
       this.generalStore.deviceInfo = data 
+      console.log(data)
       if (this.generalStore.deviceInfo.operatingSystem == 'android') {
         this.generalStore.linkToAppInStore = 'https://play.google.com/store/apps/details?id=izs.market'
       }
+
     },
     async hideStatusBar() {
       await StatusBar.hide();
@@ -208,7 +219,7 @@ export default defineComponent({
       const data = await res.json()
       this.generalStore.staff = data
     },
-    async getHousesByCountries() {
+    async getCountries() {
       const res = await fetch(`${this.generalStore.server}/country`)
       const data = await res.json()
       this.generalStore.countries = data
@@ -225,6 +236,14 @@ export default defineComponent({
       const res = await fetch(`${this.generalStore.server}/promocodes`)
       this.generalStore.allPromocodes = await res.json()
     },
+    async getWidgets() {
+      const res = await fetch(`${this.generalStore.server}/widgets`)
+      this.generalStore.widgets = await res.json()
+    },
+    async getBuilders() {
+      const res = await fetch(`${this.generalStore.server}/builders`)
+      this.generalStore.builders = await res.json() 
+    },
     getImageURL(iconName : string, goTo : string) {
       const path = new URL(
         `./assets/icons/${iconName}--${this.$route.matched.map(route => route.path).includes(goTo) ? 'violet' : 'gray'}.svg`,
@@ -238,6 +257,17 @@ export default defineComponent({
           ? this.isMandatoryUpdate = true
           : this.isUpdate = true
       }
+    },
+    createViewedHousesArray() {
+      const houses : Array<Object> = []
+      this.generalStore.deviceState.viewed_houses_id.forEach( (house_id: number) => {
+        this.generalStore.allHouses.forEach( (house : {[key: string]: any}) => {
+          if (house.id === house_id) {
+            houses.push(house)
+          }
+        })
+      })
+      this.generalStore.viewedHouses = houses.reverse()
     }
   },  
   computed: {
@@ -245,7 +275,7 @@ export default defineComponent({
       const tabbarTitles = this.navigationItems.map(item => item.title)
       const actualPath = this.$route.matched.map((item: {[key: string]: any}) => item.name)
       // console.log(actualPath)
-      const allowedRouters = ['Архитектурный набор', 'Подборка']
+      const allowedRouters = ['Архитектурный набор', 'Подборка', 'Страна', 'Застройщик']
       const restrictedRouters = ['Проверить участок', 'Построить дом', 'Спроектировать дом']
       for (let title of tabbarTitles) {
         for (let item of actualPath) {
@@ -283,7 +313,13 @@ export default defineComponent({
     IonApp,
     ErrorNotification,
     UpdateNotification,
-    RequiredUpdateNotification
+    RequiredUpdateNotification,
+    BottomPopup,
+    HelpContacts,
+    CenterPopup,
+    AddUsToProjectPopups: AddUsToProject,
+    RegionChoosing,
+    ServiceApplication,
   }
 })
 </script>

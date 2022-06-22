@@ -14,8 +14,9 @@
       :src="generalStore.getImageURL(iconPath)"
     />
     <div 
+      v-if="set"
       class="s-card__details-btn"
-      @click="() => {$router.push(goTo)}"
+      @click="$emit('goToSetPage', set.id)"
     >Подробнее</div>
   </div>
 </template>
@@ -33,7 +34,8 @@ export default defineComponent({
     'quantity',
     'iconPath',
     'goTo',
-    'backgroundImagePath'
+    'backgroundImagePath',
+    'set',
   ],
   data: () => ({
     generalStore: useGeneralStore(),
@@ -56,13 +58,23 @@ export default defineComponent({
   font-size: 16px;
   line-height: 120%;
   color: #F9F9F9;
-  font-stretch: 151;
-  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
+  margin-bottom: 121px;
 }
 .s-card__description {
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 120%;
+  color: #F9F9F9;
 }
 .s-card__icon {
-  margin-bottom: 27px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+.s-card__quantity {
+  font-weight: 750;
+  font-size: 10px;
+  line-height: 120%;
+  color: #F9F9F9;
 }
 .s-card__details-btn {
   height: 40px;

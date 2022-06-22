@@ -1,5 +1,8 @@
 <template>
-  <div class="favourites-btn">
+  <div 
+    class="favourites-btn"
+    @click="$router.push('/catalog/favourites')"
+  >
     <div class="favourites-btn__quantity-circle-wrapper">
       <div 
         class="favourites-btn__quantity-circle"

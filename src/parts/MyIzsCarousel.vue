@@ -1,82 +1,72 @@
 <template>
-  <div class="home-section__carousel">
-    <Flicking :options="{
-      align: {camera: '20', panel: '0'}, 
-      bound: false, 
-      threshold: 0
-    }">
+  <div class="carousel">
+    <div 
+      class="card"
+      v-for="card in pages"
+      :key="card.title"
+    >
       <div 
-        class="my-izs__card my-izs__card--my-state"
+        class="card__body"
+        :style="{
+          backgroundImage: `url(./src/assets/features-cards/${card.imageName}.svg)`,
+          justifyContent: card.textPosition
+        }"
       >
-        <div></div>
-        <img src="" alt=""> 
-        <div>
-          <div>
-            <div>Genius</div>
-            <!-- <img src="@/assets/default-man-1.png" alt=""> -->
-          </div>
-          <div>Начать стройку можно с участком или без него</div>
-        </div>
+        <div class="card__title">{{card.title}}</div>
+        <div class="card__text">{{card.text}}</div>
+      </div>
+      <div class="card__footer">
         <div 
-          class="my-izs__button"
+          class="card__go-to-btn"
+          @click="$router.push(card.goTo)"
         >Подробнее</div>
       </div>
-      <div class="my-izs__card my-izs__card--construction">
-        <div>
-          <div>Стройка</div>
-          <div>Ваша стройка еще не началась</div>
-          <!-- <img src="" alt="">  -->
-        </div>
+    </div>
+    <div class="card izs-index">
+      <div class="card__body">
+        <div class="card__title">ИЖС Индекс</div>
+        <div class="card__text card__text--gray">Это как Dow Jones, только для строительных материалов</div>
+
         <div 
-          class="my-izs__button"
-        >Подробнее</div>
-      </div> 
-      <div class="my-izs__card my-izs__card--landscape">
-        <div>
-          <div>Landscape</div>
-          <div>Ваша стройка еще не началась</div>
-        </div>
-        <div 
-          class="my-izs__button"
-          @click="() => {$router.push('/landscape')}"
-        >Подробнее</div>
-      </div> 
-      <div class="my-izs__card my-izs__card--izs-index">
-        <div>
-          <div>ИЖС Индекс</div>
-          <div>Это как Dow <br/> Jones, только для <br/> строительных <br/> материалов</div>
-        </div>
-        <div>
-          <div>
-            <div>
-              <div>1234</div>
-              <div>пунктов <br/> сейчас</div>
-            </div>
-            <div>
-              <div>1700</div>
-              <div>было в пике</div>
-            </div>
-          </div>
-          <div class="bar">
-            <div class="bar__max-value"></div>
-            <div class="bar__current-value"></div>
+          class="izs-index__statistics statistics"
+          v-if="izsIndex"
+        >
+          <div class="statistics__current-value">{{izsIndex.current}}</div>
+          <div class="statistics__current-value-subtitle">пунктов сейчас</div>
+          <div class="statistics__max-value">{{izsIndex.max}}</div>
+          <div class="statistics__max-value-subtitle">было в пике</div>
+          <div class="statistics__bar bar">
+            <div 
+              class="bar__max-value"
+              :style="{height: `${100 - izsIndex.current * 100 / izsIndex.max}%`}"
+            ></div>
+            <div 
+              class="bar__current-value"
+              :style="{height: `${izsIndex.current * 100 / izsIndex.max}%`}"
+            ></div>
           </div>
         </div>
       </div>
-      <div class="my-izs__card my-izs__card--cheating">
-        <div>
-          <div>Где тебя обманут</div>
-          <div>Застройщик <br/> попросит <br/> предоплату за <br/> домокомплект, а <br/> привезет сырые <br/> доски, но деньги <br/> уже заплачены</div>
-        </div>
-        <div>
-          <div>Посмотрите <br/> на другие <br/> стройки у <br/> застройщика</div>
-          <img src="@/assets/temporary/check-mark.svg"/>
-        </div>
-      </div> 
-      <div class="settings-card">
-        <img src="@/assets/icons/gear.svg">
+    </div>
+    <div class="card server-card">
+      <div class="card__body">
+        <div class="card__title">Где тебя обманут</div>
+        <div class="card__text card__text--gray">Застройщик попросит предоплату за домокомплект, а привезёт сырые доски, но деньги уже заплачены</div>
       </div>
-    </Flicking>
+      <div class="card__footer">
+        <div class="card__solution">Посмотрите на другие стройки у застройщика</div>
+        <img 
+          class="card__check-mark"
+          src="@/assets/temporary/check-mark.svg"
+        />
+      </div>
+    </div>
+    <div class="settings">
+      <img 
+        class="settings__icon"
+        src="@/assets/icons/gear.svg"
+      />
+    </div>
   </div>
 </template>
 
@@ -89,8 +79,38 @@ import "@egjs/vue3-flicking/dist/flicking.css";
 export default defineComponent({
   data: () => ({
     generalStore: useGeneralStore(),
+    pages: [
+      {
+        imageName: 'genius-card',
+        title: 'Genius',
+        text: 'Начать стройку можно с участком или без него',
+        textPosition: 'flex-end',
+        goTo: '/menu/my-state'
+      },
+      {
+        imageName: 'construction',
+        title: 'Стройка',
+        text: 'Ваша стройка ещё не началась',
+        textPosition: 'flex-start',
+        goTo: '/my-project'
+      },
+      {
+        imageName: 'landscape',
+        title: 'Landscape',
+        text: 'Ваша стройка ещё не началась',
+        textPosition: 'flex-start',
+        goTo: '/landscape'
+      }
+    ]
   }),
-
+  computed: {
+    izsIndex() {
+      if (this.generalStore.widgets.filter(widget => widget.id === 4).length !== 0) {
+        return this.generalStore.widgets.filter(widget => widget.id === 4)[0].values
+      }
+      return false
+    }
+  },
   components: {
     Flicking,
   }
@@ -99,158 +119,93 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.my-izs__card {
-  height: 322px;
-  width: 182px;
-  border-radius: 16px;
-  box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.12);
-  padding: 20px;
-  margin-right: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.my-izs__card:first-child {
-  margin-left: 20px;
-}
-.my-izs__button {
-  width: 100%;
-  height: 40px;
-  background: var(--white-text);
-  border-radius: 20px;
+.carousel {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
   display: grid;
+  grid-template-columns: repeat(6, min-content);
+  gap: 16px;
+  overflow-x: auto;
   align-items: center;
-  justify-content: center;
-  font-weight: 750;
-  font-size: 12px;
-  line-height: 120%;
-  color: #090909;
-  font-stretch: 151;
 }
-.my-izs__card--my-state {
-  background: #090909 url('@/assets/features-cards/genius-card.svg')  no-repeat;
+.card {
+  width: 189px;
+  height: 322px;
+  background: #2D2D2D;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.card__body {
+  height: 238px;
+  padding: 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: var(--white-text);
-}
-.my-izs__card--my-state div:nth-child(1) {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 120%;
-}
-.my-izs__card--my-state div:nth-child(2) {
-  margin-bottom: 24px;
-}
-.my-izs__card--my-state div:nth-child(2) div:nth-child(1) {
-  font-family: 'Roboto Flex';
-  font-style: normal;
-  font-weight: 750;
-  font-size: 20px;
-  line-height: 120%;
-}
-.my-izs__card--my-state div:nth-child(2) div:nth-child(1) {
-  font-weight: 750;
-  font-size: 12px;
-  line-height: 120%;
   color: #F9F9F9;
+  flex-direction: column;
+  background-position: center;
+  background-size: cover;
 }
-.my-izs__card--my-state > div:nth-child(3) > div:nth-child(1) {
+.card__title, .card__footer, .card__go-to-btn {
+  font-weight: 750;
+  line-height: 120%;
+}
+.card__title {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.card__text {
+  font-size: 12px;
+}
+.card__text--gray {
+  color: #E0E0E0;
+}
+.card__footer {
+  height: calc(322px - 238px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card__go-to-btn {
+  width: 149px;
+  height: 40px;
+  background: #F9F9F9;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.izs-index .card__body {
+  height: 322px;
+  background-image: url('@/assets/features-cards/izs-index.svg');
+}
+.izs-index .card__footer {
+  display: none;
+}
+.izs-index__statistics {
+  margin-top: auto;
+}
+.statistics {
   display: grid;
   grid-template-columns: auto min-content;
-  margin-bottom: 8px;
-  align-items: center;
+  grid-template-rows: repeat(4, min-content);
 }
-.my-izs__card--my-state > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 120%;
-}
-.my-izs__card--my-state > div:nth-child(3) > div:nth-child(1) > img {
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-}
-.my-izs__card--my-state div:nth-child(3) div:nth-child(2) {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 120%;
-  color: var(--lightgray-text);
-}
-.my-izs__card--construction {
-  background: url('@/assets/features-cards/construction.svg') no-repeat right bottom;
-} 
-.my-izs__card--landscape {
-  background: url('@/assets/features-cards/landscape.svg') no-repeat bottom;
-}
-.my-izs__card--construction, .my-izs__card--landscape {
-  background-color: #787878;
-}
-.my-izs__card--construction > div:nth-child(1),
-.my-izs__card--landscape >  div:nth-child(1) {
-  display: flex;
-  flex-direction: column;
-}
-.my-izs__card--construction > div:nth-child(1) > div:nth-child(1), 
-.my-izs__card--landscape > div:nth-child(1) > div:nth-child(1) {
+.statistics__max-value, .statistics__current-value {
   font-weight: 750;
   font-size: 20px;
   line-height: 120%;
-  color: #F9F9F9;
-  margin-bottom: 8px;
 }
-.my-izs__card--construction div:nth-child(1) div:nth-child(2), 
-.my-izs__card--landscape div:nth-child(1) div:nth-child(2) {
-  font-weight: 750;
+.statistics__max-value-subtitle, .statistics__current-value-subtitle {
+  color: #E0E0E0;
+}
+.statistics__current-value-subtitle {
   font-size: 12px;
-  line-height: 120%;
-  color: #F9F9F9;
-  font-stretch: 151;
-  margin-bottom: 34px;
 }
-.my-izs__card--construction div:nth-child(1) img, 
-.my-izs__card--landscape div:nth-child(1) img {
-  align-self: center;
-  height: 94px;
-  width: 94px;
+.statistics__max-value-subtitle {
+  font-size: 10px;
 }
-/* ----------- */
-.my-izs__card--izs-index {
-  background: #121212;
-}
-.my-izs__card--izs-index > div:nth-child(1) > div:nth-child(1) {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 120%;
-  color: var(--white-text);
-  margin-bottom: 8px;
-}
-.my-izs__card--izs-index > div:nth-child(1) > div:nth-child(2) {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 125%;
-  color: var(--lightgray-text)
-} 
-.my-izs__card--izs-index > div:nth-child(2) {
-  display: grid;
-  grid-template-columns: auto 20px;
-}
-.my-izs__card--izs-index > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
-  margin-bottom: 16px;
-}
-.my-izs__card--izs-index > div:nth-child(2) > div:nth-child(1) > div > div:nth-child(1) {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 120%;
-  color: var(--white-text);
-  margin-bottom: 4px;
-}
-.my-izs__card--izs-index > div:nth-child(2) > div:nth-child(1) > div > div:nth-child(2) {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 120%;
-  color: var(--lightgray-text);
+.statistics__bar {
+  grid-column: 2 / 3;
+  grid-row: 1 / -1;
 }
 .bar {
   width: 20px;
@@ -263,47 +218,36 @@ export default defineComponent({
 .bar__max-value {
   width: 100%;
   background: #5337FF;
-  height: 20%;
 }
 .bar__current-value {
   width: 100%;
-  height: 80%;
   background: #883FFF;
   border-top: 1px solid #121212;
 }
-.my-izs__card--cheating {
-  background: #F24C00;
-  display: flex;
+.server-card .card__body {
+  height: 222px;
+  background-image: url('@/assets/features-cards/cheating.svg');
 }
-.my-izs__card--cheating > div:nth-child(1) > div:nth-child(1) {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 120%;
-  color: var(--white-text);
-  margin-bottom: 8px;
-}
-.my-izs__card--cheating > div:nth-child(1) > div:nth-child(2) {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 125%;
-  color: var(--lightgray-text);
-}
-.my-izs__card--cheating > div:nth-child(2) {
+.server-card .card__footer {
+  padding: 20px;
+  height: calc(322px - 222px);
   display: grid;
-  grid-template-columns: auto 24px;
+  grid-template-columns: auto 32px;
   align-items: center;
-  font-weight: 500;
+  gap: 12px;
+  font-weight: 750;
   font-size: 12px;
-  line-height: 125%;
-  color: var(--lightgray-text);
+  line-height: 120%;
+  color: #F9F9F9;
 }
-.settings-card {
-  width: 96px;
-  height: 322px;
-  border: 1px solid rgba(9, 9, 9, 0.3);
-  border-radius: 18px;
+.settings {
+  width: 46px;
+  height: 32px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 32px;
 }
 </style>

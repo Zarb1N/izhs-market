@@ -54,7 +54,7 @@ const routes = [
       {
         path: 'architecture-set/:setId',
         name: 'Архитектурный набор',
-        component: () => import('../views/catalog/ArchitectureSet.vue')
+        component: () => import('../views/catalog/CatalogArchitectureSet.vue')
       },
       {
         path: 'custom-set/:setId',
@@ -65,7 +65,22 @@ const routes = [
         path: 'favourites',
         name: 'Избранное',
         component: () => import('../views/catalog/Favourites.vue')
-      }
+      },
+      {
+        path: 'countries-set/:countryId',
+        name: 'Страна',
+        component: () => import('../views/catalog/CountriesSet.vue')
+      },
+      {
+        path: 'builders-set/:builderId',
+        name: 'Застройщик',
+        component: () => import('../views/catalog/BuildersSet.vue')
+      },
+      {
+        path: 'without-price',
+        name: 'Застройщик',
+        component: () => import('../views/catalog/WithoutPrice.vue')
+      },
     ]
   },
   {

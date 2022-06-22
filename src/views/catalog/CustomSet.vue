@@ -3,7 +3,7 @@
     <div class="set__header">
       <div 
         class="set__back-btn"
-        @click="() => {$router.push('/catalog')}"
+        @click="() => {$router.go(-1)}"
       >
         <img :src="generalStore.getImageURL('icons/back-arrow.svg')">
         <div>Каталог</div>
@@ -23,6 +23,7 @@
             @goToHouse="generalStore.houseInfo = house; $router.push(`/house/${house.id}/overview?subpage=prices`)"
             @openContextMenu="(event) => openContextMenu(event, house.id)"
             :cardBudge="generalStore.filters.compilations.filter(set => set.id == $route.params.setId)[0].budge_card"
+            style="width: 160px"
           />
         </div>
       </div>
@@ -101,6 +102,7 @@ export default defineComponent({
 <style scoped>
 .set {
   width: 100%;
+  margin-bottom: 100px;
 }
 .set__back-btn {
   display: grid;
@@ -142,7 +144,7 @@ export default defineComponent({
 .set__houses {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 167px);
+  grid-template-columns: repeat(2, 160px);
   gap: 14px;
 }
 .set__house {

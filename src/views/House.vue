@@ -79,11 +79,27 @@ export default defineComponent({
          }
       }) 
     },
+    async markHouseAsViewed(houseId: number) {
+      if (this.generalStore.deviceState.viewed_houses_id.indexOf(houseId) !== -1) {
+        this.generalStore.deviceState.viewed_houses_id = this.generalStore.deviceState.viewed_houses_id.filter( (house_id : number) => house_id !== houseId)
+      }
+      this.generalStore.deviceState.viewed_houses_id.push(houseId)
+      const res = await fetch(`${this.generalStore.server}/states/${this.generalStore.deviceId}`, {
+        method: 'PATCH',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          device_id: this.generalStore.deviceId,
+          viewed_houses_id: this.generalStore.deviceState.viewed_houses_id
+        })
+      })
+      const data = await res.json()
+    }
   },
   computed: {
   },
   mounted() {
     this.combineHouseAndBuildersInfo(this.$route.params.id.toString())
+    this.markHouseAsViewed(Number(this.$route.params.id))
   },
   created() {
   },

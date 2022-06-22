@@ -60,7 +60,7 @@ export default defineComponent({
     padding: 8px 14px;
     background: rgba(106, 106, 106, 0.16);
     backdrop-filter: blur(44px);
-    border-radius: 18px 18px 0px 0px;
+    border-radius: 24px 24px 18px 18px;
     height: 36px;
     display: flex;
     align-items: center;
