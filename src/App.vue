@@ -275,7 +275,7 @@ export default defineComponent({
       const tabbarTitles = this.navigationItems.map(item => item.title)
       const actualPath = this.$route.matched.map((item: {[key: string]: any}) => item.name)
       // console.log(actualPath)
-      const allowedRouters = ['Архитектурный набор', 'Подборка', 'Страна']
+      const allowedRouters = ['Архитектурный набор', 'Подборка', 'Страна', 'Застройщик']
       const restrictedRouters = ['Проверить участок', 'Построить дом', 'Спроектировать дом']
       for (let title of tabbarTitles) {
         for (let item of actualPath) {

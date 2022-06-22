@@ -222,7 +222,7 @@
               :title="set.name"
               :quantity="set.builders_count"
               description="Двустрочное <br/> описание"
-              @goToSetPage="(countryId) => {$router.push(`/catalog/countries-set/${countryId}`)}"
+              @goToSetPage="(countryId) => {$router.push(`/catalog/builders-set/${countryId}`)}"
               :set="set"
               v-show="set.builders_count"
             />

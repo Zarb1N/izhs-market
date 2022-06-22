@@ -70,7 +70,12 @@ const routes = [
         path: 'countries-set/:countryId',
         name: 'Страна',
         component: () => import('../views/catalog/CountriesSet.vue')
-      }
+      },
+      {
+        path: 'builders-set/:builderId',
+        name: 'Застройщик',
+        component: () => import('../views/catalog/BuildersSet.vue')
+      },
     ]
   },
   {
