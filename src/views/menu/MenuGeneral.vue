@@ -22,12 +22,8 @@
         </div>
       </div>
       <div class="menu__buttons">
-        <MenuButton
-          v-for="(btn, index) in buttons"
-          :key="index"
-          :data="btn"
-          @click="() => {$router.push(`/menu/${btn.goTo}`)}"
-        />
+        <MenuButton v-for="(btn, index) in buttons" :key="index" :data="btn"
+          @click="() => { $router.push(`/menu/${btn.goTo}`) }" />
       </div>
     </div>
   </IonContent>
@@ -45,7 +41,7 @@ interface IButton {
   goTo: string
 }
 
-defineProps<{buttons: IButton[]}>()
+defineProps<{ buttons: IButton[] }>()
 
 const store = useStore()
 
@@ -59,15 +55,14 @@ onMounted(async () => {
 
 <style scoped>
 .menu__title {
-  font-family: Roboto Flex;
   font-size: 26px;
   font-weight: 750;
   line-height: 31px;
   letter-spacing: 0px;
   color: #F9F9F9;
-  font-stretch: 151%;
   font-variation-settings: 'wdth' 151, 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
+
 .menu__genius-state {
   position: absolute;
   bottom: 60px;
@@ -77,18 +72,22 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
 }
+
 .menu__user-info {
   height: 100%;
   background: linear-gradient(178.93deg, rgba(9, 9, 9, 0.35) 0.92%, rgba(9, 9, 9, 0.3) 0.92%, rgba(9, 9, 9, 0.1) 99.08%);
   position: relative;
 }
+
 .menu__background {
   height: 100%;
 }
+
 .menu__general {
   display: grid;
   grid-template-rows: minmax(120px, 400px) auto;
 }
+
 .menu__profile {
   position: fixed;
   height: 400px;
@@ -98,6 +97,7 @@ onMounted(async () => {
   top: 0;
   left: 0;
 }
+
 .menu__buttons {
   position: relative;
   margin-top: -24px;
