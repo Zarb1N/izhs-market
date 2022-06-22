@@ -103,7 +103,57 @@
             Воспользуйтесь сервисами с кэшбеком до 100% 
           </div>
           <ServicesCarousel/>
-          <div class="home-section__button"></div>
+        </div>
+
+        <div 
+          class="home__section home-section"
+          v-if="generalStore.viewedHouses.length"
+        >
+          <div class="home-section__header">
+            <div class="home-section__title">Вы смотрели</div>
+            <div class="home-section__header-slot"></div>
+          </div>
+          <div class="home-section__description">
+            Найдите проект в истории просмотров
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="house in generalStore.viewedHouses"
+              :key="house.id"
+              :data="house"
+              :cardBudge="weekProjects.budge_card"
+              style="width: 189px"
+              @goToHouse="$router.push(`/house/${house.id}/overview`)"
+            /> 
+          </div>
+        </div>
+
+        <div class="home__section home-section">
+          <div class="home-section__header">
+            <div class="home-section__title">Подборки </div>
+          </div>
+          <div 
+            class="home-section__description"
+            style="display: flex; justify-content: space-between; align-items: flex-start;"
+          >
+            <div>
+              Обновляет и курирует архитектор Екатерина Шувалова
+            </div>
+            <img 
+              class="home-section__person-image"
+              src="@/assets/default-woman-3.png"
+            />
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <SetSmallCard
+              class="home-section__set-preview-small"
+              v-for="set in generalStore.filters.compilations"
+              :key="set.id"
+              v-show="!set.preview_main && set.name !== 'Проекты недели'"
+              :set="set"
+              @openSetPage="(setId) => {$router.push(`/catalog/custom-set/${setId}`)}"
+            />
+          </div>
         </div>
 
         <div 
@@ -167,49 +217,6 @@
           </Flicking>
         </div>
 
-        <div class="home__section home-section">
-          <div class="home-section__header">
-            <div class="home-section__title">Подборки </div>
-          </div>
-          <div 
-            class="home-section__description"
-            style="display: flex; justify-content: space-between; align-items: flex-start;"
-          >
-            <div>
-              Обновляет и курирует архитектор Екатерина Шувалова
-            </div>
-            <img 
-              class="home-section__person-image"
-              src="@/assets/default-woman-3.png"
-            />
-          </div>
-          <Flicking 
-            class="home-section__houses-carousel"
-            :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
-              threshold: 0
-            }"
-          >
-            <div
-              class="home-section__set-preview-small"
-              v-for="set in generalStore.filters.compilations"
-              :key="set.id"
-              :style="{
-                width: '189px',
-                backgroundImage: `url(${set.image && set.image.url})`,
-                height: '276px',
-                marginRight: '16px',
-                borderRadius: '18px'
-              }"
-              v-show="!set.preview_main"
-            >
-              {{set.name}}
-              {{set.count_houses}}
-            </div>
-          </Flicking>
-        </div>
-
       </div>
     </IonContent>
   </IonPage>
@@ -237,6 +244,7 @@ import BottomPopup from '@/components/BottomPopup.vue'
 import { useAppState } from '@/stores/appState'
 import LandscapeCarousel from '@/parts/LandscapeCarousel.vue'
 import ServicesCarousel from '@/parts/ServicesCarousel.vue'
+import SetSmallCard from '@/components/SetSmallCard.vue'
 
 declare interface IHouse {
   readonly id : string | number
@@ -337,6 +345,7 @@ export default defineComponent({
     BottomPopup,
     LandscapeCarousel,
     ServicesCarousel,
+    SetSmallCard,
   }
 })
 </script>

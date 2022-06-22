@@ -23,6 +23,7 @@
             @goToHouse="generalStore.houseInfo = house; $router.push(`/house/${house.id}/overview?subpage=prices`)"
             @openContextMenu="(event) => openContextMenu(event, house.id)"
             :cardBudge="generalStore.filters.compilations.filter(set => set.id == $route.params.setId)[0].budge_card"
+            style="width: 160px"
           />
         </div>
       </div>
@@ -143,7 +144,7 @@ export default defineComponent({
 .set__houses {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 167px);
+  grid-template-columns: repeat(2, 160px);
   gap: 14px;
 }
 .set__house {

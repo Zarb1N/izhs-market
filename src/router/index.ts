@@ -54,7 +54,7 @@ const routes = [
       {
         path: 'architecture-set/:setId',
         name: 'Архитектурный набор',
-        component: () => import('../views/catalog/ArchitectureSet.vue')
+        component: () => import('../views/catalog/CatalogArchitectureSet.vue')
       },
       {
         path: 'custom-set/:setId',

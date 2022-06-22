@@ -131,6 +131,7 @@ export default defineComponent({
         this.getWidgets()
       ])
       await this.getArchitechtureStyles()
+      this.createViewedHousesArray()
       if (this.generalStore.deviceState.applications_houses_id) {
          await Promise.all([
            this.getApplicationHouse(),
@@ -156,6 +157,7 @@ export default defineComponent({
       }
       else {
         this.generalStore.deviceState = data
+        console.log(this.generalStore.deviceState)
       }
     },
     async getHouses() {
@@ -250,6 +252,17 @@ export default defineComponent({
           ? this.isMandatoryUpdate = true
           : this.isUpdate = true
       }
+    },
+    createViewedHousesArray() {
+      const houses : Array<Object> = []
+      this.generalStore.deviceState.viewed_houses_id.forEach( (house_id: number) => {
+        this.generalStore.allHouses.forEach( (house : {[key: string]: any}) => {
+          if (house.id === house_id) {
+            houses.push(house)
+          }
+        })
+      })
+      this.generalStore.viewedHouses = houses.reverse()
     }
   },  
   computed: {

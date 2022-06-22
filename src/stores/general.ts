@@ -22,7 +22,8 @@ export const useGeneralStore : any = defineStore({
       stories_id: Array<number>,
       promocodes_id: Array<number>,
       favourites_houses_id: Array<number>,
-      genius_number: string
+      genius_number: string,
+      viewed_houses_id: Array<number>,
     },
     housePreviewContextActions: [
       {
@@ -67,7 +68,8 @@ export const useGeneralStore : any = defineStore({
     services: [],
     servicesGroups: [],
     countries: [],
-    widgets: []
+    widgets: [],
+    viewedHouses: [],
   }),
   actions: {
     formatNumber: (val: number, decimalsNumber = 0) => {
