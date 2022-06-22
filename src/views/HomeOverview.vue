@@ -229,6 +229,32 @@
           </div>
         </div>
 
+        <div class="home__section home-section">
+          <div class="home-section__header">
+            <div class="home-section__title">Свежайшие без цен</div>
+            <div class="home-section__header-slot"></div>
+          </div>
+          <div class="home-section__description">
+            Оставьте заявку и получите цены от двух застройщиков с высоким рейтингом
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <Product
+              v-for="
+                house in generalStore.allHouses
+                  .filter( (house) => house.price_history
+                    .reduce( (acc, curr) => acc.price + curr.price) === 0)
+                  .slice(0,6)"
+              :key="house.id"
+              :data="house"
+              style="width: 189px"
+            />
+          </div>
+          <div 
+            class="home-section__button"
+            @click="(event) => {$router.push(`/catalog/without-price`)}"
+          >Просмотреть подборку</div>
+        </div>
+
       </div>
     </IonContent>
   </IonPage>

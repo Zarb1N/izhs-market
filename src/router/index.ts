@@ -76,6 +76,11 @@ const routes = [
         name: 'Застройщик',
         component: () => import('../views/catalog/BuildersSet.vue')
       },
+      {
+        path: 'without-price',
+        name: 'Застройщик',
+        component: () => import('../views/catalog/WithoutPrice.vue')
+      },
     ]
   },
   {
