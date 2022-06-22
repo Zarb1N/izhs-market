@@ -29,6 +29,7 @@
           </div>
         </div>
       </div>
+      <!--
       <ContextMenu
         tabindex="0"
         ref="contextMenu"
@@ -46,6 +47,7 @@
         @blur="isContextMenu = false"
         @close="isContextMenu = false"
       />
+      -->
     </div>
   </IonContent>
 </template>

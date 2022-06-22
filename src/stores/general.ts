@@ -70,6 +70,7 @@ export const useGeneralStore : any = defineStore({
     countries: [],
     widgets: [],
     viewedHouses: [],
+    builders: [],
   }),
   actions: {
     formatNumber: (val: number, decimalsNumber = 0) => {

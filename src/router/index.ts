@@ -65,6 +65,11 @@ const routes = [
         path: 'favourites',
         name: 'Избранное',
         component: () => import('../views/catalog/Favourites.vue')
+      },
+      {
+        path: 'countries-set/:countryId',
+        name: 'Страна',
+        component: () => import('../views/catalog/CountriesSet.vue')
       }
     ]
   },

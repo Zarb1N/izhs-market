@@ -167,23 +167,15 @@
             <div class="home-section__header-slot">{{set.count_houses}}</div>
           </div>
           <div class="home-section__description">{{set.budge}}</div>
-          <Flicking 
-            class="home-section__houses-carousel"
-            :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
-              threshold: 0
-            }"
-          >
+          <div class="home-section__horizontal-scroll">
             <Product
-              class="home-section__houses-carousel-item"
               v-for="house in set.houses_in_sets.slice(0,6)"
               :key="house.id"
               :data="house"
               :cardBudge="set.budge_card"
               style="width: 200px"
             />
-          </Flicking>
+          </div>
           <div 
             class="home-section__button"
             @click="(event) => {$router.push(`/catalog/custom-set/${set.id}`)}"
@@ -198,23 +190,43 @@
           <div class="home-section__description">
             Приобщайтесь к работам архитекторов со всего мира
           </div>
-          <Flicking 
-            class="home-section__houses-carousel"
-            :options="{
-              align: {camera: '20', panel: '0'}, 
-              bound: false, 
-              threshold: 0
-            }"
-          >
+          <div class="home-section__horizontal-scroll">
             <SetCard
-              class="home-section__houses-carousel-item"
               v-for="set in generalStore.countries"
               :key="set.id"
               style="width: 200px"
               :backgroundImagePath="set.image && set.image.url"
               :title="set.name"
+              :quantity="set.country_count"
+              description="Двустрочное <br/> описание"
+              @goToSetPage="(countryId) => {$router.push(`/catalog/countries-set/${countryId}`)}"
+              :set="set"
             />
-          </Flicking>
+          </div>
+        </div>
+
+        <div class="home__section home-section">
+          <div class="home-section__header">
+            <div class="home-section__title">По застройщикам</div>
+            <div class="home-section__header-slot"></div>
+          </div>
+          <div class="home-section__description">
+            Найти проект дома по застройщикам
+          </div>
+          <div class="home-section__horizontal-scroll">
+            <SetCard
+              v-for="set in generalStore.builders"
+              :key="set.id"
+              style="width: 200px"
+              :backgroundImagePath="set.image && set.image.url"
+              :title="set.name"
+              :quantity="set.builders_count"
+              description="Двустрочное <br/> описание"
+              @goToSetPage="(countryId) => {$router.push(`/catalog/countries-set/${countryId}`)}"
+              :set="set"
+              v-show="set.builders_count"
+            />
+          </div>
         </div>
 
       </div>

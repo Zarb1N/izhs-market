@@ -127,8 +127,9 @@ export default defineComponent({
         this.getPromocodes(),
         this.getSystemParameters(),
         this.getDeviceInfo(),
-        this.getHousesByCountries(),
-        this.getWidgets()
+        this.getCountries(),
+        this.getWidgets(),
+        this.getBuilders()
       ])
       await this.getArchitechtureStyles()
       this.createViewedHousesArray()
@@ -218,7 +219,7 @@ export default defineComponent({
       const data = await res.json()
       this.generalStore.staff = data
     },
-    async getHousesByCountries() {
+    async getCountries() {
       const res = await fetch(`${this.generalStore.server}/country`)
       const data = await res.json()
       this.generalStore.countries = data
@@ -238,6 +239,10 @@ export default defineComponent({
     async getWidgets() {
       const res = await fetch(`${this.generalStore.server}/widgets`)
       this.generalStore.widgets = await res.json()
+    },
+    async getBuilders() {
+      const res = await fetch(`${this.generalStore.server}/builders`)
+      this.generalStore.builders = await res.json() 
     },
     getImageURL(iconName : string, goTo : string) {
       const path = new URL(
@@ -270,7 +275,7 @@ export default defineComponent({
       const tabbarTitles = this.navigationItems.map(item => item.title)
       const actualPath = this.$route.matched.map((item: {[key: string]: any}) => item.name)
       // console.log(actualPath)
-      const allowedRouters = ['Архитектурный набор', 'Подборка']
+      const allowedRouters = ['Архитектурный набор', 'Подборка', 'Страна']
       const restrictedRouters = ['Проверить участок', 'Построить дом', 'Спроектировать дом']
       for (let title of tabbarTitles) {
         for (let item of actualPath) {
