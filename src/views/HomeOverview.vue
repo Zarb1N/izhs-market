@@ -102,6 +102,7 @@
           <div class="home-section__description">
             Воспользуйтесь сервисами с кэшбеком до 100% 
           </div>
+          <ServicesCarousel/>
           <div class="home-section__button"></div>
         </div>
 
@@ -235,6 +236,7 @@ import SetCard from '@/components/SetCard.vue'
 import BottomPopup from '@/components/BottomPopup.vue'
 import { useAppState } from '@/stores/appState'
 import LandscapeCarousel from '@/parts/LandscapeCarousel.vue'
+import ServicesCarousel from '@/parts/ServicesCarousel.vue'
 
 declare interface IHouse {
   readonly id : string | number
@@ -333,7 +335,8 @@ export default defineComponent({
     GeniusCarousel,
     SetCard,
     BottomPopup,
-    LandscapeCarousel
+    LandscapeCarousel,
+    ServicesCarousel,
   }
 })
 </script>

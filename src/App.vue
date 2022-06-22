@@ -23,27 +23,12 @@
         :isActive="appState.isRegionChoosing"
         @close="appState.isRegionChoosing = false"
       /> 
+      <ServiceApplication
+        :isActive="appState.isServiceApplicationPopup"
+        @close="appState.isServiceApplicationPopup = false"
+      />
       <IonTabs>
         <IonRouterOutlet/> 
-
-        <!--<IonTabBar slot="bottom">
-          <IonTabButton
-            class="tabbar__item"
-            v-for="(item) in navigationItems"
-            :key="item.goTo"
-            :class="$route.matched.map(route => route.name).includes(item.title) ? 'tabbar__item--choosed' : 'tabbar__item--unchoosed'"
-            :href="item.goTo"
-            :tab="item.title"
-          >
-            <img 
-              class="tabbar__item-icon"
-              :src="getImageURL(item.iconName, item.goTo)"
-            /> 
-            <IonLabel class="tabbar__item-name">{{item.title}}</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-        -->
-
         <Tabbar
           id="app__tabbar"
           :items="navigationItems"
@@ -88,6 +73,7 @@ import HelpContacts from '@/components/HelpContacts.vue'
 import CenterPopup from '@/components/CenterPopup.vue'
 import AddUsToProject from '@/parts/AddUsToProject.vue'
 import RegionChoosing from '@/parts/RegionChoosing.vue'
+import ServiceApplication from '@/parts/ServiceApplication.vue'
 
 
 App.addListener('backButton', () => {
@@ -315,6 +301,7 @@ export default defineComponent({
     CenterPopup,
     AddUsToProjectPopups: AddUsToProject,
     RegionChoosing,
+    ServiceApplication,
   }
 })
 </script>
