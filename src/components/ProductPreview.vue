@@ -29,10 +29,28 @@
       class="product__bottom"
       @click="$emit('goToHouse')"
     >
-      <div class="product__builders"></div>
-      <img class="product__country"/>
+      <div class="product__country-and-builders">
+        <div class="product__builders">
+          <div
+            class="product__builder"
+            v-for="id in buildersIds"
+            :key="id"
+            :style="{zIndex: buildersIds.length - buildersIds.indexOf(id)}"
+            v-show="generalStore.builders.filter(builder => builder.id === id).length"
+          >
+            <img 
+              :src="generalStore.builders.filter(builder => builder.id === id)[0].image.url"
+              v-if="generalStore.builders.filter(builder => builder.id === id).length"
+            />
+          </div>
+        </div>
+        <img class="product__country"/>
+      </div>
       <div class="product__area">{{data.square}} м<sup>2</sup></div>
-      <div class="product__price">{{priceRange[0]}}-{{priceRange[1]}} млн ₽</div>
+      <div 
+        class="product__price"
+        v-show="priceRange.reduce( (acc, item) => Number(acc.replace(',', '.')) + Number(item.replace(',', '.')))"
+      >{{priceRange[0]}}-{{priceRange[1]}} млн ₽</div>
     </div>
   </div>
 </template>
@@ -75,7 +93,17 @@ export default defineComponent({
     images() : Array<{[key: string]: string}> {
       const images = this.data.images.map( (image: {[key: string]: string}) => image.url)
       return images
+    },
+    buildersIds() {
+      console.log(this.data)
+      const buildersIds = [] as Array<number>
+      this.data.price_history.forEach( (offer : {[key: string] : any}) => {
+        buildersIds.indexOf(offer.builders_id) === -1 && buildersIds.push(offer.builders_id)
+      })
+      return buildersIds
     }
+  },
+  mounted() {
   },
   components: {
     Flicking,
@@ -91,7 +119,8 @@ export default defineComponent({
     border-radius: 10px 10px 12px 12px;
     overflow: hidden;
     display: grid;
-    grid-template-rows: auto 54px;
+    grid-template-rows: min-content auto;
+    grid-auto-flow: column;
     box-shadow: 1px 1px 8px #DDDCDF;
     width: 100%;
     position: relative;
@@ -126,6 +155,38 @@ export default defineComponent({
   .product__favorites-btn {
     grid-column: 2 / 3;
   }
+ 
+  .product__bottom {
+    display: grid;
+    align-self: flex-end;
+    grid-template-columns: min-content auto;
+    grid-template-rows: repeat(3, min-content);
+  }
+  .product__country-and-builders {
+    display: grid;
+    grid-auto-flow: row;
+    gap: 8px;
+    margin-bottom: 19px;
+  }
+  .product__builders {
+    grid-template-columns: 14px;
+    display: grid;
+    grid-auto-flow: column;
+  }
+  .product__builder {
+    background: #F8F8F8;
+    border: 1px solid rgba(9, 9, 9, 0.08);
+    border-radius: 70px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product__builder img {
+    max-height: 12px;
+    max-width: 12px;
+  }
   .product__area, .product__price {
     font-weight: normal;
     font-size: 12px;
@@ -137,17 +198,14 @@ export default defineComponent({
     position: absolute;
     margin-top: -2px;
   }
-  .product__bottom {
-    display: grid;
-    grid-template-columns: min-content auto;
-    grid-template-rows: 24px 15px 15px;
-  }
   .product__area, .product__price {
     grid-column: 1 / 3;
     color: #F9F9F9;
     font-stretch: 151;
   }
   .product__area {
-    margin-bottom: 4px;
+  }
+  .product__price {
+    margin-top: 4px;
   }
 </style>>

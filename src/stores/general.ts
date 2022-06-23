@@ -68,7 +68,8 @@ export const useStore = defineStore({
       servicesGroups: [],
       countries: [],
       viewedHouses: [] as Array<{}>,
-      widgets: [] as Array<{}>
+      widgets: [] as Array<{}>,
+      builders: [] as Array<{}>
     };
   },
   getters: {

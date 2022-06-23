@@ -602,8 +602,8 @@ export default defineComponent({
   margin-right: -20px;
   padding: 0px 20px;
   display: grid;
-  grid-template-columns: repeat(6, min-content);
   overflow-x: auto;
+  grid-auto-flow: column;   
   gap: 16px;
 }
 </style>
