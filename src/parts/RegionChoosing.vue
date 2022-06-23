@@ -72,6 +72,7 @@ export default defineComponent({
   font-weight: normal;
   font-size: 12px;
   line-height: 15px;
+  font-weight: 750;
 }
 .region-choosing__divider {
   margin-top: 12.5px;
@@ -82,15 +83,16 @@ export default defineComponent({
 }
 
 .region-choosing__hint {
-  font-weight: 500;
+  font-weight: 750;
   font-size: 12px;
   line-height: 120%;
   color: #000000;
+  margin-bottom: 15px;
 }
 .region-choosing__unable-regions {
   display: grid;
   gap: 15px;
-  font-weight: 500;
+  font-weight: 750;
   font-size: 12px;
   line-height: 120%;
   color: #94919F;
