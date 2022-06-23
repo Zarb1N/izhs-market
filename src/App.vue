@@ -27,6 +27,11 @@
         :isActive="appState.isServiceApplicationPopup"
         @close="appState.isServiceApplicationPopup = false"
       />
+      <SelectingWidgetsPopup
+        :isActive="appState.isSelectingWidgetsPopup"
+        :data="generalStore.widgetsList"
+        @close="appState.isSelectingWidgetsPopup = false"
+      />
       <IonTabs>
         <IonRouterOutlet/> 
         <Tabbar
@@ -74,6 +79,7 @@ import CenterPopup from '@/components/CenterPopup.vue'
 import AddUsToProject from '@/parts/AddUsToProject.vue'
 import RegionChoosing from '@/parts/RegionChoosing.vue'
 import ServiceApplication from '@/parts/ServiceApplication.vue'
+import SelectingWidgetsPopup from '@/parts/SelectingWidgetsPopup.vue'
 
 
 App.addListener('backButton', () => {
@@ -319,6 +325,7 @@ export default defineComponent({
     AddUsToProjectPopups: AddUsToProject,
     RegionChoosing,
     ServiceApplication,
+    SelectingWidgetsPopup,
   }
 })
 </script>

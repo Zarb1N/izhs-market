@@ -254,8 +254,8 @@
             @click="(event) => {$router.push(`/catalog/without-price`)}"
           >Просмотреть подборку</div>
         </div>
-
       </div>
+      
     </IonContent>
   </IonPage>
 </template>
@@ -283,6 +283,8 @@ import { useAppState } from '@/stores/appState'
 import LandscapeCarousel from '@/parts/LandscapeCarousel.vue'
 import ServicesCarousel from '@/parts/ServicesCarousel.vue'
 import SetSmallCard from '@/components/SetSmallCard.vue'
+import CenterPopup from '@/components/CenterPopup.vue'
+import SelectingWidgetsPopup from '@/parts/SelectingWidgetsPopup.vue'
 
 declare interface IHouse {
   readonly id : string | number
@@ -304,6 +306,8 @@ export default defineComponent({
     isChoosingRegion: false,
     isContextMenu: false,
     clickCoordinates: {x: 0, y: 0},
+    isWdigetSelectingPopup: false,
+    
   }),
   methods: {
     async getPartnersHouses() {
@@ -383,6 +387,8 @@ export default defineComponent({
     LandscapeCarousel,
     ServicesCarousel,
     SetSmallCard,
+    CenterPopup,
+    SelectingWidgetsPopup,
   }
 })
 </script>

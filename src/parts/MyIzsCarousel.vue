@@ -4,6 +4,7 @@
       class="card"
       v-for="card in pages"
       :key="card.title"
+      v-show="generalStore.widgetsList.filter(widget => widget.id === card.id)[0].isDisplayed"
     >
       <div 
         class="card__body"
@@ -22,7 +23,11 @@
         >Подробнее</div>
       </div>
     </div>
-    <div class="card izs-index">
+
+    <div 
+      class="card izs-index"
+      v-if="generalStore.widgetsList.filter(widget => widget.id === 'izs-index')[0].isDisplayed"
+    >
       <div class="card__body">
         <div class="card__title">ИЖС Индекс</div>
         <div class="card__text card__text--gray">Это как Dow Jones, только для строительных материалов</div>
@@ -48,7 +53,11 @@
         </div>
       </div>
     </div>
-    <div class="card server-card">
+
+    <div 
+      class="card server-card"
+      v-if="generalStore.widgetsList.filter(widget => widget.id === 'cheating')[0].isDisplayed"
+    >
       <div class="card__body">
         <div class="card__title">Где тебя обманут</div>
         <div class="card__text card__text--gray">Застройщик попросит предоплату за домокомплект, а привезёт сырые доски, но деньги уже заплачены</div>
@@ -61,7 +70,10 @@
         />
       </div>
     </div>
-    <div class="settings">
+    <div 
+      class="settings"
+      @click="appState.isSelectingWidgetsPopup = true"
+    >
       <img 
         class="settings__icon"
         src="@/assets/icons/gear.svg"
@@ -75,31 +87,36 @@ import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
+import { useAppState } from "@/stores/appState";
 
 export default defineComponent({
   data: () => ({
     generalStore: useStore(),
+    appState: useAppState(),
     pages: [
       {
         imageName: 'genius-card',
         title: 'Genius',
         text: 'Начать стройку можно с участком или без него',
         textPosition: 'flex-end',
-        goTo: '/menu/my-state'
+        goTo: '/menu/my-state',
+        id: 'state'
       },
       {
         imageName: 'construction',
         title: 'Стройка',
         text: 'Ваша стройка ещё не началась',
         textPosition: 'flex-start',
-        goTo: '/my-project'
+        goTo: '/my-project',
+        id: 'building'
       },
       {
         imageName: 'landscape',
         title: 'Landscape',
         text: 'Ваша стройка ещё не началась',
         textPosition: 'flex-start',
-        goTo: '/landscape'
+        goTo: '/landscape',
+        id: 'landscape'
       }
     ]
   }),
