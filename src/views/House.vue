@@ -81,17 +81,21 @@ export default defineComponent({
     async markHouseAsViewed(houseId: number) {
       if (this.generalStore.deviceState.viewed_houses_id.indexOf(houseId) !== -1) {
         this.generalStore.deviceState.viewed_houses_id = this.generalStore.deviceState.viewed_houses_id.filter( (house_id : number) => house_id !== houseId)
+        this.generalStore.deviceState.viewed_houses_id.push(houseId)
       }
-      this.generalStore.deviceState.viewed_houses_id.push(houseId)
-      const res = await fetch(`${this.generalStore.server}/states/${this.generalStore.deviceId}`, {
-        method: 'PATCH',
-        headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({
-          device_id: this.generalStore.deviceId,
-          viewed_houses_id: this.generalStore.deviceState.viewed_houses_id
+      else {
+        this.generalStore.deviceState.viewed_houses_id.push(houseId)
+        const res = await fetch(`${this.generalStore.server}/states/${this.generalStore.deviceId}`, {
+          method: 'PATCH',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({
+            device_id: this.generalStore.deviceId,
+            viewed_houses_id: this.generalStore.deviceState.viewed_houses_id
+          })
         })
-      })
-      const data = await res.json()
+        const data = await res.json()
+      }
+      
     }
   },
   computed: {

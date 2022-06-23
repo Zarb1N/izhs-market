@@ -24,7 +24,10 @@
         @click="$emit('goToHouse')"
       >{{data.name}}</div>
     </div>
-
+    <div 
+      class="product__middle"
+      @click="$emit('goToHouse')"
+    ></div>
     <div
       class="product__bottom"
       @click="$emit('goToHouse')"
@@ -119,7 +122,7 @@ export default defineComponent({
     border-radius: 10px 10px 12px 12px;
     overflow: hidden;
     display: grid;
-    grid-template-rows: min-content auto;
+    grid-template-rows: min-content auto min-content;
     grid-auto-flow: column;
     box-shadow: 1px 1px 8px #DDDCDF;
     width: 100%;

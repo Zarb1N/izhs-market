@@ -62,6 +62,7 @@
               :key="house.id"
               :data="house"
               :cardBudge="weekProjects.budge_card"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 189px"
               @goToHouse="$router.push(`/house/${house.id}/overview`)"
             /> 
@@ -122,6 +123,7 @@
               :key="house.id"
               :data="house"
               :cardBudge="weekProjects.budge_card"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 189px"
               @goToHouse="$router.push(`/house/${house.id}/overview`)"
             /> 
@@ -173,6 +175,7 @@
               :key="house.id"
               :data="house"
               :cardBudge="set.budge_card"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 200px"
             />
           </div>
@@ -246,6 +249,7 @@
                   .slice(0,6)"
               :key="house.id"
               :data="house"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 189px"
             />
           </div>
@@ -440,7 +444,7 @@ export default defineComponent({
 .home__stories {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 99px;
+  grid-auto-columns: 96px;
   overflow-x: auto;
   gap: 7px;
   margin-bottom: 32px;

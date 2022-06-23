@@ -1,14 +1,14 @@
 <template>
-  <div 
+  <div
     class="s-preview"
     :class="isUnread ? 's-preview--unread' : 's-preview--read'"
   >
-    <div 
+    <div
       class="s-preview__content"
       :style="{background: `linear-gradient(360deg, #000000 -7.89%, rgba(0, 0, 0, 0) 82.9%), url(${(data && data.image) && data.image.url})`}"
     >
       <div class="s-preview__text-zone">
-        <div 
+        <div
           class="s-preview__text"
           :style="data.name && data.name.split(' ').length <= 2 ? {'width': 'min-content'}: {}"
         >{{data.name}}</div>
@@ -30,22 +30,25 @@ export default defineComponent({
 
 <style>
   .s-preview {
-    width: 88px;
-    height: 120px;
+    width: 96px;
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
   }
   .s-preview--unread {
-    border: 2px solid;
-    border-image-source: linear-gradient(180deg, #E5ADFF 0%, #FF7650 100%);
+    background: linear-gradient(180deg, #E5ADFF 0%, #FF7650 100%);
     /* border-image-source: linear-gradient(135.55deg, #A7A6CB -5.43%, #8989BA 107.62%); */
-    border-radius: 12px;
+    border-radius: 20px;
   }
   .s-preview--read {
-    border: 1px solid rgba(255, 255, 255, 0);
+    background: rgba(0, 0, 0, 0);
   }
   .s-preview__content {
+    box-sizing: content-box;
     height: 120px;
     width: 88px;
-    border: 1px solid #F5F5F5;
+    border: 2px solid #F5F5F5;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: cover !important;
