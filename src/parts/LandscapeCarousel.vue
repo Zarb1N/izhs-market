@@ -4,6 +4,7 @@
       :options="{
         align: {camera: '20', panel: '0'}, 
         threshold: 0,
+        inputType: ['pointer', 'mouse', 'touch'],
       }"
       @will-change="(event) => {currentIndex = event.index}"
     >

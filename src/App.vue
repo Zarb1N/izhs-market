@@ -298,6 +298,7 @@ export default defineComponent({
   mounted() {
     this.loadRequirementData()
     // this.hideStatusBar()
+    StatusBar.setOverlaysWebView({ overlay: true });
   },    
   components: {
     Tabbar,
