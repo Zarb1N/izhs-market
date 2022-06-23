@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     class="s-card"
     :style="{
       background: `#56ABFF url(${backgroundImagePath})`
@@ -9,7 +9,7 @@
     <div class="s-card__title">{{title}}</div>
     <div class="s-card__description" v-html="description"></div>
     <div class="s-card__quantity">{{quantity}}</div>
-    <img 
+    <img
       class="s-card__icon"
       :src="generalStore.getImageURL(iconPath)"
     />
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 
@@ -38,7 +38,7 @@ export default defineComponent({
     'set',
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 </script>

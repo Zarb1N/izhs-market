@@ -1,13 +1,13 @@
 <template>
-  <div 
+  <div
     class="notification__wrap"
     :class="isActive ? 'notification__wrap--active' : 'notification__wrap--disactive'"
   >
-    <div 
+    <div
       class="notification"
       :class="isActive ? 'notification--active' : 'notification--disactive'"
     >
-      <img 
+      <img
         class="notification__icon"
         :src="generalStore.getImageURL('emojis/warning.svg')"
       />
@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -31,7 +31,7 @@ export default defineComponent({
     'isActive'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 </script>

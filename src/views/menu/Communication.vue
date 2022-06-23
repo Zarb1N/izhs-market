@@ -2,12 +2,12 @@
   <div class="communication menu-subpage">
     <div class="communication__description">Пообщаться по сервисам <span class="underline-dashed">ИЖС Genius</span></div>
     <div class="communication__contacts">
-      <div 
+      <div
         class="communication__contact"
         v-for="(contact, index) in contacts"
         :key="index"
       >
-        <img 
+        <img
           class="communication__contact-image"
           :src="generalStore.getImageURL(`${contact.icon}.svg`)"
         >
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     contacts: [
       {
         icon: 'telegram',
@@ -38,7 +38,7 @@ export default defineComponent({
       },
     ]
   }),
-  
+
 })
 
 </script>

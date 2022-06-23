@@ -3,7 +3,7 @@
     <IonContent>
       <div class="services">
         <div class="services__header">
-          <img 
+          <img
             class="services-header__back-btn"
             src="../assets/icons/arrow-left--black.svg"
             @click="() => {$route.matched.map(path => path.name).indexOf('Сервисы') === -1 ? $router.push('/home/services') : $router.push('/home')}"
@@ -12,7 +12,7 @@
           <div class="services__title title--primary">{{$route.matched.map( (item: {[key: string]: string}) => item.name)[2]}}</div>
         </div>
         <RouterView style="position: static; height: 100%;"/>
-        <div 
+        <div
           class="services__bottom-elements"
           v-if="$route.matched.map( (item: {[key: string]: string}) => item.name)[2] !== 'Сервисы'"
         >
@@ -21,7 +21,7 @@
             placeholder="Введите номер телефона"
             v-model="phoneNumber"
           />
-          <div 
+          <div
             class="services__create-application-btn"
             @click="sendApplicationForService()"
           >Перейти к заявке</div>
@@ -29,18 +29,18 @@
       </div>
     </IonContent>
   </IonPage>
-  
+
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 import { defineComponent } from '@vue/runtime-core'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonRouterOutlet } from '@ionic/vue';
 
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     services: [
       {
         groupName: 'Участок',
@@ -85,7 +85,7 @@ export default defineComponent({
   }),
   methods: {
     async sendApplicationForService() {
-      const choosedServiceItem : {[key: string]: string} = this.services.filter(service => service.goTo === this.$route.path)[0] 
+      const choosedServiceItem : {[key: string]: string} = this.services.filter(service => service.goTo === this.$route.path)[0]
       const res = await fetch(`${this.generalStore.server}/applicationsservices`, {
         method: 'PUT',
         headers: {'Content-type': 'application/json'},
@@ -107,7 +107,7 @@ export default defineComponent({
             })
           })
         }
-      } 
+      }
       else {
         this.generalStore.showErrorNotification(res)
       }
@@ -125,7 +125,7 @@ export default defineComponent({
     }
   },
   computed: {
-    
+
   },
   mounted() {
     this.servicesGroups()

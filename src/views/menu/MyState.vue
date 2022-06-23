@@ -5,7 +5,7 @@
         <div class="my-state__state">
           <div class="my-state__state-card my-state__state-card--genius">
             <div class="my-state__state-card-row">
-              <img 
+              <img
                 class="my-state__state-card-logo"
                 src="../../assets/izs-logo--blue.svg"
               />
@@ -27,7 +27,7 @@
         <div class="my-state__state">
           <div class="my-state__state-card">
             <div class="my-state__state-card-row">
-              <img 
+              <img
                 class="my-state__state-card-logo"
                 src="../../assets/izs-logo--gray.svg"
               />
@@ -59,12 +59,12 @@
           theme="gray-white"
         >
           <div class="e-card__body-items paragraph">
-            <div 
+            <div
               class="e-card__body-item"
               v-for="(item, index) in feature.body"
               :key="index"
             >
-              <ul 
+              <ul
                 class="e-card__bulleted-list-items"
                 v-if="item.type === 'bulleted-list'"
               >
@@ -74,25 +74,25 @@
                 >
                   <div class="e-card__bulleted-list-item">
                     <div class="paragraph">{{point.text}}</div>
-                    <img 
+                    <img
                       style="display: inline-block; position: relative; top: -1px;"
                       v-if="point.hint"
-                      src="../../assets/icons/question-mark-in-circle.svg" 
+                      src="../../assets/icons/question-mark-in-circle.svg"
                       @click="(event) => showPopupHint(event, point.hint)"
                     />
 
                   </div>
                 </li>
               </ul>
-              <div 
+              <div
                 class="e-card__paragraph"
                 v-if="item.type === 'paragraph'"
               >
                 <span class="paragraph">{{item.content}}</span>
-                <img 
+                <img
                   style="display: inline-block; position: relative; top: 4px; left: 2px"
                   v-if="item.hint"
-                  src="../../assets/icons/question-mark-in-circle.svg" 
+                  src="../../assets/icons/question-mark-in-circle.svg"
                   @click="(event) => showPopupHint(event, item.hint)"
                 />
               </div>
@@ -110,7 +110,7 @@
           v-show="isPopupHint"
           @blur="isPopupHint = false"
         >
-          <div 
+          <div
             class="paragraph"
             v-html="popupHintText"
           ></div>
@@ -221,7 +221,6 @@ export default defineComponent({
     showPopupHint(event : any, text: string) {
       this.popupHintText = text
       event.preventDefault()
-      console.log(event.x, event.y)
       this.clickCoordinates = {
         x: event.x,
         y: event.y

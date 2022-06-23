@@ -1,13 +1,13 @@
 <template>
   <div class="house-c-s">
-    <div 
+    <div
       class="house-c-s__live-stream-row"
       v-if="isApplicationHouse"
     >
       <div class="house-c-s__live-stream-description">Здесь можно отслеживать этапы строительства</div>
       <div class="house-c-s__live-stream-btn">Live</div>
     </div>
-    <div 
+    <div
       class="house-c-s__live-stream-row"
       v-else
     >
@@ -17,7 +17,7 @@
     <Card title="Команда">
       <Team :team="isApplicationHouse ? generalStore.constructionTeam : null"/>
     </Card>
-    <div 
+    <div
       class="m-p-house__view-documents-btn"
       :class="isApplicationHouse ? 'm-p-house__view-documents-btn--active' : 'm-p-house__view-documents-btn--disactive'"
     >
@@ -32,7 +32,7 @@ import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
 import ConstructionStages from "@/components/ConstructionStages.vue";
 import ConstructionTeam from "@/components/ConstructionTeam.vue";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 
 export default defineComponent({
   components: {
@@ -41,12 +41,12 @@ export default defineComponent({
     Team: ConstructionTeam,
   },
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   computed: {
     isApplicationHouse() {
       if (
-        this.generalStore.deviceState.applications_houses_id 
+        this.generalStore.deviceState.applications_houses_id
         && this.$route.params.id === this.generalStore.deviceState.applications_houses_id.toString()
       ) {
         return true

@@ -1,7 +1,7 @@
 <template>
   <div class="house-p">
     <div class="house-p__description paragraph">{{data.description}}</div>
-    <div 
+    <div
       class="house-p__about-prices-btn paragraph"
       @click="(event) => {showPopupHint(event, 'Можно использовать одну <br/> из комплектации или что-то <br/> изменить, цены могут немного <br/> меняться, так как меняются <br/> цены на материалы')}"
     >
@@ -11,7 +11,7 @@
         </svg>
     </div>
     <div class="house-p__sellers-offers-cards">
-      <SellerCard 
+      <SellerCard
         v-for="builder_id in Object.keys(sellers)"
         :key="builder_id"
         :seller="sellers[builder_id]"
@@ -29,7 +29,7 @@
       v-show="isPopupHint"
       @blur="isPopupHint = false"
     >
-      <div 
+      <div
         class="paragraph"
         style="white-space: nowrap"
         v-html="popupHintText"
@@ -42,7 +42,7 @@
 import { computed, defineComponent } from "@vue/runtime-core";
 import SellerExtensionCard from "@/components/SellerExtensionCard.vue";
 import PopupHint from "@/components/PopupHint.vue";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
@@ -50,7 +50,7 @@ export default defineComponent({
     'sellers'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     isPopupHint: false,
     popupHintText: '',
   }),
@@ -62,7 +62,6 @@ export default defineComponent({
     showPopupHint(event : any, text: string) {
       this.popupHintText = text
       event.preventDefault()
-      console.log(event)
       this.generalStore.clickCoordinates = {
         x: event.layerX,
         y: event.layerY

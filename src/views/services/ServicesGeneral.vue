@@ -4,7 +4,7 @@
       <div class="g-services">
         <div class="services__body">
           <div class="services__groups">
-            <div 
+            <div
               class="services__group"
               :class="group === 'Пока недоступные' && 'services__group--disabled'"
               v-for="(group, index) in generalStore.servicesGroups"
@@ -14,18 +14,18 @@
                 {{group}}
               </div>
               <div class="services__group-items">
-                <div 
+                <div
                   class="services__group-item service-button"
                   v-for="(service, index) in generalStore.services"
                   :key="index"
                   v-show="service.groupName === group"
                   @click="() => {service && $router.push(service.goTo)}"
                 >
-                  <div 
+                  <div
                     class="service-button__name"
                     v-html="service.name"
                   ></div>
-                  <img 
+                  <img
                     class="service-button__image"
                     :src="generalStore.getImageURL(`${service.image}.png`)"
                   >
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
@@ -51,7 +51,7 @@ export default defineComponent({
     'services',
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
 })

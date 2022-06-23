@@ -1,10 +1,10 @@
 <template>
   <div class="house-d">
-    <div 
+    <div
       class="house-d__manager"
       v-if="staffInfo && data.discussions"
     >
-      <img 
+      <img
         class="house-d__manager-image"
         :src="staffInfo.image.url"
         v-if="staffInfo.image"
@@ -14,11 +14,11 @@
         <div class="house-d__manager-hint">{{staffInfo.description}}</div>
       </div>
     </div>
-    <div 
+    <div
       class="house-d__discussions"
       v-if="data.discussions && data.discussions.length"
-    > 
-      <div 
+    >
+      <div
         v-for="disc in data.discussions"
         :key="disc.question"
       >
@@ -33,18 +33,18 @@
           </div>
       </div>
     </div>
-    <div 
+    <div
       class="house-d__no-discussions"
       v-else
     >
       <ContentCard>
         <div class="house-d__no-discussions-content">
-          <img 
+          <img
             class="house-d__no-discussions-icon"
             src="../../assets/emojis/card-file-box.svg"
           />
           <div class="house-d__no-discussions-text">
-            Обсуждений по {{data.name}} <br /> еще не было 
+            Обсуждений по {{data.name}} <br /> еще не было
           </div>
         </div>
       </ContentCard>
@@ -55,20 +55,20 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ContentCard from '@/components/ContentCard.vue'
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 
 export default defineComponent({
   props: ['data'],
   data: () => ({
     staffInfo: {},
-    generalStore: useGeneralStore()
+    generalStore: useStore()
   }),
   methods: {
     async getStaffInfo(buildingId: number) {
       const res = await fetch(`${this.generalStore.server}/staff`)
       const data = await res.json()
       this.staffInfo = data.filter((staff: {[key: string]: any}) => staff.id === buildingId)[0]
-    } 
+    }
   },
   mounted() {
     this.getStaffInfo(Number(this.$route.params.id))

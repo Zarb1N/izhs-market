@@ -1,9 +1,9 @@
 <template>
   <div class="comparison menu-subpage">
     <div class="comparison__description paragraph">
-      Объединили людей и строительные процессы, а также создали 
+      Объединили людей и строительные процессы, а также создали
       <div class="menu__inline-button">ИЖС Genius</div>
-      и 
+      и
       <div class="menu__inline-button">ИЖС Стандарт</div>
       , изучив сложности реальных сделок
     </div>
@@ -17,7 +17,7 @@
         <div class="comparison__feature feature">
           <div class="feature__header">
             <img
-              class="feature__icon" 
+              class="feature__icon"
               :src="generalStore.getImageURL(`emojis/${feature.icon}.svg`)"
             >
             <div class="feature__title" v-html="feature.title"></div>
@@ -29,20 +29,20 @@
         </div>
       </Card>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
-import { useGeneralStore } from '../../stores/general'
+import { useStore } from '../../stores/general'
 
 export default defineComponent({
   props: [
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     features: [
       {
         icon: 'artist-palette',
