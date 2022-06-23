@@ -1,10 +1,10 @@
 <template>
-  <div 
+  <div
     class="notification"
     :class="isActive ? 'notification--active' : 'notification--disactive'"
     @click="() => {$emit('close')}"
   >
-    <img 
+    <img
       class="notification__icon"
       :src="generalStore.getImageURL('emojis/repeat-button.svg')"
     />
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -27,7 +27,7 @@ export default defineComponent({
     'isActive'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   methods: {
   }

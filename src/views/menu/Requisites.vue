@@ -6,12 +6,12 @@
         :isPrimaryTitle="true"
       >
         <div class="requisites__company-faces">
-          <div 
+          <div
             class="requisites__company-face staff-row"
             v-for="(staff, index) in companyFaces"
             :key="index"
           >
-            <img 
+            <img
               class="staff-row__image"
               src="../../assets/default-man-1.png"
             >
@@ -27,7 +27,7 @@
         :isPrimaryTitle="true"
       >
         <div class="requisites__requisites">
-          <div 
+          <div
             class="requisites__text-field"
             v-for="(requisite, index) in requisites"
             :key="index"
@@ -43,7 +43,7 @@
         :isPrimaryTitle="true"
       >
         <div class="requisites__settlemental-account">
-          <div 
+          <div
             class="requisites__text-field"
             v-for="(item, index) in settlementАccount"
             :key="index"
@@ -59,12 +59,12 @@
         :isPrimaryTitle="true"
       >
         <div class="requisites__contacts">
-          <div 
+          <div
             class="requisites__contact"
             v-for="(contact, index) in contacts"
             :key="index"
           >
-            <img 
+            <img
               class="requisites__contact-icon"
               :src="generalStore.getImageURL(`emojis/${contact.icon}.svg`)"
             />
@@ -79,14 +79,14 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ExtensionCard from "@/components/ExtensionCard.vue";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     companyFaces: [
       {
         name: 'Сергей Трутненко',

@@ -3,13 +3,13 @@
     <div class="house-c-s__stages-card">
       <div class="house-c-s__stages-card-title">Этапы</div>
       <div class="house-c-s__stages-description">
-        <div 
+        <div
           class="house-c-s__stage-description paragraph"
           v-for="index in 3"
           :key="index"
         >
-          Застройщик произведет домокомплект, а после соберет на вашем участке. Мы в свою очередь будем выезжать на стройку чтобы контролировать 
-          <div 
+          Застройщик произведет домокомплект, а после соберет на вашем участке. Мы в свою очередь будем выезжать на стройку чтобы контролировать
+          <div
             class="house-c-s__stage-description--actual"
             v-if="index === 1"
           >
@@ -23,13 +23,13 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore()
+    generalStore: useStore()
   })
 })
 

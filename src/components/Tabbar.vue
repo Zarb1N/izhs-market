@@ -48,8 +48,6 @@ export default defineComponent({
       return path
     }
   },
-  created() {
-  },
   components: {
     IonTabBar,
   }

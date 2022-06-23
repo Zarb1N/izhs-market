@@ -1,25 +1,25 @@
 <template>
-  <div 
+  <div
     class="e-card"
     :class="theme ? `e-card--${theme}` : 'e-card--white-gray'"
   >
-    <div 
+    <div
       class="e-card__header"
       @click="isOpen = !isOpen"
       :class="((data && data.icon) || icon) ? 'e-card__header--with-icon' : 'e-card__header--without-icon'"
       :style="{'height': headerHeight || 'auto'}"
     >
-      <img 
+      <img
         class="e-card__seller-icon"
         v-if="data && data.icon"
         :src="generalStore.getImageURL(`emojis/${icon || data.icon}.svg`)"
       />
-      <div 
+      <div
         class="e-card__title"
         :class="isPrimaryTitle && 'e-card__title--primary'"
         :style="titleStyle"
       >{{data && data.title}}{{title}}</div>
-      <img 
+      <img
         class="e-card__open-body-btn"
         src="../assets/icons/arrow-bottom.svg"
         :class="isOpen ? 'e-card__open-body-btn--top' : 'e-card__open-body-btn--bottom'"
@@ -36,11 +36,11 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 
 
 export default defineComponent({
-  props: [ 
+  props: [
     'data',
     'isPrimaryTitle',
     'title',
@@ -52,7 +52,7 @@ export default defineComponent({
   data: () => ({
     isOpen: false,
     priceRange: [] as Array<number>,
-    generalStore: useGeneralStore()
+    generalStore: useStore()
   }),
   methods: {
   },
@@ -114,7 +114,7 @@ export default defineComponent({
   line-height: 18px;
 }
 .e-card__prices-range {
-  
+
 }
 .e-card__open-body-btn {
   height: 26px;

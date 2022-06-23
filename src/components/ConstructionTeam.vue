@@ -1,15 +1,15 @@
 <template>
   <div class="team">
-    <div 
+    <div
       class="team--not-empty"
       v-if="team"
     >
-      <div 
+      <div
         class="team__member"
         v-for="member in team"
         :key="member.id"
       >
-        <img 
+        <img
           class="team__member-photo"
           :src="member.image.url"
         />
@@ -20,21 +20,21 @@
         </div>
       </div>
     </div>
-    <div 
+    <div
       class="team--empty"
       v-else
     >
-      <div 
+      <div
         class="team__member"
         v-for="member in 3"
         :key="member"
       >
-        <img 
+        <img
           class="team__member-photo"
           v-if="member % 2"
           :src="generalStore.getImageURL('user-default-photo--female.svg')"
         />
-        <img 
+        <img
           class="team__member-photo"
           v-else
           :src="generalStore.getImageURL('user-default-photo--male.svg')"
@@ -50,13 +50,13 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   props: [ 'team' ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 </script>

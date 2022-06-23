@@ -1,22 +1,22 @@
 <template>
   <div class="loader">
-    <img 
+    <img
       class="loader__gif"
       :src="generalStore.getImageURL('dog-on-green-background.gif')"
     >
-    <img 
+    <img
       class="loader__company-logo"
       :src="generalStore.getImageURL('company-logo.svg')"
     >
   </div>
 </template>
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   })
 })
 </script>

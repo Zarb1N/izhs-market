@@ -4,12 +4,12 @@
     <div class="check-plot">
       <Card title="Как это работает">
         <div
-          class="numbered-list" 
+          class="numbered-list"
           v-for="(item, index) in howItWorksPoints"
           :key="index"
         >
           <div class="numbered-list__item">
-            <img 
+            <img
               class="numbered-list__item-marker"
               :src="generalStore.getImageURL(`numbered-list/${index + 1}-in-circle.svg`)"
             >
@@ -24,7 +24,7 @@
         <div class="check-plot__card-body">
           <div class="paragraph">СтройПроект совместно с ИЖС</div>
           <div class="staff">
-            <img 
+            <img
               class="staff__image"
               src="../../assets/default-woman-2.png"
             />
@@ -39,7 +39,7 @@
         <Contacts />
       </Card>
       <div class="check-plot__example">
-        <img 
+        <img
           class="check-plot__example-icon"
           src="../../assets/emojis/bookmark-tabs.svg"
         />
@@ -48,19 +48,19 @@
     </div>
   </IonContent>
   </IonPage>
-    
+
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import TgWaContacts from "@/parts/TgWaContacts.vue";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     howItWorksPoints: [
       'Оставить заявку',
       'Пообщаться и оплатить',
@@ -71,7 +71,7 @@ export default defineComponent({
   components: {
     Card: ContentCard,
     Contacts: TgWaContacts,
-    IonHeader, IonToolbar, IonTitle, IonContent, IonPage 
+    IonHeader, IonToolbar, IonTitle, IonContent, IonPage
   }
 })
 

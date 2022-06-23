@@ -55,7 +55,7 @@
                 )[0].name
               }}
             </div>
-          </div> 
+          </div>
           <div class="catalog__header-right-group">
             <div
               class="catalog__open-favourites-btn"
@@ -127,13 +127,13 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from "@ionic/vue";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   methods: {},
   mounted() {},
