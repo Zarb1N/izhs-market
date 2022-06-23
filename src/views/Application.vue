@@ -21,7 +21,7 @@
                 v-for="(key, index) in Object.keys(builders)"
                 :key="index"
               >
-                <img 
+                <img
                   class="application__builder-logo"
                   :src="builders[key][0].builder_info.image.url"
                 />
@@ -31,7 +31,7 @@
               </div>
             </div>
           </div>
-          <img 
+          <img
             class="application__main-info-image"
             :src="house && house.images && house.images[0].url"
           />
@@ -42,8 +42,8 @@
           <ul class="application__bulleted-list">
             <li>
               <div>
-                Пообщаетесь и выберите застройщика 
-                <img 
+                Пообщаетесь и выберите застройщика
+                <img
                   src="../assets/icons/question-mark-in-circle.svg"
                   @click="(e) => showPopupHint(e, 'Посмотрите на другие объекты по видеозвонку, сравните сметы и решите, с кем было приятнее общаться 😉')"
                 >
@@ -65,7 +65,7 @@
             <div class="application__contact-name">Написать в Telegram</div>
           </div>
           <div class="application__contact">
-            <img 
+            <img
               class="application__contact-image"
               :src="generalStore.getImageURL('whatsapp.svg')"
             />
@@ -77,7 +77,7 @@
           <div class="application__subtitle">Задать вопросы</div>
           <div class="application__description">Начните звонок с ответов застройщика <br/> на важные для вас вопросы</div>
           <div class="application__questions-items">
-            <div 
+            <div
               class="application__questions-item"
               :class="question.selected ? 'application__questions-item--selected' : 'application__questions-item--unselected'"
               v-for="(question, index) in questions"
@@ -86,8 +86,8 @@
             >{{question.text}}</div>
           </div>
         </div>
-      </Card> 
-      <Card 
+      </Card>
+      <Card
         color="gray"
         style="box-shadow: 4px 6px 0px #000000;"
       >
@@ -98,14 +98,14 @@
         <div class="application__loyality-benefits">
           <div class="application__subtitle">Лояльность ИЖС CLUB</div>
           <div class="application__cashback-items">
-            <div 
+            <div
               class="application__cashback-item"
               v-for="(item, index) in cashback"
               :key="index"
             >
               <div class="application__cashback-item-description">
                 <div class="application__cashback-item-name">{{item.name}}</div>
-                <img 
+                <img
                   class="application__cashback-item-hint"
                   :src="generalStore.getImageURL('icons/question-mark-in-circle.svg')"
                   v-if="item.description"
@@ -129,7 +129,7 @@
         placeholder="Введите номер телефона"
         v-model="phoneNumber"
       />
-      <div 
+      <div
         class="application__create-application-btn"
         @click="sendAnApplication()"
       >Отправить</div>
@@ -155,7 +155,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "../components/ContentCard.vue";
 import PopupHint from "../components/PopupHint.vue";
@@ -167,7 +167,7 @@ export default defineComponent({
     'cashback'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     hintText: '' as string,
     isHint: false,
     clickCoordinates: {x: 0, y: 0},
@@ -195,7 +195,6 @@ export default defineComponent({
     showPopupHint(event : any, text: string) {
       this.hintText = text
       event.preventDefault()
-      console.log(event.x, event.y)
       this.clickCoordinates = {
         x: event.x,
         y: event.y
@@ -224,9 +223,9 @@ export default defineComponent({
             */
           ]
         })
-      })  
+      })
       const res = await fetch(`${this.generalStore.server}/states/${this.generalStore.deviceId}`, {
-        method: 'PATCH', 
+        method: 'PATCH',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
           device_id: this.generalStore.deviceId,

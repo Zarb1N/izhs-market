@@ -71,14 +71,14 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     pages: [
       {
         imageName: 'genius-card',

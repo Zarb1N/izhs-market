@@ -1,7 +1,7 @@
 <template>
   <div class="gallery">
     <div class="gallery__header header">
-      <img 
+      <img
         class="gallery__back-btn"
         :src="generalStore.getImageURL('icons/arrow-left--black.svg')"
         @click="() => {$router.go(-1)}"
@@ -13,14 +13,14 @@
         <div class="gallery__house-name">{{house.name}}</div>
         <div class="gallery__house-info-row">
           <span class="gallery__house-area">{{house.square}} м2</span> | <span class="gallery__house-prices">
-            <span class="ruble-character">{{generalStore.formatNumber(prices.min)}}</span> 
-            — 
+            <span class="ruble-character">{{generalStore.formatNumber(prices.min)}}</span>
+            —
             <span class="ruble-character">{{generalStore.formatNumber(prices.max)}}</span>
           </span>
         </div>
       </div>
       <div class="gallery__images">
-        <img 
+        <img
           class="gallery__image"
           v-for="(image, index) in house.images"
           :key="index"
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -41,11 +41,8 @@ export default defineComponent({
     'prices'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
-  mounted() {
-    console.log(this.house)
-  },
 })
 </script>
 

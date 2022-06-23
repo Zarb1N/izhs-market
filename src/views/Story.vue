@@ -3,7 +3,7 @@
     <IonContent :scroll-x="false">
       <stories
         class="stories"
-        :autoplay="true"    
+        :autoplay="true"
         ref="stories_component"
         :stories="stories"
         v-if="stories.length"
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent, ref } from "@vue/runtime-core";
 // @ts-ignore
 import Stories from "vue3-insta-stories";
@@ -49,11 +49,11 @@ export default defineComponent({
   },
   */
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     stories: [] as Array<{[key: string]: any}>
   }),
   computed: {
-    
+
   },
   methods: {
     chooseStory() {
@@ -88,7 +88,7 @@ export default defineComponent({
     }
     StatusBar.hide()
     if (
-        this.generalStore.deviceState.stories_id 
+        this.generalStore.deviceState.stories_id
         && this.generalStore.deviceState.stories_id.indexOf(Number(this.$route.params.id)
     ) === -1) {
       this.markStoryAsViewed(Number(this.$route.params.id))
@@ -150,7 +150,7 @@ export default defineComponent({
   bottom: 0;
 }
 
-/* Updated styles for library */ 
+/* Updated styles for library */
 .story .timeline>.slice {
   height: 4px;
   border-radius: 2px;

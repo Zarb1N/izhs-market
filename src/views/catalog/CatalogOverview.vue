@@ -1,24 +1,24 @@
 <template>
   <IonContent>
-    <div 
+    <div
       class="catalog-overview"
       v-if="generalStore.filters"
     >
-      <div 
+      <div
         class="catalog-overview__sets"
         v-if="generalStore.filters.architecture"
       >
         <div class="catalog-overview__sets-name">Архитектура</div>
         <div class="catalog-overview__sets-description">Следите за обновлениями — каждый день новые проекты со всего мира</div>
         <div class="catalog-overview__sets-items">
-          <div 
+          <div
             class="catalog-overview__set"
             v-for="(set, index) in generalStore.filters.architecture.slice(1)"
             :key="index"
             @click="(event) => {$router.push(`/catalog/architecture-set/${set.id}`)}"
             v-show="set.count_houses"
           >
-            <img 
+            <img
               class="catalog-overview__set-image"
               :src="set.image && set.image.url"
             />
@@ -30,20 +30,20 @@
         </div>
       </div>
       <!--
-      <div 
+      <div
         class="catalog-overview__sets"
         v-if="generalStore.filters.compilations"
       >
         <div class="catalog-overview__sets-name">Подборки</div>
         <div class="catalog-overview__sets-items">
-          <div 
+          <div
           class="catalog-overview__set"
           v-for="(set, index) in generalStore.filters.compilations"
           :key="index"
           @click="(event) => {$router.push(`/catalog/custom-set/${set.id}`)}"
           v-show="set.count_houses"
           >
-            <img 
+            <img
               class="catalog-overview__set-image"
               :src="set.image && set.image.url"
             />
@@ -55,12 +55,12 @@
         </div>
       </div>
       -->
-    </div> 
+    </div>
   </IonContent>
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Controls from '@/components/Controls.vue'
 import ProductPreview from '@/components/ProductPreview.vue'
@@ -73,14 +73,13 @@ export default defineComponent({
     'filters'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
   }),
   methods: {
     openContextMenu(event : any) {
       event.preventDefault()
-      console.log(event.x, event.y)
       this.clickCoordinates = {
         x: event.x,
         y: event.y
@@ -137,7 +136,7 @@ export default defineComponent({
   gap: 16px;
 }
 .catalog-overview__set {
-  
+
 }
 .catalog-overview__set-name {
   font-weight: 750;

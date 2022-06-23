@@ -1,7 +1,7 @@
 <template>
   <div class="c-menu">
     <div class="c-menu__options">
-      <div 
+      <div
         class="c-menu__option"
         v-for="option in options"
         :key="option.text"
@@ -14,18 +14,16 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   props: [
     'options'
   ],
-  mounted() {
-  }
 })
 </script>
 
@@ -48,7 +46,7 @@ export default defineComponent({
   .c-menu__option {
     font-weight: normal;
     font-size: 12px;
-    line-height: 15px; 
+    line-height: 15px;
     white-space: nowrap;
   }
 </style>

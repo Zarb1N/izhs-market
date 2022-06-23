@@ -2,11 +2,11 @@
   <IonPage>
     <IonContent>
       <div class="menu">
-        <div 
+        <div
           class="menu__header"
           v-if="!$route.matched.map(item => item.name)[1] === 'Меню главная'"
         >
-          <img 
+          <img
             class="menu-subpage__back-btn"
             src="../assets/icons/arrow-left--black.svg"
             @click="() => {$router.go(-1)}"
@@ -14,9 +14,7 @@
           <div class="menu__title title--primary">{{$route.matched.map(item => item.name)[1]}}</div>
         </div>
         <div class="menu__body">
-          <RouterView
-            :buttons="buttons"
-          />
+          <RouterView :buttons="buttons" />
         </div>
       </div>
     </IonContent>
@@ -26,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import MenuButton from "@/components/MenuButton.vue";
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 
 export default defineComponent({
@@ -92,6 +90,7 @@ export default defineComponent({
   }),
   components: {
     Button: MenuButton,
+    RouterView,
     IonPage,
     IonContent,
     IonRouterOutlet,

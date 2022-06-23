@@ -2,18 +2,18 @@
   <div class="izs menu-subpage">
     <div class="izs__description">Все застройщики работают по правилам <br/> ИЖС Стандарт</div>
     <div class="izs__features">
-      <div 
+      <div
         class="izs__feature izs-feature"
         v-for="(feature, index) in izsFeatures"
         :key="index"
       >
-        <img 
+        <img
           class="izs-feature__icon"
           :src="generalStore.getImageURL(`emojis/${feature.icon}.svg`)"
         />
         <div class="izs-feature__name">
           {{feature.name}}
-          <img 
+          <img
             class="izs-feature__hint"
             v-if="feature.hint"
             src="../../assets/icons/question-mark-in-circle.svg"
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import PopupHint from "../../components/PopupHint.vue"
 
@@ -50,7 +50,7 @@ export default defineComponent({
   ],
   data: () => ({
     isPopupHint: false,
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     popupHintText: '',
     clickCoordinates: {x: 0, y: 0},
     izsFeatures: [
@@ -97,7 +97,6 @@ export default defineComponent({
     showPopupHint(event : any, text: string) {
       this.popupHintText = text
       event.preventDefault()
-      console.log(event.x, event.y)
       this.clickCoordinates = {
         x: event.x,
         y: event.y

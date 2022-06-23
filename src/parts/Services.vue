@@ -1,16 +1,16 @@
 <template>
   <div class="services">
     <div class="services__features without-scrollbar">
-      <div 
+      <div
         class="services__feature"
         v-for="(service, index) in services"
         :key="index"
         :style="{background: `url(${generalStore.getImageURL('services-background/' + service.backgroud + '.svg')}) center no-repeat `}"
-        @click="$router.push(service.goTo)" 
+        @click="$router.push(service.goTo)"
       >
 
         <div class="services__feature-name">{{service.name}}</div>
-        <div 
+        <div
           class="services__feature-description"
           v-html="service.description"
         ></div>
@@ -20,14 +20,14 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     services: [
       {
         name: 'Genius',

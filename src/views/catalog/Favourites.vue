@@ -1,7 +1,7 @@
 <template>
   <!-- <IonContent> -->
     <div class="favorites">
-      <div 
+      <div
         class="favorites--not-empty"
         v-if="favoriteHouses.length"
       >
@@ -24,12 +24,12 @@
           </div>
         </div>
       </div>
-      <div 
+      <div
         class="favorites__empty"
         v-else
       >
         <div class="favorites__description">Нажмите <b class="favorites__bold-font">Добавить в избранное</b> на карточке дома и проект появится здесь</div>
-        <img 
+        <img
           class="favorites__image"
           :src="generalStore.getImageURL('how-to-add-house-to-favorites.png')"
         >
@@ -46,13 +46,13 @@
         :options="generalStore.favouriteHousePreviewContextActions"
         @blur="generalStore.isContextMenu = false"
         @close="generalStore.isContextMenu = false"
-      /> 
+      />
     </div>
   <!-- </IonContent> -->
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ProductPreview from "@/components/ProductPreview.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
@@ -61,7 +61,7 @@ import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   methods: {
     openContextMenu(event : any, id : string) {

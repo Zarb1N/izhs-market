@@ -1,11 +1,11 @@
 <template>
-  <div 
+  <div
     class="pagination"
     :style="{
       gridTemplateColumns: `repeat(${items}, 1fr)`,
     }"
   >
-      <div 
+      <div
         class="pagination__point"
         :class="index === currentItem ? 'pagination__point--choosed' : 'pagination__point--unchoosed'"
         v-for="(item, index) in items"
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -24,7 +24,7 @@ export default defineComponent({
     'currentItem'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
 })
 </script>

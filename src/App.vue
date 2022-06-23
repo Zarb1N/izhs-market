@@ -33,7 +33,7 @@
           id="app__tabbar"
           :items="navigationItems"
           v-show="isTabbar"
-        /> 
+        />
       </IonTabs>
     </IonContent>
   </IonApp>
@@ -44,7 +44,7 @@
 import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
-import { useGeneralStore } from '@/stores/general'
+import { useStore } from '@/stores/general'
 import { useAppState } from '@/stores/appState'
 import {
   IonTabBar,
@@ -79,10 +79,9 @@ import ServiceApplication from '@/parts/ServiceApplication.vue'
 App.addListener('backButton', () => {
   router.back()
 });
-console.log(router.currentRoute)
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     appState: useAppState(),
     isUpdate: false,
     isMandatoryUpdate: false,
@@ -107,7 +106,7 @@ export default defineComponent({
         title: 'Стройка',
         goTo: '/my-project'
       },
-      
+
       {
         iconName: 'human',
         title: 'Меню',
@@ -140,7 +139,7 @@ export default defineComponent({
          ])
       }
       this.generalStore.isLoading = false
-    }, 
+    },
     async getSystemParameters() {
       const res = await fetch(`${this.generalStore.server}/system`)
       const data = await res.json()
@@ -172,8 +171,7 @@ export default defineComponent({
     },
     async getDeviceInfo() {
       const data = await Device.getInfo()
-      this.generalStore.deviceInfo = data 
-      console.log(data)
+      this.generalStore.deviceInfo = data
       if (this.generalStore.deviceInfo.operatingSystem == 'android') {
         this.generalStore.linkToAppInStore = 'https://play.google.com/store/apps/details?id=izs.market'
       }
@@ -269,7 +267,7 @@ export default defineComponent({
       })
       this.generalStore.viewedHouses = houses.reverse()
     }
-  },  
+  },
   computed: {
     isTabbar() {
       const tabbarTitles = this.navigationItems.map(item => item.title)

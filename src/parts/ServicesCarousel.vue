@@ -2,7 +2,7 @@
   <div class="home-section__carousel">
     <Flicking 
       :options="{
-        align: {camera: '20', panel: '0'}, 
+        align: {camera: '20', panel: '0'},
         threshold: 0,
         inputType: ['pointer', 'mouse', 'touch'],
       }"
@@ -39,16 +39,16 @@
 </template>
 
 <script lang="ts">
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-import { useGeneralStore } from "@/stores/general";
 import CarouselPagination from "@/components/CarouselPagination.vue";
 import { useAppState } from "@/stores/appState";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     appState: useAppState(),
     cards: [
       {

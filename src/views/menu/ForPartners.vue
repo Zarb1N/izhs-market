@@ -2,7 +2,7 @@
   <div class="for-partners menu-subpage">
     <div class="for-partners__description">Развивайте бизнес вместе с ИЖС Маркет. Направления для партнеров из разных регионов, которые хотят продавать больше.</div>
     <div class="for-partners__partners-cards">
-      <div 
+      <div
         class="for-partners__partner-card partner-card"
         v-for="(partner, index) in partners"
         :key="index"
@@ -12,7 +12,7 @@
           <div class="partner-card__header">{{partner.title}}</div>
           <div class="partner-card__body" v-html="partner.description"></div>
         </div>
-        <img 
+        <img
           class="partner-card__image"
           :src="generalStore.getImageURL(`${partner.image}.png`)"
         >
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
+import { useStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 
@@ -31,7 +31,7 @@ export default defineComponent({
     'data'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
     partners: [
       {
         title: 'Девелоперам',

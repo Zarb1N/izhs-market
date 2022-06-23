@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     class="product"
     :style="{
       backgroundImage: `url(${data.image_preview && data.image_preview.url})`,
@@ -14,18 +14,18 @@
         v-show="cardBudge"
         @click="$emit('goToHouse')"
       >{{cardBudge}}</div>
-      <img 
+      <img
         class="product__favorites-btn"
         :src="generalStore.getImageURL(`icons/heart--${isFavorite ? 'filled' : 'empty'}.svg`)"
         @click="interactWithFavoritesList(data.id)"
       />
-      <div 
+      <div
         class="product__name"
         @click="$emit('goToHouse')"
       >{{data.name}}</div>
     </div>
 
-    <div 
+    <div
       class="product__bottom"
       @click="$emit('goToHouse')"
     >
@@ -41,7 +41,7 @@
 import { computed, defineComponent } from 'vue'
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-import { useGeneralStore } from '@/stores/general';
+import { useStore } from '@/stores/general';
 
 export default defineComponent({
   props: [
@@ -50,7 +50,7 @@ export default defineComponent({
     'isFavorite'
   ],
   data: () => ({
-    generalStore: useGeneralStore(),
+    generalStore: useStore(),
   }),
   methods: {
     interactWithFavoritesList(houseId : number | string) {
@@ -65,19 +65,17 @@ export default defineComponent({
       if (this.data.price_history) {
         const prices: Array<number> = this.data.price_history.map( (item: {[key: string]: any}) => item.price/1000000)
         return [
-          Math.min(...prices).toFixed(1).toString().replace('.', ','), 
+          Math.min(...prices).toFixed(1).toString().replace('.', ','),
           Math.max(...prices).toFixed(1).toString().replace('.', ',')
         ]
       }
       return ['0', '0']
-      
+
     },
     images() : Array<{[key: string]: string}> {
       const images = this.data.images.map( (image: {[key: string]: string}) => image.url)
       return images
     }
-  },
-  mounted() {
   },
   components: {
     Flicking,
