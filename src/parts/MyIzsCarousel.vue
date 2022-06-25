@@ -9,7 +9,7 @@
       <div 
         class="card__body"
         :style="{
-          backgroundImage: `url(./src/assets/features-cards/${card.imageName}.svg)`,
+          backgroundImage: `url(./src/assets/features-cards/${card.imageName}.png)`,
           justifyContent: card.textPosition
         }"
       >

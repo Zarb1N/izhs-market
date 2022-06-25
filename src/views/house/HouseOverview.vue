@@ -86,7 +86,7 @@
             –
             <span class="ruble-character">{{generalStore.formatNumber(prices.max)}}</span></div>
         </div>
-        <div class="house__description">{{house.description}}</div>
+        <!-- <div class="house__description">{{house.description}}</div> -->
       </div>
 
       <Prices
@@ -349,7 +349,8 @@ export default defineComponent({
   width: 100%;
   z-index: 1;
   box-shadow: 0px 0px 20px 0px #0000001A;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .house__body--closed {
   height: 180px;

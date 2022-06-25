@@ -10,7 +10,7 @@
     >
       <div 
         class="services-card"
-        :style="{backgroundImage: `url(./src/assets/features-cards/${card.background}.svg)`}"
+        :style="{backgroundImage: `url(./src/assets/features-cards/${card.background}.png)`}"
         v-for="(card, index) of cards"
         :key="index"
       >

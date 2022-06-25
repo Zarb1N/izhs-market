@@ -1,17 +1,18 @@
 <template>
   <!-- <IonContent> -->
-    <div class="favorites">
+    <div class="favourites">
+      <div class="status-bar"></div>
+      <div class="favourites__header">
+        <BackButton/>
+      </div>
       <div
-        class="favorites--not-empty"
+        class="favourites--not-empty"
         v-if="favoriteHouses.length"
       >
-        <div class="favorites__header">
-          <div class="favorites__title">Проектов — {{favoriteHouses.length}}</div>
-        </div>
-        <div class="favorites__body">
-          <div class="favorites__houses">
+        <div class="favourites__body">
+          <div class="favourites__houses">
             <div
-              class="favorites__house"
+              class="favourites__house"
               v-for="(house, index) in favoriteHouses"
               :key="index"
             >
@@ -25,13 +26,13 @@
         </div>
       </div>
       <div
-        class="favorites__empty"
+        class="favourites__empty"
         v-else
       >
-        <div class="favorites__description">Нажмите <b class="favorites__bold-font">Добавить в избранное</b> на карточке дома и проект появится здесь</div>
+        <div class="favourites__description">Нажмите <b class="favourites__bold-font">Добавить в избранное</b> на карточке дома и проект появится здесь</div>
         <img
-          class="favorites__image"
-          :src="generalStore.getImageURL('how-to-add-house-to-favorites.png')"
+          class="favourites__image"
+          :src="generalStore.getImageURL('how-to-add-house-to-favourites.png')"
         >
       </div>
       <ContextMenu
@@ -57,6 +58,7 @@ import { defineComponent } from "@vue/runtime-core";
 import ProductPreview from "@/components/ProductPreview.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
+import BackButton from "@/components/BackButton.vue";
 
 
 export default defineComponent({
@@ -96,19 +98,22 @@ export default defineComponent({
     IonContent,
     IonRouterOutlet,
     IonHeader,
+    BackButton,
   }
 })
 
 </script>
 
 <style scoped>
-.favorites {
+.favourites {
   width: 100%;
-  padding: 30px 14px 100px 14px;
+  padding: 0px 14px 100px 14px;
 
 }
-.favorites__header {}
-.favorites__title {
+.favourites__header {
+  margin-bottom: 16px;
+}
+.favourites__title {
   font-weight: 700;
   font-size: 12px;
   line-height: 15px;
@@ -116,30 +121,30 @@ export default defineComponent({
   text-transform: uppercase;
   margin-bottom: 15px;
 }
-.favorites__body {
+.favourites__body {
   width: 100%;
 }
-.favorites__houses {
+.favourites__houses {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 167px);
   gap: 14px;
 }
-.favorites__house {
+.favourites__house {
   width: 100%;
 }
-.favorites__empty {
+.favourites__empty {
   display: flex;
   flex-direction: column;
   gap: 50px;
   align-items: center;
 }
-.favorites__description {
+.favourites__description {
   font-weight: normal;
   font-size: 14px;
   line-height: 130%;
 }
-.favorites__bold-font {
+.favourites__bold-font {
   font-weight: bold;
 }
 </style>

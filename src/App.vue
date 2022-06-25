@@ -342,14 +342,15 @@ export default defineComponent({
   flex-direction: column;
   justify-content: space-between;
   overflow: auto;
+  background: #F5F5F5;
 }
 #vue-app::-webkit-scrollbar {
   display: none;
 }
-#app__tabbar {
+/* #app__tabbar {
   position: fixed;
   bottom: 0;
-}
+} */
 .page {
   height: 100%;
   background: linear-gradient(239.67deg, #227164 0.34%, #278878 61.18%);

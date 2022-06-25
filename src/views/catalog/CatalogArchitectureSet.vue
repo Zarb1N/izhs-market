@@ -2,6 +2,7 @@
   <IonContent>
     <div class="set">
       <div class="set__header">
+        <div class="status-bar"></div>
         <div
           class="set__back-btn"
           @click="() => {$router.push('/catalog')}"
@@ -12,6 +13,7 @@
         <!-- <div class="set__title">Проектов — {{numberOfHouses}}</div> -->
       </div>
       <div class="set__body">
+        <div class="set__name">{{generalStore.filters.architecture.filter(set => set.id === Number($route.params.setId))[0].style}}</div>
         <div class="set__houses">
           <div
             class="set__house"
@@ -126,7 +128,6 @@ export default defineComponent({
   background: white;
   z-index: 100;
   height: 42px;
-  padding-top: 44px;
   box-sizing: content-box;
   display: grid;
   grid-template-columns: min-content;
@@ -153,9 +154,17 @@ export default defineComponent({
   margin-bottom: 15px;
 }
 .set__body {
-  margin-top: 83px;
+  margin-top: calc(42px + 16px);
   width: 100%;
   padding: 0px 20px;
+}
+.set__name {
+  font-weight: 750;
+  font-size: 26px;
+  line-height: 120%;
+  color: #090909;
+  margin-bottom: 16px;
+
 }
 .set__houses {
   width: 100%;
