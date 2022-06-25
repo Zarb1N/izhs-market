@@ -75,6 +75,8 @@ export default defineComponent({
   height: 100vh;
   background: rgba(9, 9, 9, 0.6);
   transition: all 0.3s;
+  top: 0;
+  left: 0;
 }
 .popup__card {
   background: #FFFFFF;

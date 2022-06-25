@@ -11,7 +11,13 @@
         <div class="status-bar"></div>
         <div class="house__actions">
           <BackButton/>
-          <div class="house__live-btn">Live</div>
+          <div 
+            class="house__live-btn"
+            @click="openBottomPopup(
+              'Live',
+              `Застройщик разместит камеру и можно наблюдать за стройкой`
+            )"
+          >Live</div>
           <FavouritesButton/>
         </div>
         <div class="house__header-carousel">
@@ -87,6 +93,7 @@
         v-show="subpage === 'prices'"
         :data="house"
         :sellers="builders"
+        @openBottomPopup="(title, content) => openBottomPopup(title, content)"
       />
       <ConstructionStages
         v-show="subpage === 'construction-stages'"
@@ -108,7 +115,16 @@
       class="house__primary-button"
       v-show="!isApplicationHouse"
       @click="$router.push(`/house/${$route.params.id}/application`)"
-    >Продолжить</div>
+    >Продолжить с экономией 427 000 ₽</div>
+
+
+    <BottomPopup 
+      :isActive="isBottomPopup"
+      @close="isBottomPopup = false"
+    >
+      <template v-slot:title><div class="house__popup-title">{{bottomPopupTitle}}</div></template>
+      <div class="house__popup-paragraph">{{bottomPopupContent}}</div>
+    </BottomPopup>
     <!-- <ContextMenu
       tabindex="0"
       ref="contextMenu"
@@ -143,7 +159,7 @@ import Discussion from "./Discussion.vue";
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 import FavouritesButton from "@/components/FavouritesButton.vue";
 import BackButton from "@/components/BackButton.vue";
-
+import BottomPopup from "@/components/BottomPopup.vue";
 
 export default defineComponent({
   props: [
@@ -176,7 +192,10 @@ export default defineComponent({
       },
     ] as Array<{[key: string]: string}>,
     currentSlide: 0,
-    subpage: 'prices'
+    subpage: 'prices',
+    isBottomPopup: false,
+    bottomPopupContent: '',
+    bottomPopupTitle: ''
   }),
   methods: {
     openContextMenu(event : any, id : string) {
@@ -216,6 +235,11 @@ export default defineComponent({
         this.height = 1000
         this.isExpandedHeader = true
       }
+    },
+    openBottomPopup(title: string, content: string) {
+      this.isBottomPopup = true
+      this.bottomPopupContent = content
+      this.bottomPopupTitle = title
     }
     
   },
@@ -248,6 +272,7 @@ export default defineComponent({
     IonHeader,
     FavouritesButton,
     BackButton,
+    BottomPopup
   },
 })
 
@@ -350,20 +375,20 @@ export default defineComponent({
 }
 .house__primary-button {
   position: fixed;
-  bottom: 0px;
-  z-index: 10;
-  width: 100%;
-  min-height: 56px;
-  background: var(--green);
-  margin-top: 30px;
+  bottom: 40px;
+  left: 20px;
+  background: #090909;
+  border-radius: 60px;
+  width: calc(100% - 2 * 20px);
+  z-index: 20;
+  height: 49px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.5px;
+  justify-content: center;
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 120%;
+  color: #F9F9F9;
 }
 .house__general-features {
   margin-bottom: 30px;
@@ -428,5 +453,21 @@ export default defineComponent({
 }
 .house__subpages {
   max-width: 100%;
+}
+</style>
+
+<style>
+.house__popup-title {
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #090909;
+}
+.house__popup-paragraph {
+  margin-top: 12px;
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 125%;
+  color: #2D2D2D;
 }
 </style>
