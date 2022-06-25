@@ -1,5 +1,8 @@
 <template>
-  <div class="card">
+  <div 
+    class="card"
+    :style="{backgroundColor: backgroundColor}"
+  >
     <div class="card__header">
       <div class="card__seller-icon">
         <img :src="seller[0].builder_info.image.url"/>
@@ -54,7 +57,8 @@ import { useStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
-    'seller'
+    'seller',
+    'backgroundColor'
   ],
   data: () => ({
     isOpen: false,
@@ -91,7 +95,6 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  background: #5437FF;
   border-radius: 16px;
   padding: 1px;
 }

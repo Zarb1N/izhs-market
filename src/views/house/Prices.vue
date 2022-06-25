@@ -12,9 +12,10 @@
     </div>
     <div class="house-p__sellers-offers-cards">
       <SellerCard
-        v-for="builder_id in Object.keys(sellers)"
+        v-for="(builder_id, index) in Object.keys(sellers)"
         :key="builder_id"
         :seller="sellers[builder_id]"
+        :backgroundColor="index % 2 ? '#883FFF' : '#5437FF'"
       />
     </div>
     <!-- <PopupHint

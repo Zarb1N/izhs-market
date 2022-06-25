@@ -1,6 +1,13 @@
 <template>
-  <div class="house without-scrollbar">
-      <div class="house__header">
+  <div 
+    class="house without-scrollbar"
+    :class="isExpandedHeader ? 'house--expanded-header' : 'house--expanded-body'"
+  >
+      <div 
+        class="house__header"
+        ref="header"
+        :style="{height: height + 'px'}"
+      >
         <div class="status-bar"></div>
         <div class="house__actions">
           <BackButton/>
@@ -34,7 +41,15 @@
 
 
     <div class="house__body">
-      <div class="gestures-line"></div>
+      <div 
+        class="gestures-zone"
+        @click="(e) => switchState(e)"
+        @drag="(e) => dragging(e)"
+        @dragend="(e) => dragEnd(e)"
+        draggable="true"
+      >
+        <div class="gestures-line"></div>
+      </div>
       <div class="house__navigation-items without-scrollbar">
         <div
           class="house__navigation-item"
@@ -138,8 +153,10 @@ export default defineComponent({
   ],
   data: () => ({
     generalStore: useStore(),
+    isExpandedHeader: true,
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
+    height: 180,
     navigationItems: [
       {
         text: 'История цен',
@@ -174,7 +191,33 @@ export default defineComponent({
         this.$refs.contextMenu.$el.focus()
       })
       this.isContextMenu = true
+    },
+    dragging(event) {
+      if (event.y) {
+        this.height = event.y
+      }
+    },
+    dragEnd(event) {
+      if (event.y < 400) {
+        this.height = 0
+        this.isExpandedHeader = false
+      }
+      else {
+        this.height = 1000
+        this.isExpandedHeader = true
+      }
+    },
+    switchState(event) {
+      if (event.y > 400) {
+        this.height = 0
+        this.isExpandedHeader = false
+      }
+      else {
+        this.height = 1000
+        this.isExpandedHeader = true
+      }
     }
+    
   },
   computed: {
     windowWidth() {
@@ -189,6 +232,8 @@ export default defineComponent({
       }
       return false
     },
+  },
+  mounted() {
   },
   components: {
     Flicking,
@@ -212,16 +257,32 @@ export default defineComponent({
 .house {
   height: 100%;
   display: grid;
-  grid-template-rows: calc(225px + 20px) auto;
   grid-template-columns: 100%;
-  overflow: auto;
+  grid-template-rows: min-content auto;
+  overflow: hidden;
+  background: rgba(245, 245, 245, 0.94);
+  transition: all 0.3s;
 }
 .house__header {
-  height: calc(225px + 20px);
   width: 100%;
-  background: rgba(245, 245, 245, 0.94);
   backdrop-filter: blur(26px);
+  transition: all 1s ease;
+  min-height: 200px;  
+  max-height: calc(100vh - 180px);
 }
+.house--expanded-header .house__header {
+  height: 200px;
+}
+/* .house--expanded-header .house__body {
+  height: 100%;
+} */
+.house--expanded-body .house__header {
+  height: calc(100vh - 180px);
+}
+/* .house--expanded-header .house__body {
+  height: 180px;
+} */
+
 .house__actions {
   display: grid;
   grid-template-columns: auto 60px 32px;
@@ -259,15 +320,23 @@ export default defineComponent({
   height: 100%;
   background: #FFFFFF;
   border-radius: 16px 16px 0px 0px;
-  position: relative;
-  padding: 8px 14px calc(56px + 14px) 14px;
+  padding: 0px 14px calc(56px + 14px) 14px;
   width: 100%;
   z-index: 1;
-  box-shadow: 0px 4px 20px 0px #0000001A;
+  box-shadow: 0px 0px 20px 0px #0000001A;
+  overflow: auto;
+}
+.house__body--closed {
+  height: 180px;
+  bottom: 0;
+}
+.gestures-zone {
+  padding: 8px 0px 16px 0px;
+  margin-left: -20px;
+  margin-right: -20px;
 }
 .gestures-line {
   justify-self: center;
-  margin-bottom: 16px;
   display: flex;
   justify-content: center;
   width: 100%;
