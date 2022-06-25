@@ -134,7 +134,8 @@ export default defineComponent({
         this.getDeviceInfo(),
         this.getCountries(),
         this.getWidgets(),
-        this.getBuilders()
+        this.getBuilders(),
+        this.getEquipments(),
       ])
       await this.getArchitechtureStyles()
       this.createViewedHousesArray()
@@ -246,6 +247,10 @@ export default defineComponent({
     async getBuilders() {
       const res = await fetch(`${this.generalStore.server}/builders`)
       this.generalStore.builders = await res.json() 
+    },
+    async getEquipments() {
+      const res = await fetch(`${this.generalStore.server}/equipments`)
+      this.generalStore.equipments = await res.json() 
     },
     getImageURL(iconName : string, goTo : string) {
       const path = new URL(

@@ -17,7 +17,7 @@
         :seller="sellers[builder_id]"
       />
     </div>
-    <PopupHint
+    <!-- <PopupHint
       style="width: min-content; max-width: none;"
       tabindex="0"
       ref="popupHint"
@@ -34,7 +34,7 @@
         style="white-space: nowrap"
         v-html="popupHintText"
       ></div>
-    </PopupHint>
+    </PopupHint> -->
   </div>
 </template>
 

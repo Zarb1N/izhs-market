@@ -71,6 +71,7 @@ export const useStore = defineStore({
       widgets: [] as Array<{}>,
       builders: [] as Array<{}>,
       housesWithoutPrice: [] as Array<{}>,
+      equipments: [] as Array<{}>,
       widgetsList: [
         {
           id: 'state',

@@ -24,19 +24,27 @@ export default defineComponent({
   }),
   methods: {
     async combineHouseAndBuildersInfo(id: string) {
-      const [house, builders] = await Promise.all([
+      const [house, builders, equimpents] = await Promise.all([
         this.getHouseInfo(id),
         this.getBuildersInfo(),
+        this.getEquipments()
       ]);
       if (house.price_history) {
         house.price_history.forEach((item: { [key: string]: any | number }) => {
           builders.forEach((builder: { [key: string]: any }) => {
             if (item.builders_id === builder.id) {
-              item.builder_info = builder;
+              item.builder_info = builder
             }
-          });
-        });
+          })
+          equimpents.forEach(equip => {
+            if (item.equipments_id === equip.id) {
+              item.equipment_info = equip
+            }
+          })
+          console.log(item)
+        })
       }
+      console.log(house)
       this.generalStore.houseInfo = house
       if (this.generalStore.houseInfo.price_history) {
         const prices = this.generalStore.houseInfo.price_history.map( (item: {[key: string]: string | number}) => item.price)
@@ -55,6 +63,10 @@ export default defineComponent({
     async getBuildersInfo() {
       const res = await fetch(`${this.generalStore.server}/builders`);
       return await res.json();
+    },
+    async getEquipments() {
+      const res = await fetch(`${this.generalStore.server}/equipments`)
+      return await res.json() 
     },
     async formatSellersInfo() {
       const data: {
