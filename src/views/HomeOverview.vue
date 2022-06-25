@@ -129,7 +129,6 @@
             /> 
           </div>
         </div>
-
         <div class="home__section home-section">
           <div class="home-section__header">
             <div class="home-section__title">Подборки </div>
@@ -162,7 +161,7 @@
           class="home__section home-section"
           v-for="(set, index) in generalStore.filters.compilations"
           :key="index"
-          v-show="set.preview_main"
+          v-show="set.preview_main && set.houses_in_sets.length"
         >
           <div class="home-section__header">
             <div class="home-section__title">{{set.name}}</div>
@@ -177,6 +176,7 @@
               :cardBudge="set.budge_card"
               :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 200px"
+              @goToHouse="$router.push(`/house/${house.id}/overview`)"
             />
           </div>
           <div 
@@ -185,7 +185,10 @@
           >Просмотреть подборку</div>
         </div>
 
-        <div class="home__section home-section">
+        <div 
+          class="home__section home-section"
+          v-if="generalStore.countries"
+        >
           <div class="home-section__header">
             <div class="home-section__title">По странам мира</div>
             <div class="home-section__header-slot"></div>
@@ -198,7 +201,7 @@
               v-for="set in generalStore.countries"
               :key="set.id"
               style="width: 200px"
-              :backgroundImagePath="set.image && set.image.url"
+              :iconPath="set.image && set.image.url"
               :title="set.name"
               :quantity="set.country_count"
               description="Двустрочное <br/> описание"
@@ -208,7 +211,10 @@
           </div>
         </div>
 
-        <div class="home__section home-section">
+        <div 
+          class="home__section home-section"
+          v-if="generalStore.builders"
+        >
           <div class="home-section__header">
             <div class="home-section__title">По застройщикам</div>
             <div class="home-section__header-slot"></div>
@@ -221,7 +227,7 @@
               v-for="set in generalStore.builders"
               :key="set.id"
               style="width: 200px"
-              :backgroundImagePath="set.image && set.image.url"
+              :iconPath="set.image && set.image.url"
               :title="set.name"
               :quantity="set.builders_count"
               description="Двустрочное <br/> описание"
@@ -232,21 +238,20 @@
           </div>
         </div>
 
-        <div class="home__section home-section">
+        <div 
+          class="home__section home-section"
+          v-if="housesWithoutPrices.length"
+        >
           <div class="home-section__header">
             <div class="home-section__title">Свежайшие без цен</div>
-            <div class="home-section__header-slot"></div>
+            <div class="home-section__header-slot">{{housesWithoutPrices.length}}</div>
           </div>
           <div class="home-section__description">
             Оставьте заявку и получите цены от двух застройщиков с высоким рейтингом
           </div>
           <div class="home-section__horizontal-scroll">
             <Product
-              v-for="
-                house in generalStore.allHouses
-                  .filter( (house) => house.price_history
-                    .reduce( (acc, curr) => acc.price + curr.price) === 0)
-                  .slice(0,6)"
+              v-for="house in housesWithoutPrices"
               :key="house.id"
               :data="house"
               :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
@@ -353,6 +358,19 @@ export default defineComponent({
         return this.generalStore.filters.compilations.filter(item => item.name === 'Проекты недели')[0]
       }
       return false
+    },
+    housesWithoutPrices() {
+      const houses : Array<{}> = []
+      this.generalStore.allHouses.forEach(house => {
+        if (!house.price_history) {
+          houses.push(house)
+        }
+        else if (house.price_history.reduce( (acc, curr) => acc.price + curr.price) === 0) {
+          houses.push(house)
+        }
+      })
+      this.generalStore.housesWithoutPrice = houses
+      return houses
     }
   },
   created() {

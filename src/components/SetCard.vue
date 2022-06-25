@@ -9,10 +9,9 @@
     <div class="s-card__title">{{title}}</div>
     <div class="s-card__description" v-html="description"></div>
     <div class="s-card__quantity">{{quantity}}</div>
-    <img
-      class="s-card__icon"
-      :src="generalStore.getImageURL(iconPath)"
-    />
+    <div class="s-card__icon">
+      <img :src="iconPath"/>
+    </div>
     <div 
       v-if="set"
       class="s-card__details-btn"
@@ -67,8 +66,20 @@ export default defineComponent({
   color: #F9F9F9;
 }
 .s-card__icon {
+  height: 18px;
+  width: 18px;
   margin-bottom: 24px;
   margin-top: 24px;
+  background: #F8F8F8;
+  border: 1px solid rgba(9, 9, 9, 0.08);
+  border-radius: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.s-card__icon img {
+  max-width: 12px;
+  max-height: 12px;
 }
 .s-card__quantity {
   font-weight: 750;

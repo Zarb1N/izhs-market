@@ -15,7 +15,7 @@
           <div class="set__houses">
             <div 
               class="set__house"
-              v-for="house in generalStore.allHouses.filter( (house) => house.price_history.reduce( (acc, curr) => acc.price + curr.price) === 0)"
+              v-for="house in generalStore.housesWithoutPrice"
               :key="house.id"
             >
               <ProductPreview

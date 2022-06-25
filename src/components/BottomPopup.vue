@@ -92,7 +92,6 @@ export default defineComponent({
   display: grid;
   grid-template-columns: auto 32px;
   align-items: center;
-  margin-bottom: 32px;
 }
 .popup__close-btn {
   grid-column: 2 / 3;
