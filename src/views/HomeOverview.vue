@@ -159,7 +159,7 @@
           class="home__section home-section"
           v-for="(set, index) in generalStore.filters.compilations"
           :key="index"
-          v-show="set.preview_main"
+          v-show="set.preview_main && set.houses_in_sets.length"
         >
           <div class="home-section__header">
             <div class="home-section__title">{{set.name}}</div>
@@ -173,6 +173,7 @@
               :data="house"
               :cardBudge="set.budge_card"
               style="width: 200px"
+              @goToHouse="$router.push(`/house/${house.id}/overview`)"
             />
           </div>
           <div 
@@ -240,7 +241,7 @@
         >
           <div class="home-section__header">
             <div class="home-section__title">Свежайшие без цен</div>
-            <div class="home-section__header-slot"></div>
+            <div class="home-section__header-slot">{{housesWithoutPrices.length}}</div>
           </div>
           <div class="home-section__description">
             Оставьте заявку и получите цены от двух застройщиков с высоким рейтингом

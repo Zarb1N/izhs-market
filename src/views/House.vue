@@ -28,20 +28,24 @@ export default defineComponent({
         this.getHouseInfo(id),
         this.getBuildersInfo(),
       ]);
-      house.price_history.forEach((item: { [key: string]: any | number }) => {
-        builders.forEach((builder: { [key: string]: any }) => {
-          if (item.builders_id === builder.id) {
-            item.builder_info = builder;
-          }
+      if (house.price_history) {
+        house.price_history.forEach((item: { [key: string]: any | number }) => {
+          builders.forEach((builder: { [key: string]: any }) => {
+            if (item.builders_id === builder.id) {
+              item.builder_info = builder;
+            }
+          });
         });
-      });
-      this.generalStore.houseInfo = house
-      const prices = this.generalStore.houseInfo.price_history.map( (item: {[key: string]: string | number}) => item.price)
-      this.prices = {
-        min: Math.min(...prices).toString(),
-        max: Math.max(...prices).toString()
       }
-      this.formatSellersInfo()
+      this.generalStore.houseInfo = house
+      if (this.generalStore.houseInfo.price_history) {
+        const prices = this.generalStore.houseInfo.price_history.map( (item: {[key: string]: string | number}) => item.price)
+        this.prices = {
+          min: Math.min(...prices).toString(),
+          max: Math.max(...prices).toString()
+        }
+        this.formatSellersInfo()
+      }
       this.getClubBenefits(this.generalStore.houseInfo.club_id)
     },
     async getHouseInfo(id: string) {
@@ -98,7 +102,8 @@ export default defineComponent({
   },
   mounted() {
     this.combineHouseAndBuildersInfo(this.$route.params.id.toString())
-    this.markHouseAsViewed(Number(this.$route.params.id))
+    this.generalStore.deviceState.viewed_houses_id && this.markHouseAsViewed(Number(this.$route.params.id))
+    console.log(this.generalStore.houseInfo)
   },
   created() {
   },

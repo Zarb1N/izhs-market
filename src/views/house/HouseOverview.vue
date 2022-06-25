@@ -65,7 +65,7 @@
             –
             <span class="ruble-character">{{generalStore.formatNumber(prices.max)}}</span></div>
         </div>
-        <div class="house__description"></div>
+        <div class="house__description">{{house.description}}</div>
       </div>
 
       <Prices
@@ -94,7 +94,7 @@
       v-show="!isApplicationHouse"
       @click="$router.push(`/house/${$route.params.id}/application`)"
     >Продолжить</div>
-    <ContextMenu
+    <!-- <ContextMenu
       tabindex="0"
       ref="contextMenu"
       :style="{
@@ -110,7 +110,7 @@
       "
       @blur="isContextMenu = false"
       @close="isContextMenu = false"
-    />
+    /> -->
   </div>
 </template>
 
