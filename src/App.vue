@@ -163,7 +163,6 @@ export default defineComponent({
       }
       else {
         this.generalStore.deviceState = data
-        console.log(this.generalStore.deviceState)
       }
     },
     async getHouses() {

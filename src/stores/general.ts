@@ -70,6 +70,7 @@ export const useStore = defineStore({
       viewedHouses: [] as Array<{}>,
       widgets: [] as Array<{}>,
       builders: [] as Array<{}>,
+      housesWithoutPrice: [] as Array<{}>,
       widgetsList: [
         {
           id: 'state',
@@ -268,6 +269,7 @@ export const useStore = defineStore({
       setTimeout(() => {
         this.errorNotification = false;
       }, 5000);
+      throw(error)
     },
   },
 });

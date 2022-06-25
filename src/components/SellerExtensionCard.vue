@@ -104,9 +104,9 @@ export default defineComponent({
 
 <style scoped>
 .s-e-card {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0px 0px 1px rgba(91, 104, 113, 0.32), 0px 1px 2px rgba(91, 104, 113, 0.32);
+  background: #5437FF;
+  border-radius: 16px;
+  padding: 1px;
 }
 .s-e-card__header {
   padding: 15px;
@@ -114,7 +114,6 @@ export default defineComponent({
   grid-template-columns: 38px auto 32px;
   gap: 12px;
   align-items: center;
-  background: var(--gray-background);
 
 }
 .s-e-card__seller-icon {

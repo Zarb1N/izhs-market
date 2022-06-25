@@ -1,33 +1,14 @@
 <template>
   <div class="house without-scrollbar">
       <div class="house__header">
-        <div class="house__header-overlay-wrapper">
-          <!-- <div class="house__header-overlay">
-          <div
-            class="house__header-back-btn"
-            @click="$router.go(-1)"
-          >
-            <img :src="generalStore.getImageURL('icons/arrow-left--black.svg')"/>
-          </div>
-          <div class="house__header-overlay-right-group">
-            <div class="house__header-open-stream-btn">
-              <svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="2.5" cy="2.5" r="2.5" fill="#222127"/>
-              </svg>
-              <div>Live</div>
-            </div>
-            <div class="house__header-carousel-pagination">{{currentSlide + 1}}/{{(house && house.images) ? house.images.length : 0}}</div>
-            <div
-              class="house__header-additional-actions-btn"
-              @click="(event) => {openContextMenu(event, $route.params.id.toString())}"
-            >
-              <img :src="generalStore.getImageURL('icons/vertical-three-dots--black.svg')"/>
-            </div>
-          </div>
-        </div> -->
+        <div class="status-bar"></div>
+        <div class="house__actions">
+          <BackButton/>
+          <div class="house__live-btn">Live</div>
+          <FavouritesButton/>
         </div>
         <div class="house__header-carousel">
-          <Flicking
+          <!-- <Flicking
             v-if="house.images"
             :options="{
               circular: true,
@@ -47,12 +28,13 @@
                 :src="house.images[index].url"
               >
             </div>
-          </Flicking>
+          </Flicking> -->
         </div>
     </div>
 
 
     <div class="house__body">
+      <div class="gestures-line"></div>
       <div class="house__navigation-items without-scrollbar">
         <div
           class="house__navigation-item"
@@ -69,7 +51,7 @@
 
       <div class="house__general-features">
         <div class="house__house-name-and-genius-row">
-          <div class="house__house-name title--primary">{{house.name || 'Загружается'}}</div>
+          <div class="house__house-name">{{house.name || 'Загружается'}}</div>
           <img
             class="house__genius-feature"
             :src="generalStore.getImageURL('genius-feature.svg')"
@@ -77,12 +59,13 @@
           />
         </div>
         <div class="house__area-and-price-row">
-          <div class="house__area">{{house.square}} м2</div> |
+          <div class="house__area">{{house.square}} м<span class="sup">2</span></div> •
           <div class="house__price">
-            <span class="ruble-character">{{generalStore.formatNumber(prices.min)}}</span>
-            —
+            <span>{{generalStore.formatNumber(prices.min)}}</span>
+            –
             <span class="ruble-character">{{generalStore.formatNumber(prices.max)}}</span></div>
         </div>
+        <div class="house__description"></div>
       </div>
 
       <Prices
@@ -143,6 +126,8 @@ import ConstructionStages from "./ConstructionStages.vue";
 import Information from "./Information.vue";
 import Discussion from "./Discussion.vue";
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
+import FavouritesButton from "@/components/FavouritesButton.vue";
+import BackButton from "@/components/BackButton.vue";
 
 
 export default defineComponent({
@@ -216,6 +201,8 @@ export default defineComponent({
     IonContent,
     IonRouterOutlet,
     IonHeader,
+    FavouritesButton,
+    BackButton,
   },
 })
 
@@ -231,8 +218,25 @@ export default defineComponent({
 }
 .house__header {
   height: calc(225px + 20px);
-  background: lightblue;
   width: 100%;
+  background: rgba(245, 245, 245, 0.94);
+  backdrop-filter: blur(26px);
+}
+.house__actions {
+  display: grid;
+  grid-template-columns: auto 60px 32px;
+  align-items: center;
+  padding: 0px 9px;
+  gap: 8px;
+}
+.house__live-btn {
+  width: 60px;
+  height: 24px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .house__header-carousel {
   height: 100%;
@@ -250,62 +254,30 @@ export default defineComponent({
   height: calc(225px + 20px);
   width: 100%;
 }
-.house__header-overlay-wrapper {
-  height: 0px;
-  position: relative;
-  z-index: 2;
-}
-.house__header-overlay {
-  padding: 14px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-.house__header-overlay-right-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.house__header-back-btn, .house__header-carousel-pagination, .house__header-additional-actions-btn {
-  height: 32px;
-  width: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--white);
-  border-radius: 13px;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 10px;
-}
-.house__header-back-btn img {
-  height: 22px;
-  width: 22px;
-}
-.house__header-open-stream-btn {
-  width: 47px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--white);
-  border-radius: 13px;
-  text-transform: uppercase;
-  gap: 2px;
-}
-.house__header-open-stream-btn > div {
-  margin-bottom: -2px;
 
-}
 .house__body {
   height: 100%;
   background: #FFFFFF;
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 16px 16px 0px 0px;
   position: relative;
-  margin-top: -20px;
-  padding: 30px 14px calc(56px + 14px) 14px;
+  padding: 8px 14px calc(56px + 14px) 14px;
   width: 100%;
   z-index: 1;
+  box-shadow: 0px 4px 20px 0px #0000001A;
+}
+.gestures-line {
+  justify-self: center;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.gestures-line::after {
+  content: '';
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #E0E0E0;
 }
 .house__primary-button {
   position: fixed;
@@ -329,14 +301,26 @@ export default defineComponent({
 }
 .house__house-name-and-genius-row {
   display: flex;
-  justify-content: space-between;
   margin-bottom: 4px;
-  min-height: 31px;
+  gap: 4px;
+  font-weight: 750;
+  font-size: 20px;
+  line-height: 120%;
+  color: #090909;
+}
+.house__genius-feature {
+  height: 28px;
+  position: relative;
+  margin-top: -12px;
 }
 .house__area-and-price-row {
   height: 23px;
   line-height: 23px;
   font-size: 18px;
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #6A6A6A;
 }
 .house__area-and-price-row > div {
   display: inline-block;
@@ -350,6 +334,7 @@ export default defineComponent({
   display: flex;
   overflow: auto;
   gap: 10px;
+  margin-bottom: 48px;
 }
 .house__navigation-item {
   height: 32px;
@@ -363,7 +348,6 @@ export default defineComponent({
   font-size: 12px;
   line-height: 125%;
   transition: .4s all;
-  margin-bottom: 20px;
 }
 .house__navigation-item--unchoosed {
   color: #090909;

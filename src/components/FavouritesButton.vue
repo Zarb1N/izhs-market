@@ -6,7 +6,7 @@
     <div class="favourites-btn__quantity-circle-wrapper">
       <div
         class="favourites-btn__quantity-circle"
-        v-show="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.length"
+        v-if="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.length"
       >{{generalStore.deviceState.favourites_houses_id.length}}</div>
     </div>
     <img

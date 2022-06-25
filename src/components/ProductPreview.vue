@@ -95,11 +95,12 @@ export default defineComponent({
       return images
     },
     buildersIds() {
-      console.log(this.data)
       const buildersIds = [] as Array<number>
-      this.data.price_history.forEach( (offer : {[key: string] : any}) => {
-        buildersIds.indexOf(offer.builders_id) === -1 && buildersIds.push(offer.builders_id)
-      })
+      if (this.data.price_history) {
+        this.data.price_history.forEach( (offer : {[key: string] : any}) => {
+          buildersIds.indexOf(offer.builders_id) === -1 && buildersIds.push(offer.builders_id)
+        })
+      }
       return buildersIds
     }
   },

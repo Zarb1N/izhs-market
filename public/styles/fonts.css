@@ -4,7 +4,7 @@ body {
   font-family: 'Roboto Flex';
   color: var(--dark-text);
 }
-sup {
+.sup {
   vertical-align: super !important;
 }
 
