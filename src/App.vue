@@ -1,6 +1,6 @@
 <template>
   <IonApp id="vue-app">
-    <IonContent>
+    <IonContent id="vue-app__content" scroll-y="false">
       <ErrorNotification :isActive="generalStore.errorNotification"/>
       <FullscreenLoader v-show="generalStore.isLoading"/> 
       <UpdateNotification 
@@ -336,16 +336,21 @@ export default defineComponent({
 
 <style>
 #vue-app {
-  height: 100%;
+  /* height: 100%; */
   width: 375px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: auto;
   background: #F5F5F5;
+}
+#vue-app__content {
+  height: 100%;
 }
 #vue-app::-webkit-scrollbar {
   display: none;
+}
+.scroll-y {
+  overflow: hidden;
 }
 /* #app__tabbar {
   position: fixed;

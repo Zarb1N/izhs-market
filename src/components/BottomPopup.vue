@@ -43,8 +43,8 @@ export default defineComponent({
 <style scoped>
 .popup {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 375px;
+  height: 100%;
   z-index: 100;
   display: flex;
   align-items: flex-end;
@@ -60,8 +60,8 @@ export default defineComponent({
 }
 .popup__wrapper {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 375px;
+  height: 100%;
   background: rgba(9, 9, 9, 0.6);
   transition: all 0.3s;
 }
