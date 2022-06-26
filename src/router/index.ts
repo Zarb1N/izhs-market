@@ -123,6 +123,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../views/menu/MenuGeneral.vue')
       },
       {
+        name: '',
+        path: 'status',
+        component: () => import('../views/menu/StatusPage.vue')
+      },
+      {
         name: 'Мой статус',
         path: 'my-state',
         component: () => import(`../views/menu/MyState.vue`)

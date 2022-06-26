@@ -134,7 +134,7 @@ const onBack = () => router.back()
   background: #FFFFFF;
   border-radius: 16px;
   padding: 16px;
-  margin-bottom: 16px;
+  margin: 0 1px 16px;
 }
 
 .contracts__card-question>span {

@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="menu__buttons">
-        <section class="menu__status">
+        <section @click="redirectToStatusPage" class="menu__status">
           <p>{{ status }}</p>
           <img src="@/assets/status-large.svg" alt="status">
         </section>
@@ -74,6 +74,7 @@ import { useGeneralStore } from "@/stores/general";
 import { storeToRefs } from "pinia";
 import CenterPopup from "../../components/CenterPopup.vue";
 import type { IDeviceState, IImage } from "@/types/IDeviceState";
+import { useRouter } from "vue-router";
 
 interface IButton {
   name: string
@@ -89,6 +90,7 @@ const isEditNamePopupShown = ref(false)
 const isEditNumberPopupShown = ref(false)
 const initialState = ref({ name: '', number: '' })
 const isProfileEdit = ref(false)
+const router = useRouter()
 
 const status = 'Все инженеры и Росреестр за 0\n₽ — оплатите первый этап строительства до 25\nавгуста и Genius активируется автоматически'
 
@@ -108,6 +110,8 @@ const getStyle = computed(() => {
   if (!image) return 'background: #5437FF;'
   return `background: url(${image.path}); background-size: contain; background-repeat: no-repeat;`
 })
+
+const redirectToStatusPage = () => router.push('/menu/status')
 
 const showNameEditPopup = () => {
   isEditNamePopupShown.value = true
