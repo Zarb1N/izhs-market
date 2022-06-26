@@ -41,7 +41,7 @@
               </div>
               <div class="contracts__card-link">
                 <img src="@/assets/document-link-icon.svg" alt="document-link-icon">
-                <a :href="getOfertaLink()">Полный текст оферты</a>
+                <a :href="getLink('oferta_genius')">Полный текст оферты</a>
               </div>
             </div>
           </section>
@@ -55,7 +55,7 @@
               </span>
               <div class="contracts__card-link">
                 <img src="@/assets/document-link-icon.svg" alt="document-link-icon">
-                <a :href="getOfertaTemplateLink()">Единый шаблон оферты для всех застройщиков</a>
+                <a :href="getLink('oferta_build_template')">Единый шаблон оферты для всех застройщиков</a>
               </div>
             </div>
           </section>
@@ -84,14 +84,8 @@ onMounted(async () => {
   await fetchSystem()
 })
 
-const getOfertaLink = () => {
-  const obj = getSystems.value.find(sys => sys.name === 'oferta_genius')
-  if (!obj) return ''
-  return obj.value
-}
-
-const getOfertaTemplateLink = () => {
-  const obj = getSystems.value.find(sys => sys.name === 'oferta_build_template')
+const getLink = (name: string) => {
+  const obj = getSystems.value.find(sys => sys.name === name)
   if (!obj) return ''
   return obj.value
 }
@@ -125,7 +119,7 @@ const onBack = () => router.back()
 
 .contracts__card-link {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin-bottom: 8px;
 }

@@ -49,7 +49,7 @@ export default defineComponent({
       {
         name: 'Росреестр',
         icon: 'rosreestr',
-        goTo: 'question-answer',
+        goTo: 'ros-registry',
       },
       {
         name: 'Помощь',
