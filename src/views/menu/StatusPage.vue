@@ -108,6 +108,7 @@ import { useGeneralStore } from '@/stores/general';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { IonContent } from '@ionic/vue'
 
 const router = useRouter()
 const title = 'Статус'

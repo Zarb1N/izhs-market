@@ -113,6 +113,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/Menu.vue'),
     children: [
       {
+        name: 'ИЖС Стандарт',
+        path: 'izhs-standart',
+        component: () => import('../views/menu/IZHSstadart.vue')
+      },
+      {
         name: 'Помощь',
         path: 'help',
         component: () => import('../views/menu/HelpPage.vue')
@@ -151,11 +156,6 @@ const routes: RouteRecordRaw[] = [
         name: 'Вопрос — ответ',
         path: 'question-answer',
         component: () => import(`../views/menu/QuestionAnswer.vue`)
-      },
-      {
-        name: 'ИЖС Стандарт',
-        path: 'izs-standard',
-        component: () => import(`../views/menu/IzsStandard.vue`)
       },
       {
         name: 'Договоры',
