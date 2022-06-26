@@ -150,7 +150,7 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'Договоры',
         path: 'contracts',
-        component: () => import(`../views/menu/Contracts.vue`)
+        component: () => import(`../views/menu/ContractsPage.vue`)
       },
       {
         name: 'Росреестр',

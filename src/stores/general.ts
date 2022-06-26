@@ -2,11 +2,13 @@ import { defineStore } from "pinia";
 import { Share } from "@capacitor/share";
 import type { IDeviceState } from "@/types/IDeviceState";
 import type { IQuestion } from "@/types/IQuestion";
+import type { ISystem } from "@/types/ISystem";
 
 const useStore = defineStore({
   id: "general",
   state() {
     return {
+      systems: [] as ISystem[],
       questions: [] as IQuestion[],
       server: "https://xzim-bwxc-viqv.n7.xano.io/api:ek4QHJJA",
       telegramSupport: "https://t.me/zarb1n",
@@ -190,6 +192,9 @@ const useStore = defineStore({
     },
     getQuestions(): IQuestion[] {
       return this.questions
+    },
+    getSystems(): ISystem[] {
+      return this.systems
     }
   },
   actions: {
@@ -221,6 +226,14 @@ const useStore = defineStore({
       });
       const data: IQuestion[] = await res.json()
       this.questions = data
+    },
+    async fetchSystem() {
+      const res = await fetch(`${this.server}/system`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      })
+      const data: ISystem[] = await res.json()
+      this.systems = data
     },
     async getUserState() {
       const res = await fetch(`${this.server}/states/${this.deviceId}`, {

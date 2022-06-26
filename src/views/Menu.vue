@@ -43,32 +43,32 @@ export default defineComponent({
       },
       {
         name: 'Договоры',
-        icon: 'check-mark-button',
-        goTo: 'how-it-works',
+        icon: 'contracts',
+        goTo: 'contracts',
       },
       {
         name: 'Росреестр',
-        icon: 'shooting-star',
+        icon: 'rosreestr',
         goTo: 'question-answer',
       },
       {
         name: 'Помощь',
-        icon: 'safety-vest',
+        icon: 'info',
         goTo: 'izs-standard',
       },
       {
         name: 'Промокоды',
-        icon: 'memo',
+        icon: 'promo-codes',
         goTo: 'contracts',
       },
       {
         name: 'Партнёрам',
-        icon: 'bank',
+        icon: 'partners',
         goTo: 'for-partners',
       },
       {
         name: 'Избранное',
-        icon: 'speech-balloon',
+        icon: 'favorites',
         goTo: 'communication',
       },
     ]
