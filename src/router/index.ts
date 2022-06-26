@@ -113,6 +113,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/Menu.vue'),
     children: [
       {
+        name: 'Помощь',
+        path: 'help',
+        component: () => import('../views/menu/HelpPage.vue')
+      },
+      {
         name: 'Девелоперам',
         path: 'for-partners',
         component: () => import('../views/menu/SystemPage.vue')

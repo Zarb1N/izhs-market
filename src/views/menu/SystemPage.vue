@@ -37,18 +37,24 @@
       <section class="status-bar__modal-body">
         <ul>
           <li class="status-bar__modal-contact">
-            <p>Позвонить</p>
-            <img src="@/assets/tel-icon.svg" alt="tel-icon">
+            <a :href="`tel:${getLink('number')}`" target="_blank">
+              <p>Позвонить</p>
+              <img src="@/assets/tel-icon.svg" alt="tel-icon">
+            </a>
           </li>
           <div class="divider"></div>
           <li class="status-bar__modal-contact">
-            <p>Написать в Telegram</p>
-            <img src="@/assets/telegram-icon.svg" alt="telegram-icon">
+            <a :href="getLink('telegram')" target="_blank">
+              <p>Написать в Telegram</p>
+              <img src="@/assets/telegram-icon.svg" alt="telegram-icon">
+            </a>
           </li>
           <div class="divider"></div>
           <li class="status-bar__modal-contact">
-            <p>Написать в Whatsapp</p>
-            <img src="@/assets/whatsapp-icon.svg" alt="whatsapp-icon">
+            <a :href="getLink('whatsapp')" target="_blank">
+              <p>Написать в Whatsapp</p>
+              <img src="@/assets/whatsapp-icon.svg" alt="whatsapp-icon">
+            </a>
           </li>
         </ul>
       </section>
@@ -57,13 +63,30 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import BottomPopup from '../../components/BottomPopup.vue';
+import { useGeneralStore } from '../../stores/general'
+import { storeToRefs } from 'pinia';
+import { IonContent } from '@ionic/vue'
+
 const title = 'Развивайте бизнес вместе с ИЖС Маркет'
 
 const isPopupShown = ref(false)
 const router = useRouter()
+const store = useGeneralStore()
+const { fetchSystem } = store
+const { getSystems } = storeToRefs(store)
+
+onMounted(async () => {
+  await fetchSystem()
+})
+
+const getLink = (name: string) => {
+  const obj = getSystems.value.find(sys => sys.name === name)
+  if (!obj) return ''
+  return obj.value
+}
 
 const onShowPopup = () => {
   isPopupShown.value = true
@@ -82,11 +105,15 @@ const onBack = () => router.back()
 }
 
 .status-bar__modal-contact {
+  padding: 12px 16px;
+  background: #FFFFFF;
+}
+
+.status-bar__modal-contact a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14.5px 15px;
-  background: #FFFFFF;
+  width: 100%;
 }
 
 .status-bar__modal-contact:first-of-type {

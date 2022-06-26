@@ -75,6 +75,7 @@ import { storeToRefs } from "pinia";
 import CenterPopup from "../../components/CenterPopup.vue";
 import type { IDeviceState, IImage } from "@/types/IDeviceState";
 import { useRouter } from "vue-router";
+import { IonContent } from '@ionic/vue'
 
 interface IButton {
   name: string
@@ -231,7 +232,7 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 }
 
 .menu__navigation {
-  overflow-y: auto;
+  overflow-y: overlay;
 }
 
 .menu__status {

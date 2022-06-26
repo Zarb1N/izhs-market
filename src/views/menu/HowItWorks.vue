@@ -51,6 +51,7 @@ import { useGeneralStore } from '@/stores/general';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { IonContent } from '@ionic/vue';
 
 const title = 'Как это работает?'
 const router = useRouter()
@@ -72,7 +73,7 @@ const onBack = () => router.back()
   display: grid;
 }
 
-.how-it-works__form > p {
+.how-it-works__form>p {
   margin-top: 7px;
   font-weight: 750;
   font-size: 12px;
@@ -150,7 +151,7 @@ const onBack = () => router.back()
   border-radius: 12px;
 }
 
-.how-it-works__list-item > p {
+.how-it-works__list-item>p {
   font-weight: 750;
   font-size: 14px;
   line-height: 17px;

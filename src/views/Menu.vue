@@ -54,7 +54,7 @@ export default defineComponent({
       {
         name: 'Помощь',
         icon: 'info',
-        goTo: 'izs-standard',
+        goTo: 'help',
       },
       {
         name: 'Промокоды',
