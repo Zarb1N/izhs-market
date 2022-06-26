@@ -1,60 +1,50 @@
 <template>
-  <div class="s-e-card">
-    <div
-      class="s-e-card__header"
-      @click="isOpen = !isOpen"
+  <div 
+    class="card"
+    :style="{backgroundColor: backgroundColor}"
+  >
+    <div class="card__header">
+      <div class="card__seller-icon">
+        <img :src="seller[0].builder_info.image.url"/>
+      </div>
 
-    >
-      <img
-        class="s-e-card__seller-icon"
-        :src="seller[0].builder_info.image.url"
-      />
-      <div class="s-e-card__main-info">
-        <div class="s-e-card__seller-name">{{seller[0].builder_info.name}}</div>
-        <div class="s-e-card__prices-range paragraph">
+      
+      <div class="card__main-info">
+        <div class="card__seller-name">{{seller[0].builder_info.name}}</div>
+        <div class="card__prices-range paragraph">
           От
           <span class="ruble-character">{{generalStore.formatNumber(priceRange[0])}}</span>
           до
           <span class="ruble-character">{{generalStore.formatNumber(priceRange[1])}}</span>
         </div>
       </div>
-      <img
-        class="s-e-card__open-body-btn"
-        src="../assets/icons/arrow-bottom.svg"
-        :class="isOpen ? 's-e-card__open-body-btn--top' : 's-e-card__open-body-btn--bottom'"
-      />
     </div>
     <div
-      class="s-e-card__body without-scrollbar"
-      :class="isOpen ? 's-e-card__body--opened' : 's-e-card__body--closed'"
-    >
-      <div class="s-e-card__offers">
+      class="card__body without-scrollbar card__body--opened">
+      <div class="card__offers">
         <div
-          class="s-e-card__offer"
+          class="card__offer"
           v-for="(offer, index) in seller"
           :key="index"
         >
-          <div class="s-e-card__offer-header">
-            <div class="s-e-card__offer-name">{{offer.name}}</div>
-            <div class="s-e-card__offer-header-divider"></div>
-            <div class="s-e-card__offer-price ruble-character">{{generalStore.formatNumber(offer.price)}} </div>
-            <div class="s-e-card__offer-header-divider"></div>
-            <div class="s-e-card__offer-date">{{offer.date}}</div>
+          <div class="card__offer-header">
+            <div class="card__offer-name">{{offer.equipment_info.name}}</div>
+            <div class="card__offer-price ruble-character">{{generalStore.formatNumber(offer.price)}} </div> •
+            <div class="card__offer-date">{{offer.date}}</div>
           </div>
-          <div class="s-e-card__offer-body paragraph ">
-            {{offer.description}}
+          <div class="card__offer-body ">
+            {{offer.equipment_info.description}}
           </div>
-          <div class="s-e-card__divider"></div>
         </div>
       </div>
-      <div class="s-e-card__employee">
+      <div class="card__employee">
         <img
-          class="s-e-card__employee-image"
+          class="card__employee-image"
           :src="generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].image.url"
         />
-        <div class="s-e-card__employee-info">
-          <div class="s-e-card__employee-name">С уважением, <br/> {{generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].name}}</div>
-          <div class="s-e-card__employee-post paragraph">{{generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].post}}</div>
+        <div class="card__employee-info">
+          <div class="card__employee-name">С уважением, <br/> {{generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].name}}</div>
+          <div class="card__employee-post ">{{generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].role}}</div>
         </div>
       </div>
     </div>
@@ -67,7 +57,8 @@ import { useStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
-    'seller'
+    'seller',
+    'backgroundColor'
   ],
   data: () => ({
     isOpen: false,
@@ -103,106 +94,136 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.s-e-card {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0px 0px 1px rgba(91, 104, 113, 0.32), 0px 1px 2px rgba(91, 104, 113, 0.32);
+.card {
+  border-radius: 16px;
+  padding: 1px;
 }
-.s-e-card__header {
+.card__header {
   padding: 15px;
   display: grid;
-  grid-template-columns: 38px auto 32px;
-  gap: 12px;
+  grid-template-columns: 38px auto;
+  gap: 16px;
   align-items: center;
-  background: var(--gray-background);
 
 }
-.s-e-card__seller-icon {
-  height: 38px;
-  width: 38px;
+.card__seller-icon {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 20px;
 }
-.s-e-card__main-info {
+.card__seller-icon img {
+  max-height: 24px;
+  max-width: 24px;
+}  
+.card__main-info {
   width: 100%;
 }
-.s-e-card__seller-name {
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
+.card__seller-name {
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #F9F9F9;
+  font-stretch: 151;
+  margin-bottom: 4px;
 }
-.s-e-card__prices-range {
-
+.card__prices-range {
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 120%;
+  color: #E0E0E0;
+  font-stretch: 151;
 }
-.s-e-card__open-body-btn {
+.card__open-body-btn {
   transition: .5s all;
 }
-.s-e-card__open-body-btn--top {
+.card__open-body-btn--top {
   transform: rotate(-180deg);
 }
-.s-e-card__open-body-btn--bottom {
+.card__open-body-btn--bottom {
   transform: rotate(0deg);
 }
-.s-e-card__body {
-  background: white;
+.card__body {
   transition: .5s max-height, .5s padding;
 }
-.s-e-card__body--closed {
+.card__body--closed {
   overflow: hidden;
-  padding: 0px 20px;
   max-height: 0px !important;
 }
-.s-e-card__body--opened {
-  padding: 20px 20px;
+.card__body--opened {
   max-height: 1000px;
   overflow-y: auto;
 }
-.s-e-card__offers {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.card__offers {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 1px;
 }
-.s-e-card__offer {}
-.s-e-card__offer-header {
-  font-weight: bold;
+.card__offer {
+  padding: 16px 16px 24px 16px;
+  background: #F9F9F9;
+  border-radius: 12px;
+}
+.card__offer-header {
+  margin-bottom: 16px;
+}
+.card__offer-name {
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #090909;
+  margin-bottom: 4px;
+}
+.card__offer-price, .card__offer-date {
+  display: inline-block;
+  font-weight: 750;
   font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  display: flex;
-  gap: 5px;
-  height: 15px;
-  align-items: center;
-  margin-bottom: 7px;
+  line-height: 125%;
+  color: #2D2D2D;
+
 }
-.s-e-card__offer-header > div {
-  white-space: nowrap;
-}
-.s-e-card__offer-header-divider {
+.card__offer-header-divider {
   width: 2px;
   height: 80%;
   background: var(--lightgray-text);
 }
-.s-e-card__offer-body {
-  margin-bottom: 20px;
+.card__offer-body {
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 125%;
+  color: #6A6A6A;
 }
-.s-e-card__divider {
+.card__divider {
   height: 1px;
   width: 100%;
   background: #D8D7E0;
 }
-.s-e-card__employee {
-  display: flex;
+.card__employee {
+  padding: 24px 15px;
+  display: grid;
+  grid-template-columns: 40px auto;
   gap: 12px;
-  margin-top: 20px;
 }
-.s-e-card__employee-image {
-  height: 38px;
-  width: 38px;
-  border-radius: 10px;
+.card__employee-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
 }
-.s-e-card__employee-name {
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
-  margin-bottom: 2px;
+.card__employee-name {
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #F9F9F9;
+  margin-bottom: 4px;
+}
+.card__employee-post {
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 120%;
+  color: #E0E0E0;
+  font-stretch: 151;
 }
 </style>

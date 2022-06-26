@@ -1,6 +1,6 @@
 <template>
   <IonApp id="vue-app">
-    <IonContent>
+    <IonContent id="vue-app__content" scroll-y="false">
       <ErrorNotification :isActive="generalStore.errorNotification"/>
       <FullscreenLoader v-show="generalStore.isLoading"/> 
       <UpdateNotification 
@@ -134,7 +134,8 @@ export default defineComponent({
         this.getDeviceInfo(),
         this.getCountries(),
         this.getWidgets(),
-        this.getBuilders()
+        this.getBuilders(),
+        this.getEquipments(),
       ])
       await this.getArchitechtureStyles()
       this.createViewedHousesArray()
@@ -163,7 +164,6 @@ export default defineComponent({
       }
       else {
         this.generalStore.deviceState = data
-        console.log(this.generalStore.deviceState)
       }
     },
     async getHouses() {
@@ -247,6 +247,10 @@ export default defineComponent({
     async getBuilders() {
       const res = await fetch(`${this.generalStore.server}/builders`)
       this.generalStore.builders = await res.json() 
+    },
+    async getEquipments() {
+      const res = await fetch(`${this.generalStore.server}/equipments`)
+      this.generalStore.equipments = await res.json() 
     },
     getImageURL(iconName : string, goTo : string) {
       const path = new URL(
@@ -332,20 +336,26 @@ export default defineComponent({
 
 <style>
 #vue-app {
-  height: 100%;
+  /* height: 100%; */
   width: 375px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: auto;
+  background: #F5F5F5;
+}
+#vue-app__content {
+  height: 100%;
 }
 #vue-app::-webkit-scrollbar {
   display: none;
 }
-#app__tabbar {
+.scroll-y {
+  overflow: hidden;
+}
+/* #app__tabbar {
   position: fixed;
   bottom: 0;
-}
+} */
 .page {
   height: 100%;
   background: linear-gradient(239.67deg, #227164 0.34%, #278878 61.18%);
