@@ -3,7 +3,7 @@
     <div class="system-page">
       <div class="status-bar"></div>
       <div class="navigation-bar">
-        <img src="@/assets/chevron-left.svg" alt="chevron-left">
+        <img @click="onBack" src="@/assets/chevron-left.svg" alt="chevron-left">
         <p class="navigation-bar__title">Меню</p>
       </div>
       <section class="system-page__body">
@@ -58,14 +58,19 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 import BottomPopup from '../../components/BottomPopup.vue';
 const title = 'Развивайте бизнес вместе с ИЖС Маркет'
 
 const isPopupShown = ref(false)
+const router = useRouter()
 
 const onShowPopup = () => {
   isPopupShown.value = true
 }
+
+const onBack = () => router.back()
+
 </script>
 
 <style scoped>
