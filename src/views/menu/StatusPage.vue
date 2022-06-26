@@ -96,7 +96,7 @@
         <section class="status__footer">
           <p>Все инженеры и Росреестр за 0 ₽ — оплатите первый этап строительства до 25 августа и Genius активируется
             автоматически</p>
-          <button class="button">Выбрать дом</button>
+          <button @click="onRedirectToCatalog" class="button">Выбрать дом</button>
         </section>
       </section>
     </div>
@@ -114,6 +114,10 @@ const title = 'Статус'
 const store = useGeneralStore()
 const { getUserState } = store
 const { getDeviceState } = storeToRefs(store)
+
+const onRedirectToCatalog = () => {
+  router.push('/catalog')
+}
 
 onMounted(async () => {
   await getUserState()
