@@ -34,6 +34,12 @@
               <img class="live-example" src="@/assets/live-example.png" alt="live-example">
             </section>
           </li>
+          <li v-for="item in getQuestions" :key="item.id" class="how-it-works__list-item">
+            <p>{{ item.questions }}</p>
+            <section class="how-it-works__form">
+              <p>{{ item.answer }}</p>
+            </section>
+          </li>
         </ul>
       </section>
     </div>
@@ -42,6 +48,7 @@
 
 <script lang="ts" setup>
 import { useGeneralStore } from '@/stores/general';
+import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -49,10 +56,12 @@ const title = 'Как это работает?'
 const router = useRouter()
 const store = useGeneralStore()
 
-const {  } = store
+const { fetchQuestions } = store
+
+const { getQuestions } = storeToRefs(store)
 
 onMounted(async () => {
-  await 
+  await fetchQuestions()
 })
 
 const onBack = () => router.back()
@@ -61,6 +70,15 @@ const onBack = () => router.back()
 <style scoped>
 .how-it-works__form {
   display: grid;
+}
+
+.how-it-works__form > p {
+  margin-top: 7px;
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 15px;
+  color: #6A6A6A;
+  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
 .live-example {
@@ -130,6 +148,14 @@ const onBack = () => router.back()
   padding: 16px 16px 24px;
   background: #FFFFFF;
   border-radius: 12px;
+}
+
+.how-it-works__list-item > p {
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 17px;
+  color: #090909;
+  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
 .how-it-works__list-item::before {

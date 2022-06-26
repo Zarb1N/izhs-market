@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import { Share } from "@capacitor/share";
 import type { IDeviceState } from "@/types/IDeviceState";
+import type { IQuestion } from "@/types/IQuestion";
 
 const useStore = defineStore({
   id: "general",
   state() {
     return {
+      questions: [] as IQuestion[],
       server: "https://xzim-bwxc-viqv.n7.xano.io/api:ek4QHJJA",
       telegramSupport: "https://t.me/zarb1n",
       whatsappSupport: "https://wa.me/qr/QQ4VTH3AZSIFM1",
@@ -186,6 +188,9 @@ const useStore = defineStore({
     getDeviceState(): IDeviceState {
       return this.deviceState;
     },
+    getQuestions(): IQuestion[] {
+      return this.questions
+    }
   },
   actions: {
     formatNumber: (val: number, decimalsNumber = 0) => {
@@ -208,6 +213,14 @@ const useStore = defineStore({
     },
     getImageURL(path: string) {
       return new URL(`../assets/${path}`, import.meta.url).href;
+    },
+    async fetchQuestions() {
+      const res = await fetch(`${this.server}/questions`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+      const data: IQuestion[] = await res.json()
+      this.questions = data
     },
     async getUserState() {
       const res = await fetch(`${this.server}/states/${this.deviceId}`, {
