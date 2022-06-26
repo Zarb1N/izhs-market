@@ -14,15 +14,16 @@ export interface IDeviceState {
 }
 
 export interface IMeta {
-  [key: string]: string
+  width: number
+  height: number
 }
 
 export interface IImage {
   path: string;
   name: string;
   type: string;
-  size: number;
-  mime: string;
-  url: string;
-  meta: IMeta;
+  size?: number;
+  mime?: string;
+  url?: string;
+  meta?: IMeta;
 }

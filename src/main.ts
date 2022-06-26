@@ -1,5 +1,6 @@
 import { createApp/*, useAttrs, useAttrs*/ } from 'vue'
 import { createPinia } from 'pinia'
+import Maska from 'maska'
 import { IonicVue } from '@ionic/vue';
 
 import '@ionic/vue/css/core.css';
@@ -30,7 +31,7 @@ import { useStore } from './stores/general'
 
 const app = createApp(App)
 
-
+app.use(Maska)
 app.use(createPinia())
 // app.use(IonicVue)
 app.use(router)

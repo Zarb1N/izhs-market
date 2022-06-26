@@ -114,63 +114,63 @@ export const useStore = defineStore({
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'laws',
           name: 'Законы',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'blacklist',
           name: 'Черный список',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'darwin-prize',
           name: 'Премия Дарвина',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'system-hacking',
           name: 'Хакнуть систему',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'builders-fight',
           name: 'Битва застройщиков',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'ours-fails',
           name: 'Наши фейлы',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'check-costs',
           name: 'Проверить смету',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'discussions',
           name: 'Дискуссии',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'cheaper',
           name: 'Где дешевле',
           isPossibleToHide: true,
@@ -213,6 +213,15 @@ export const useStore = defineStore({
         headers: { "Content-type": "application/json" },
       });
       const data: IDeviceState = await res.json();
+      this.deviceState = data;
+    },
+    async updateUserState(body: IDeviceState) {
+      const res = await fetch(`${this.server}/states/${this.deviceId}`, {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body)
+      })
+      const data: IDeviceState = await res.json()
       this.deviceState = data;
     },
     async addToFavorites(houseId: number) {
