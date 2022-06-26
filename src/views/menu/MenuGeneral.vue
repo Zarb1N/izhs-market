@@ -4,7 +4,6 @@
       <div class="menu__profile" :style="getStyle">
         <div class="menu__user-info">
           <img v-if="!getDeviceState.image" class="menu__background" src="@/assets/empty-avatar.svg" alt="empty-avatar">
-          <!-- <img v-else :src="getDeviceState.image.path" class="menu__background" alt="user-avatar"> -->
           <div class="menu__user-header">
             <div class="menu__user-name">
               <img v-if="!initialState.name" src="@/assets/add-icon.svg" alt="add-icon" @click="showNameEditPopup" />
@@ -40,7 +39,7 @@
           <img src="@/assets/status-large.svg" alt="status">
         </section>
         <section class="menu__navigation">
-          <MenuButton v-for="(btn, index) in buttons" :key="index" :data="btn"
+          <MenuButton :is-link="true" v-for="(btn, index) in buttons" :key="index" :data="btn"
             @click="() => { $router.push(`/menu/${btn.goTo}`) }" />
         </section>
       </div>
@@ -107,7 +106,7 @@ const computedNumber = computed(() => getDeviceState.value.number || 'Ваш т�
 const getStyle = computed(() => {
   const image = getDeviceState.value.image
   if (!image) return 'background: #5437FF;'
-  return `background: url(${image.path}); background-size: contain;`
+  return `background: url(${image.path}); background-size: contain; background-repeat: no-repeat;`
 })
 
 const showNameEditPopup = () => {
@@ -229,7 +228,6 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 
 .menu__navigation {
   overflow-y: auto;
-  max-height: calc(100% - 90px - 24px + 8px);
 }
 
 .menu__status {
@@ -239,6 +237,7 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  margin-bottom: 32px;
 }
 
 .menu__status p {
@@ -347,11 +346,12 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
   margin-top: -36px;
   background: #F5F5F5;
   border-radius: 24px 24px 0px 0px;
-  padding: 20px 20px 90px 20px;
+  padding: 20px 20px 0 20px;
   z-index: 100;
   grid-row: 2 / 3;
-  max-height: calc(100vh + 24px - 120px - 24px);
+  max-height: calc(100vh - 120px - 90px);
   overflow: hidden;
+  display: grid;
 }
 
 .menu__buttons::before {
