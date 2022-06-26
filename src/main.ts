@@ -27,7 +27,7 @@ import './theme/variables.css';
 
 import App from './App.vue'
 import router from './router'
-import { useStore } from './stores/general'
+import { useGeneralStore } from './stores/general'
 
 const app = createApp(App)
 
@@ -37,7 +37,7 @@ app.use(createPinia())
 app.use(router)
 app.use(VueVirtualScroller);
 
-app.config.errorHandler = (error) => useStore().showErrorNotification(error);
+app.config.errorHandler = (error) => useGeneralStore().showErrorNotification(error);
 
 
 app.mount('#app')

@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ProductPreview from "../../components/ProductPreview.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
@@ -68,7 +68,7 @@ export default defineComponent({
     'filters'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
   }),

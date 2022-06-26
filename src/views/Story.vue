@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent, ref } from "@vue/runtime-core";
 // @ts-ignore
 import Stories from "vue3-insta-stories";
@@ -49,7 +49,7 @@ export default defineComponent({
   },
   */
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     stories: [] as Array<{[key: string]: any}>
   }),
   computed: {

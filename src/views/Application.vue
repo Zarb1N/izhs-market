@@ -155,7 +155,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "../components/ContentCard.vue";
 import PopupHint from "../components/PopupHint.vue";
@@ -167,7 +167,7 @@ export default defineComponent({
     'cashback'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     hintText: '' as string,
     isHint: false,
     clickCoordinates: {x: 0, y: 0},

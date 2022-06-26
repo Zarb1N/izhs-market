@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ProductPreview from "@/components/ProductPreview.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
@@ -63,7 +63,7 @@ import BackButton from "@/components/BackButton.vue";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   methods: {
     openContextMenu(event : any, id : string) {

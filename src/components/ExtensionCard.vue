@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 
 
 export default defineComponent({
@@ -52,7 +52,7 @@ export default defineComponent({
   data: () => ({
     isOpen: false,
     priceRange: [] as Array<number>,
-    generalStore: useStore()
+    generalStore: useGeneralStore()
   }),
   methods: {
   },

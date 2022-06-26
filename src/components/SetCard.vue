@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 
@@ -37,7 +37,7 @@ export default defineComponent({
     'set',
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   })
 })
 </script>

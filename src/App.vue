@@ -32,7 +32,7 @@
 import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import { useAppState } from '@/stores/appState'
 import {
   IonTabBar,
@@ -70,7 +70,7 @@ App.addListener('backButton', () => {
 });
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     appState: useAppState(),
     isUpdate: false,
     isMandatoryUpdate: false,

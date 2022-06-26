@@ -274,7 +274,7 @@ import { defineComponent } from 'vue'
 import FeaturesCards from '@/parts/FeaturesCards.vue'
 import StoryPreview from '@/components/StoryPreview.vue'
 import ProductPreview from '@/components/ProductPreview.vue'
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import ModalWindow from '../components/ModalWindow.vue'
 import RegionChoosing from '../parts/RegionChoosing.vue'
 import ContextMenu from '../components/ContextMenu.vue'
@@ -305,8 +305,8 @@ export default defineComponent({
   data: () => ({
     allHouses: [] as Array<IHouse>,
     selectedHouses: [] as Array<{[key: string]: any}>,
-    general: useStore(),
-    generalStore: useStore(),
+    general: useGeneralStore(),
+    generalStore: useGeneralStore(),
     appState: useAppState(),
     choosedStyle: {} as {[key: string]: any},
     allStories: [] as Array<{[key: string]: string}>,

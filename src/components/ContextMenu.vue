@@ -14,12 +14,12 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   props: [
     'options'

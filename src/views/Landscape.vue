@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
@@ -73,7 +73,7 @@ import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 export default defineComponent({
   name: 'Landscape',
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     currentSlide: 0,
     landscapeStyles: [
       {

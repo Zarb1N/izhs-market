@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ConstructionStages from "@/components/ConstructionStages.vue";
 import ContentCard from "@/components/ContentCard.vue";
@@ -24,7 +24,7 @@ import ConstructionTeam from "@/components/ConstructionTeam.vue";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   components: {
     Stages: ConstructionStages,

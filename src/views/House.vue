@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 
 export default defineComponent({
   name: 'House',
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     prices: {} as {[key: string]: string | object},
     builders: {},
     cashback: [] as Array<{}>,

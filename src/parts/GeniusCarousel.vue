@@ -38,12 +38,12 @@
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import CarouselPagination from "@/components/CarouselPagination.vue";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     cards: [
       {
         description: 'Росреестр и все <br/> инженеры в одном <br/> окне',

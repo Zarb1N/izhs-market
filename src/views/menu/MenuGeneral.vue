@@ -70,7 +70,7 @@
 import { computed, defineProps, onMounted, ref } from "vue";
 import { Camera, CameraResultType, type Photo } from '@capacitor/camera';
 import MenuButton from "@/components/MenuButton.vue";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { storeToRefs } from "pinia";
 import CenterPopup from "../../components/CenterPopup.vue";
 import type { IDeviceState, IImage } from "@/types/IDeviceState";
@@ -83,7 +83,7 @@ interface IButton {
 
 defineProps<{ buttons: IButton[] }>()
 
-const store = useStore()
+const store = useGeneralStore()
 
 const isEditNamePopupShown = ref(false)
 const isEditNumberPopupShown = ref(false)

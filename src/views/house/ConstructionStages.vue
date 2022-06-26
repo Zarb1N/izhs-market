@@ -32,7 +32,7 @@ import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
 import ConstructionStages from "@/components/ConstructionStages.vue";
 import ConstructionTeam from "@/components/ConstructionTeam.vue";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 
 export default defineComponent({
   components: {
@@ -41,7 +41,7 @@ export default defineComponent({
     Team: ConstructionTeam,
   },
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   computed: {
     isApplicationHouse() {

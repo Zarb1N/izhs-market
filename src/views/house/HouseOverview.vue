@@ -148,7 +148,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
 import ContextMenu from "@/components/ContextMenu.vue";
@@ -168,7 +168,7 @@ export default defineComponent({
     'builders'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     isExpandedHeader: true,
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,

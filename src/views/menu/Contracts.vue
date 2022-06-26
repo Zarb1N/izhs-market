@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import ExtensionCard from '../../components/ExtensionCard.vue'
 
@@ -79,7 +79,7 @@ export default defineComponent({
     'data'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     questionsAndAnswers: [
       {
         icon: 'shooting-star',

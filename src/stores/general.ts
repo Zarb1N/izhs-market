@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { Share } from "@capacitor/share";
 import type { IDeviceState } from "@/types/IDeviceState";
 
-export const useStore = defineStore({
+const useStore = defineStore({
   id: "general",
   state() {
     return {
