@@ -90,7 +90,7 @@ const useStore = defineStore({
           id: 'building',
           name: 'Стройка',
           isPossibleToHide: true,
-          isDisplayed: false,
+          isDisplayed: true,
           isAvailable: true
         },
         {

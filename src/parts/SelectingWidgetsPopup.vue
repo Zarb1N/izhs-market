@@ -1,55 +1,57 @@
 <template>
-<CenterPopup 
-  class="home__widget-selecting widget-selecting"
-  :isActive="isActive"
->
-  <template v-slot:title><div class="widget-selecting__title">Виджеты</div></template>
-  <div class="widget-selecting__body">
-    <div class="widget-selecting__available-widgets">
-      <div 
-        class="widget-selecting__available-widget"
-        v-for="widget in availableWidgets"
-        :key="widget.id"
-      >
-        <div class="widget-selecting__text">{{widget.name}}</div>
-        <img 
-          class="widget-selecting__check-mark--gray widget-selecting__status-icon"
-          src="@/assets/icons/gray-check-in-circle.svg"
-          v-if="!widget.isPossibleToHide"
-        >
-        <img 
-          class="widget-selecting__check-mark widget-selecting__status-icon"
-          src="@/assets/icons/green-check-in-circle.svg"
-          v-else-if="widget.isDisplayed"
-          @click="widget.isDisplayed = false"
-        >
+  <CenterPopup 
+    class="home__widget-selecting widget-selecting"
+    :isActive="isActive"
+    @close="applySelectedWidgets()"
+  >
+    <template v-slot:title><div class="widget-selecting__title">Виджеты</div></template>
+    <div class="widget-selecting__body">
+      <div class="widget-selecting__available-widgets">
         <div 
-          class="widget-selecting__uncheck-mark widget-selecting__status-icon"
-          v-else
-          @click="widget.isDisplayed = true"
-        ></div>
+          class="widget-selecting__available-widget"
+          v-for="(widget, index) in availableWidgets"
+          :key="index"
+        >
+          <div class="widget-selecting__text">{{widget.name}}</div>
+          <img 
+            class="widget-selecting__check-mark--gray widget-selecting__status-icon"
+            src="@/assets/icons/gray-check-in-circle.svg"
+            v-if="!widget.isPossibleToHide"
+          >
+          <img 
+            class="widget-selecting__check-mark widget-selecting__status-icon"
+            src="@/assets/icons/green-check-in-circle.svg"
+            v-else-if="widget.isDisplayed"
+            @click="hideWidget(widget)"
+          >
+          <div 
+            class="widget-selecting__uncheck-mark widget-selecting__status-icon"
+            v-else
+            @click="showWidget(widget)"
+          ></div>
+        </div>
       </div>
-    </div>
-    
-    <div class="widget-selecting__horizontal-divider"></div>
+      
+      <div class="widget-selecting__horizontal-divider"></div>
 
-    <div class="widget-selecting__unavailable-widgets">
-      <div class="widget-selecting__text widget-selecting__text--bold">Пока недоступны:</div>
-      <div 
-        class="widget-selecting__unavailable-widget"
-        v-for="widget in unavailableWidgets"
-        :key="widget.id"
-      >
-        <div class="widget-selecting__text widget-selecting__text--gray">{{widget.name}}</div>
+      <div class="widget-selecting__unavailable-widgets">
+        <div class="widget-selecting__text widget-selecting__text--bold">Пока недоступны:</div>
+        <div 
+          class="widget-selecting__unavailable-widget"
+          v-for="(widget, index) in unavailableWidgets"
+          :key="index"
+        >
+          <div class="widget-selecting__text widget-selecting__text--gray">{{widget.name}}</div>
+        </div>
       </div>
     </div>
-  </div>
-</CenterPopup>
+  </CenterPopup>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import CenterPopup from "@/components/CenterPopup.vue";
+import { useGeneralStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
@@ -57,8 +59,28 @@ export default defineComponent({
     'isActive'
   ],
   data: () => ({
-
+    generalStore: useGeneralStore(),
   }),
+  methods: {
+    hideWidget(widget) {
+      widget.isDisplayed = false
+    },
+    showWidget(widget) {
+      widget.isDisplayed = true
+    },
+    async applySelectedWidgets() {
+      const res = await fetch(`${this.generalStore.server}/state/${this.generalStore.deviceId}`, {
+        method: 'PATCH',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          device_id: this.generalStore.deviceId,
+          widgets_name: this.generalStore.widgetsList.filter(widget => widget.isDisplayed).map(widget => widget.id)
+        })
+      }) 
+      const data = res.json()
+      console.log(data)
+    }
+  },
   computed: {
     availableWidgets() {
       return this.data.filter(widget => widget.isAvailable)
