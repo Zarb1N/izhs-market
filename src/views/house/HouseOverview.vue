@@ -67,7 +67,13 @@
               : 'house__navigation-item--unchoosed'
           "
           @click="subpage = button.goTo"
-        >{{button.text}}</div>
+        >
+          <span class="house__navigation-item-text">{{button.text}}</span>
+          <span 
+            class="house__navigation-item-quanity"
+            v-if="button.text === 'Обсуждения'"
+          >{{house.discussions && house.discussions.length}}</span>
+        </div>
       </div>
 
       <div class="house__scrollable">
@@ -458,6 +464,21 @@ export default defineComponent({
   font-size: 12px;
   line-height: 125%;
   transition: .4s all;
+}
+.house__navigation-item-quanity {
+  height: 16px;
+  width: 15px;
+  border-radius: 8px;
+  background: #F9F9F9;
+  font-weight: 750;
+  font-size: 10px;
+  line-height: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  margin-left: 8px;
+  padding-top: 1px;
 }
 .house__navigation-item--unchoosed {
   color: #090909;
