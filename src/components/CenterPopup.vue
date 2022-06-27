@@ -1,26 +1,10 @@
 <template>
-  <div 
-    class="popup"
-    :class="isActive ? 'popup--active' : 'popup--disactive'"
-  >
-    <div 
-      class="popup__wrapper"
-      @click="$emit('close')"
-    ></div>
+  <div class="popup" :class="isActive ? 'popup--active' : 'popup--disactive'">
+    <div class="popup__wrapper" @click="$emit('close')"></div>
     <div class="popup__card">
-      <div 
-        class="popup__header"
-        v-show="showHeader"
-      >
-        <slot 
-          name="title"
-          class="popup__title"
-        ></slot>
-        <img 
-          class="popup__close-btn"
-          src="@/assets/icons/x-mark-in-circle.svg"
-          @click="$emit('close')"
-        />
+      <div class="popup__header" v-show="showHeader">
+        <slot name="title" class="popup__title"></slot>
+        <img class="popup__close-btn" src="@/assets/icons/x-mark-in-circle.svg" @click="$emit('close')" />
       </div>
       <div class="popup__body">
         <slot></slot>
@@ -51,8 +35,8 @@ export default defineComponent({
 <style scoped>
 .popup {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 375px;
+  height: 100%;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -61,23 +45,29 @@ export default defineComponent({
   overflow: hidden;
   padding: 8px;
 }
+
 .popup--active {
   opacity: 1;
   pointer-events: all;
 }
+
 .popup--disactive {
   opacity: 0;
   pointer-events: none;
 }
+
 .popup__wrapper {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 375px;
+  height: 100%;
   background: rgba(9, 9, 9, 0.6);
   transition: all 0.3s;
-  top: 0;
   left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
+
 .popup__card {
   background: #FFFFFF;
   border-radius: 16px;
@@ -85,15 +75,16 @@ export default defineComponent({
   z-index: 200;
   width: 100%;
   height: auto;
-  transition: height .3s ;
+  transition: height .3s;
 }
+
 .popup__header {
   display: grid;
   grid-template-columns: auto 32px;
   align-items: center;
 }
+
 .popup__close-btn {
   grid-column: 2 / 3;
 }
-
 </style>

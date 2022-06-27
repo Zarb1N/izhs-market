@@ -62,6 +62,7 @@
               :key="house.id"
               :data="house"
               :cardBudge="weekProjects.budge_card"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 189px"
               @goToHouse="$router.push(`/house/${house.id}/overview`)"
             /> 
@@ -122,6 +123,7 @@
               :key="house.id"
               :data="house"
               :cardBudge="weekProjects.budge_card"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 189px"
               @goToHouse="$router.push(`/house/${house.id}/overview`)"
             /> 
@@ -172,6 +174,7 @@
               :key="house.id"
               :data="house"
               :cardBudge="set.budge_card"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 200px"
               @goToHouse="$router.push(`/house/${house.id}/overview`)"
             />
@@ -251,6 +254,7 @@
               v-for="house in housesWithoutPrices"
               :key="house.id"
               :data="house"
+              :isFavorite="generalStore.deviceState.favourites_houses_id && generalStore.deviceState.favourites_houses_id.indexOf(house.id) !== -1"
               style="width: 189px"
             />
           </div>
@@ -270,7 +274,7 @@ import { defineComponent } from 'vue'
 import FeaturesCards from '@/parts/FeaturesCards.vue'
 import StoryPreview from '@/components/StoryPreview.vue'
 import ProductPreview from '@/components/ProductPreview.vue'
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import ModalWindow from '../components/ModalWindow.vue'
 import RegionChoosing from '../parts/RegionChoosing.vue'
 import ContextMenu from '../components/ContextMenu.vue'
@@ -301,8 +305,8 @@ export default defineComponent({
   data: () => ({
     allHouses: [] as Array<IHouse>,
     selectedHouses: [] as Array<{[key: string]: any}>,
-    general: useStore(),
-    generalStore: useStore(),
+    general: useGeneralStore(),
+    generalStore: useGeneralStore(),
     appState: useAppState(),
     choosedStyle: {} as {[key: string]: any},
     allStories: [] as Array<{[key: string]: string}>,
@@ -458,7 +462,7 @@ export default defineComponent({
 .home__stories {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 99px;
+  grid-auto-columns: 96px;
   overflow-x: auto;
   gap: 7px;
   margin-bottom: 32px;

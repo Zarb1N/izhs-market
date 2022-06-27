@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/home',
     name: 'Главная',
@@ -112,9 +113,34 @@ const routes = [
     component: () => import('../views/Menu.vue'),
     children: [
       {
+        name: 'Promocodes',
+        path: 'promo-codes',
+        component: () => import('../views/menu/PromocodesPage.vue')
+      },
+      {
+        name: 'ИЖС Стандарт',
+        path: 'izhs-standart',
+        component: () => import('../views/menu/IZHSstadart.vue')
+      },
+      {
+        name: 'Помощь',
+        path: 'help',
+        component: () => import('../views/menu/HelpPage.vue')
+      },
+      {
+        name: 'Девелоперам',
+        path: 'for-partners',
+        component: () => import('../views/menu/SystemPage.vue')
+      },
+      {
         name: 'Меню главная',
         path: '',
         component: () => import('../views/menu/MenuGeneral.vue')
+      },
+      {
+        name: '',
+        path: 'status',
+        component: () => import('../views/menu/StatusPage.vue')
       },
       {
         name: 'Мой статус',
@@ -137,14 +163,9 @@ const routes = [
         component: () => import(`../views/menu/QuestionAnswer.vue`)
       },
       {
-        name: 'ИЖС Стандарт',
-        path: 'izs-standard',
-        component: () => import(`../views/menu/IzsStandard.vue`)
-      },
-      {
         name: 'Договоры',
         path: 'contracts',
-        component: () => import(`../views/menu/Contracts.vue`)
+        component: () => import(`../views/menu/ContractsPage.vue`)
       },
       {
         name: 'Росреестр',
@@ -186,7 +207,7 @@ const routes = [
           {
             path: 'prices',
             name: 'История цен',
-            component: () => import('../views/house/Prices.vue') 
+            component: () => import('../views/house/Prices.vue')
           },
           {
             path: 'construction-stages',

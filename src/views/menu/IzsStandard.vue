@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import PopupHint from "../../components/PopupHint.vue"
 
@@ -50,7 +50,7 @@ export default defineComponent({
   ],
   data: () => ({
     isPopupHint: false,
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     popupHintText: '',
     clickCoordinates: {x: 0, y: 0},
     izsFeatures: [

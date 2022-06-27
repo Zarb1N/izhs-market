@@ -33,14 +33,14 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import { defineComponent } from '@vue/runtime-core'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonRouterOutlet } from '@ionic/vue';
 
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     services: [
       {
         groupName: 'Участок',

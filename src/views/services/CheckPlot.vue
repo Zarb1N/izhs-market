@@ -54,13 +54,13 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import TgWaContacts from "@/parts/TgWaContacts.vue";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     howItWorksPoints: [
       'Оставить заявку',
       'Пообщаться и оплатить',

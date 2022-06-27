@@ -10,7 +10,7 @@
     >
       <div 
         class="services-card"
-        :style="{backgroundImage: `url(./src/assets/features-cards/${card.background}.png)`}"
+        :style="{backgroundImage: `url(${generalStore.getImageURL('features-cards/' + card.background + '.png')})`}"
         v-for="(card, index) of cards"
         :key="index"
       >
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
@@ -48,7 +48,7 @@ import { useAppState } from "@/stores/appState";
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     appState: useAppState(),
     cards: [
       {

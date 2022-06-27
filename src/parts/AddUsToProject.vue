@@ -38,7 +38,6 @@
 </template>
 
 <script lang="ts">
-import { useAppState } from "@/stores/appState";
 import { defineComponent } from "@vue/runtime-core";
 import CenterPopup from '@/components/CenterPopup.vue'
 

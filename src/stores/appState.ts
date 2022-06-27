@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-export const useAppState : any = defineStore({
+const useStore = defineStore({
   id: 'appState',
   state: () => ({
     isContactsPopup: false,
@@ -8,3 +8,5 @@ export const useAppState : any = defineStore({
     isServiceApplicationPopup: false,
   }),
 })
+
+export const useAppState = useStore

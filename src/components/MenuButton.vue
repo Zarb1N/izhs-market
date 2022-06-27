@@ -1,12 +1,9 @@
 <template>
   <div class="m-btn">
-    <img 
-      class="m-btn__icon"
-      :src="data.icon && getImageURL(data.icon)"
-    />
-    <div class="m-btn__text">{{data.name}}</div>
+    <img class="m-btn__icon" :src="data.icon && getImageURL(data.icon)" />
+    <div class="m-btn__text">{{ data.name }}</div>
     <slot class="m-btn__slot"></slot>
-    <img src="" alt="">
+    <img v-if="isLink" src="@/assets/chevron-right.svg" alt="chevron-right">
   </div>
 </template>
 
@@ -14,9 +11,9 @@
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
-  props: ['data'],
+  props: ['data', 'isLink'],
   methods: {
-    getImageURL(iconName : string) {
+    getImageURL(iconName: string) {
       const path = new URL(
         `../assets/emojis/${iconName}.svg`,
         import.meta.url
@@ -37,6 +34,7 @@ export default defineComponent({
   align-items: center;
   border-bottom: 1px solid #E0E0E0;
 }
+
 .m-btn__text {
   font-style: 'normal';
   font-weight: 750;

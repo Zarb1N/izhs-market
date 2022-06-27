@@ -79,14 +79,14 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ExtensionCard from "@/components/ExtensionCard.vue";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
     'data'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     companyFaces: [
       {
         name: 'Сергей Трутненко',

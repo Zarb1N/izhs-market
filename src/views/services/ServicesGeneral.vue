@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
@@ -51,7 +51,7 @@ export default defineComponent({
     'services',
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
 })

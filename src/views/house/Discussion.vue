@@ -55,13 +55,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ContentCard from '@/components/ContentCard.vue'
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 
 export default defineComponent({
   props: ['data'],
   data: () => ({
     staffInfo: {},
-    generalStore: useStore()
+    generalStore: useGeneralStore()
   }),
   methods: {
     async getStaffInfo(buildingId: number) {
