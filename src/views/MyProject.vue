@@ -15,12 +15,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core"
-import { useStore } from "@/stores/general"
+import { useGeneralStore } from "@/stores/general"
 import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   components: {
     IonPage,

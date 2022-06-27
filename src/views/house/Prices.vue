@@ -49,7 +49,7 @@
 import { computed, defineComponent } from "@vue/runtime-core";
 import SellerExtensionCard from "@/components/SellerExtensionCard.vue";
 import PopupHint from "@/components/PopupHint.vue";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 
 export default defineComponent({
   props: [
@@ -57,7 +57,7 @@ export default defineComponent({
     'sellers'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     isPopupHint: false,
     popupHintText: '',
   }),

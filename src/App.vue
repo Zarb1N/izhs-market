@@ -1,44 +1,27 @@
 <template>
   <IonApp id="vue-app">
     <IonContent id="vue-app__content" scroll-y="false">
-      <ErrorNotification :isActive="generalStore.errorNotification"/>
-      <FullscreenLoader v-show="generalStore.isLoading"/> 
-      <UpdateNotification 
-        :isActive="isUpdate"
-        @close="isUpdate = false"
-      />
-      <RequiredUpdateNotification :isActive="isMandatoryUpdate"/>
-      <BottomPopup 
-        :isActive="appState.isContactsPopup"
-        @close="appState.isContactsPopup = false"
-      >
-        <template v-slot:title><div style="font-size: 20px; font-weight: 750">Связаться в мессенжерах</div></template>
-        <HelpContacts/>
+      <ErrorNotification :isActive="generalStore.errorNotification" />
+      <FullscreenLoader v-show="generalStore.isLoading" />
+      <UpdateNotification :isActive="isUpdate" @close="isUpdate = false" />
+      <RequiredUpdateNotification :isActive="isMandatoryUpdate" />
+      <BottomPopup :isActive="appState.isContactsPopup" @close="appState.isContactsPopup = false">
+        <template v-slot:title>
+          <div style="font-size: 20px; font-weight: 750">Связаться в мессенжерах</div>
+        </template>
+        <HelpContacts />
       </BottomPopup>
-      <AddUsToProjectPopups 
-        :isActive="appState.isAddingProjectApplication"
-        @close="appState.isAddingProjectApplication = false"
-      />
-      <RegionChoosing
-        :isActive="appState.isRegionChoosing"
-        @close="appState.isRegionChoosing = false"
-      /> 
-      <ServiceApplication
-        :isActive="appState.isServiceApplicationPopup"
-        @close="appState.isServiceApplicationPopup = false"
-      />
-      <SelectingWidgetsPopup
-        :isActive="appState.isSelectingWidgetsPopup"
-        :data="generalStore.widgetsList"
-        @close="appState.isSelectingWidgetsPopup = false"
-      />
+      <AddUsToProjectPopups :isActive="appState.isAddingProjectApplication"
+        @close="appState.isAddingProjectApplication = false" />
+      <RegionChoosing :isActive="appState.isRegionChoosing" @close="appState.isRegionChoosing = false" />
+      <ServiceApplication :isActive="appState.isServiceApplicationPopup"
+        @close="appState.isServiceApplicationPopup = false" />
+      <SelectingWidgetsPopup :isActive="appState.isSelectingWidgetsPopup" :data="generalStore.widgetsList"
+        @close="appState.isSelectingWidgetsPopup = false" />
       <IonTabs>
-        <IonRouterOutlet/> 
-        <Tabbar
-          id="app__tabbar"
-          :items="navigationItems"
-          v-show="isTabbar"
-        />
+        <IonRouterOutlet />
+        <div id="overlay"></div>
+        <Tabbar id="app__tabbar" :items="navigationItems" v-show="isTabbar" />
       </IonTabs>
     </IonContent>
   </IonApp>
@@ -49,7 +32,7 @@
 import { defineComponent } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
-import { useStore } from '@/stores/general'
+import { useGeneralStore } from '@/stores/general'
 import { useAppState } from '@/stores/appState'
 import {
   IonTabBar,
@@ -87,7 +70,7 @@ App.addListener('backButton', () => {
 });
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     appState: useAppState(),
     isUpdate: false,
     isMandatoryUpdate: false,
@@ -140,17 +123,17 @@ export default defineComponent({
       await this.getArchitechtureStyles()
       this.createViewedHousesArray()
       if (this.generalStore.deviceState.applications_houses_id) {
-         await Promise.all([
-           this.getApplicationHouse(),
-           this.getApplicationInfo()
-         ])
+        await Promise.all([
+          this.getApplicationHouse(),
+          this.getApplicationInfo()
+        ])
       }
       this.generalStore.isLoading = false
     },
     async getSystemParameters() {
       const res = await fetch(`${this.generalStore.server}/system`)
       const data = await res.json()
-      data.forEach( (param : {[key: string]: string}) => {
+      data.forEach((param: { [key: string]: string }) => {
         this.generalStore.systemParameters[param.name.toLowerCase()] = param.value
       })
       this.isNeedToUpdate()
@@ -189,7 +172,7 @@ export default defineComponent({
     async createAnAccount(device_id: string) {
       const res = await fetch(`${this.generalStore.server}/states`, {
         method: 'POST',
-        headers: {'Content-type': 'application/json'},
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
           device_id,
           genius_number: Math.round(Math.random() * 10000)
@@ -246,13 +229,13 @@ export default defineComponent({
     },
     async getBuilders() {
       const res = await fetch(`${this.generalStore.server}/builders`)
-      this.generalStore.builders = await res.json() 
+      this.generalStore.builders = await res.json()
     },
     async getEquipments() {
       const res = await fetch(`${this.generalStore.server}/equipments`)
-      this.generalStore.equipments = await res.json() 
+      this.generalStore.equipments = await res.json()
     },
-    getImageURL(iconName : string, goTo : string) {
+    getImageURL(iconName: string, goTo: string) {
       const path = new URL(
         `./assets/icons/${iconName}--${this.$route.matched.map(route => route.path).includes(goTo) ? 'violet' : 'gray'}.svg`,
         import.meta.url
@@ -267,9 +250,9 @@ export default defineComponent({
       }
     },
     createViewedHousesArray() {
-      const houses : Array<Object> = []
-      this.generalStore.deviceState.viewed_houses_id.forEach( (house_id: number) => {
-        this.generalStore.allHouses.forEach( (house : {[key: string]: any}) => {
+      const houses: Array<Object> = []
+      this.generalStore.deviceState.viewed_houses_id.forEach((house_id: number) => {
+        this.generalStore.allHouses.forEach((house: { [key: string]: any }) => {
           if (house.id === house_id) {
             houses.push(house)
           }
@@ -281,7 +264,7 @@ export default defineComponent({
   computed: {
     isTabbar() {
       const tabbarTitles = this.navigationItems.map(item => item.title)
-      const actualPath = this.$route.matched.map((item: {[key: string]: any}) => item.name)
+      const actualPath = this.$route.matched.map((item: { [key: string]: any }) => item.name)
       // console.log(actualPath)
       const allowedRouters = ['Архитектурный набор', 'Подборка', 'Страна', 'Застройщик']
       const restrictedRouters = ['Проверить участок', 'Построить дом', 'Спроектировать дом']
@@ -307,7 +290,7 @@ export default defineComponent({
     this.loadRequirementData()
     // this.hideStatusBar()
     StatusBar.setOverlaysWebView({ overlay: true });
-  },    
+  },
   components: {
     Tabbar,
     FullscreenLoader,
@@ -343,15 +326,19 @@ export default defineComponent({
   justify-content: space-between;
   background: #F5F5F5;
 }
+
 #vue-app__content {
   height: 100%;
 }
+
 #vue-app::-webkit-scrollbar {
   display: none;
 }
+
 .scroll-y {
   overflow: hidden;
 }
+
 /* #app__tabbar {
   position: fixed;
   bottom: 0;

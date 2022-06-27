@@ -74,14 +74,14 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import ContentCard from "@/components/ContentCard.vue";
-import { useStore } from "@/stores/general";
+import { useGeneralStore } from "@/stores/general";
 import PopupHint from "@/components/PopupHint.vue";
 import TgWaContacts from "@/parts/TgWaContacts.vue";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 
 export default defineComponent({
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
     isPopupHint: false,
     popupHintText: 'За дом площадью 120 м2 <br/> или 1000 рублей за 1 м2 ',
     clickCoordinates: {x: 0, y: 0},

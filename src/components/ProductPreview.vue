@@ -62,7 +62,7 @@
 import { computed, defineComponent } from 'vue'
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-import { useStore } from '@/stores/general';
+import { useGeneralStore } from '@/stores/general';
 
 export default defineComponent({
   props: [
@@ -71,7 +71,7 @@ export default defineComponent({
     'isFavorite'
   ],
   data: () => ({
-    generalStore: useStore(),
+    generalStore: useGeneralStore(),
   }),
   methods: {
     interactWithFavoritesList(houseId : number | string) {

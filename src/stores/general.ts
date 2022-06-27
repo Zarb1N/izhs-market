@@ -1,11 +1,17 @@
 import { defineStore } from "pinia";
 import { Share } from "@capacitor/share";
 import type { IDeviceState } from "@/types/IDeviceState";
+import type { IQuestion } from "@/types/IQuestion";
+import type { ISystem } from "@/types/ISystem";
+import type { IPromocode } from "@/types/IPromocode";
 
-export const useStore = defineStore({
+const useStore = defineStore({
   id: "general",
   state() {
     return {
+      promocodes: [] as IPromocode[],
+      systems: [] as ISystem[],
+      questions: [] as IQuestion[],
       server: "https://xzim-bwxc-viqv.n7.xano.io/api:ek4QHJJA",
       telegramSupport: "https://t.me/zarb1n",
       whatsappSupport: "https://wa.me/qr/QQ4VTH3AZSIFM1",
@@ -116,63 +122,63 @@ export const useStore = defineStore({
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'laws',
           name: 'Законы',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'blacklist',
           name: 'Черный список',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'darwin-prize',
           name: 'Премия Дарвина',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'system-hacking',
           name: 'Хакнуть систему',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'builders-fight',
           name: 'Битва застройщиков',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'ours-fails',
           name: 'Наши фейлы',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'check-costs',
           name: 'Проверить смету',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'discussions',
           name: 'Дискуссии',
           isPossibleToHide: true,
           isDisplayed: false,
           isAvailable: false,
         },
-         {
+        {
           id: 'cheaper',
           name: 'Где дешевле',
           isPossibleToHide: true,
@@ -183,9 +189,18 @@ export const useStore = defineStore({
     };
   },
   getters: {
+    getPromocodes(): IPromocode[] {
+      return this.promocodes
+    },
     getDeviceState(): IDeviceState {
       return this.deviceState;
     },
+    getQuestions(): IQuestion[] {
+      return this.questions
+    },
+    getSystems(): ISystem[] {
+      return this.systems
+    }
   },
   actions: {
     formatNumber: (val: number, decimalsNumber = 0) => {
@@ -209,12 +224,63 @@ export const useStore = defineStore({
     getImageURL(path: string) {
       return new URL(`../assets/${path}`, import.meta.url).href;
     },
+    async fetchQuestions() {
+      const res = await fetch(`${this.server}/questions`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+      const data: IQuestion[] = await res.json()
+      this.questions = data
+    },
+    async searchPromocode(promocode: string) {
+      const res = await fetch(`${this.server}/promocodes/${promocode}`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      })
+      const data: IPromocode = await res.json()
+      return data
+    },
+    async updatePromocodes(body: { device_id: string, promocodes_id: number[] }) {
+      const statesId = this.getDeviceState.id
+      const res = await fetch(`${this.server}/states/${statesId}/promocodes`, {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body)
+      })
+      const data: IDeviceState = await res.json()
+      this.deviceState = data
+    },
+    async fetchPromocodes() {
+      const res = await fetch(`${this.server}/promocodes`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      })
+      const data: IPromocode[] = await res.json()
+      this.promocodes = data
+    },
+    async fetchSystem() {
+      const res = await fetch(`${this.server}/system`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      })
+      const data: ISystem[] = await res.json()
+      this.systems = data
+    },
     async getUserState() {
       const res = await fetch(`${this.server}/states/${this.deviceId}`, {
         method: "GET",
         headers: { "Content-type": "application/json" },
       });
       const data: IDeviceState = await res.json();
+      this.deviceState = data;
+    },
+    async updateUserState(body: IDeviceState) {
+      const res = await fetch(`${this.server}/states/${this.deviceId}`, {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body)
+      })
+      const data: IDeviceState = await res.json()
       this.deviceState = data;
     },
     async addToFavorites(houseId: number) {
@@ -270,7 +336,7 @@ export const useStore = defineStore({
       setTimeout(() => {
         this.errorNotification = false;
       }, 5000);
-      throw(error)
+      throw (error)
     },
   },
 });

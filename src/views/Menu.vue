@@ -32,59 +32,44 @@ export default defineComponent({
   data: () => ({
     buttons: [
       {
-        name: 'Мой статус',
-        icon: 'izs-mascot-dog',
-        goTo: 'my-state',
-      },
-      {
-        name: 'Сравнение',
-        icon: 'shopping-bags',
-        goTo: 'comparison',
-      },
-      {
-        name: 'Как это работает',
-        icon: 'check-mark-button',
+        name: 'Как это работает',
+        icon: 'how-it-works',
         goTo: 'how-it-works',
       },
       {
-        name: 'Вопрос — ответ',
-        icon: 'shooting-star',
-        goTo: 'question-answer',
-      },
-      {
-        name: 'ИЖС Стандарт',
-        icon: 'safety-vest',
-        goTo: 'izs-standard',
+        name: 'ИЖС Стандарт',
+        icon: 'izhs-standart',
+        goTo: 'izhs-standart',
       },
       {
         name: 'Договоры',
-        icon: 'memo',
+        icon: 'contracts',
         goTo: 'contracts',
       },
       {
         name: 'Росреестр',
-        icon: 'bank',
+        icon: 'rosreestr',
         goTo: 'ros-registry',
       },
       {
-        name: 'Общение',
-        icon: 'speech-balloon',
-        goTo: 'communication',
+        name: 'Помощь',
+        icon: 'info',
+        goTo: 'help',
       },
       {
         name: 'Промокоды',
-        icon: 'ticket',
-        goTo: 'promocodes',
+        icon: 'promo-codes',
+        goTo: 'promo-codes',
       },
       {
-        name: 'Реквизиты',
-        icon: 'briefcase',
-        goTo: 'requisites',
-      },
-      {
-        name: 'Партнерам',
-        icon: 'necktie',
+        name: 'Партнёрам',
+        icon: 'partners',
         goTo: 'for-partners',
+      },
+      {
+        name: 'Избранное',
+        icon: 'favorites',
+        goTo: 'communication',
       },
     ]
   }),
