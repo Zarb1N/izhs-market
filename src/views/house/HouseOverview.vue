@@ -299,8 +299,8 @@ export default defineComponent({
   backdrop-filter: blur(26px);
   transition: all 1s ease;
   min-height: 200px;  
-  /* max-height: calc(100% - 180px); */
-  max-height: 100%;
+  max-height: calc(100% - 180px);
+  /* max-height: 100%; */
 }
 /*
 .house--expanded-header .house__header {
