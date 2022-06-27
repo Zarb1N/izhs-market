@@ -1,6 +1,6 @@
 <template>
 <div class="house-i">
-  <div class="house-i__description paragraph">Короткие описания про сервисы, стандарты и договоры</div>
+  <div class="house-i__description">Короткие описания про сервисы, стандарты и договоры</div>
   <div class="house-i__buttons">
     <MenuButton
       v-for="btn in buttons"
@@ -57,7 +57,11 @@ export default defineComponent({
 
 <style>
 .house-i__description {
-  margin-bottom: 25px;
+  margin-bottom: 32px;
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 120%;
+  color: #2D2D2D;
 }
 .house-i__buttons {
   display: flex;
