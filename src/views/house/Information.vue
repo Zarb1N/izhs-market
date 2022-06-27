@@ -6,12 +6,9 @@
       v-for="btn in buttons"
       :key="btn.name"
       :data="btn"
+      :isLink="true"
       @click="$router.push(btn.goTo)"
     >
-      <img 
-        v-if="btn.name === 'Мой статус'"
-        src="../../assets/genius-feature.svg"
-      >
     </MenuButton>
   </div>
 </div>
@@ -24,30 +21,30 @@ import MenuButton from '../../components/MenuButton.vue'
 export default defineComponent({
   data: () => ({
     buttons: [
+      // {
+      //   icon: 'shield',
+      //   name: 'Мой статус',
+      //   goTo: '/menu/my-state'
+      // },
       {
-        icon: 'shield',
-        name: 'Мой статус',
-        goTo: '/menu/my-state'
+        name: 'Как это работает',
+        icon: 'how-it-works',
+        goTo: '/menu/how-it-works',
       },
       {
-        icon: 'check-mark-button',
-        name: 'Как это работает',
-        goTo: '/menu/how-it-works'
+        name: 'ИЖС Стандарт',
+        icon: 'izhs-standart',
+        goTo: '/menu/izhs-standart',
       },
       {
-        icon: 'safety-vest',
-        name: 'ИЖС Стандарт',
-        goTo: '/menu/izs-standard'
-      },
-      {
-        icon: 'bank',
-        name: 'Росреестр',
-        goTo: '/menu/ros-registry'
-      },
-      {
-        icon: 'memo',
         name: 'Договоры',
-        goTo: '/menu/contracts'
+        icon: 'contracts',
+        goTo: '/menu/contracts',
+      },
+      {
+        name: 'Росреестр',
+        icon: 'rosreestr',
+        goTo: '/menu/ros-registry',
       },
     ]
   }),
@@ -65,6 +62,5 @@ export default defineComponent({
 .house-i__buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 </style>

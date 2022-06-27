@@ -20,8 +20,8 @@
           >Live</div>
           <FavouritesButton/>
         </div>
-        <div class="house__header-carousel">
-          <!-- <Flicking
+        <!-- <div class="house__header-carousel">
+          <Flicking
             v-if="house.images"
             :options="{
               circular: true,
@@ -41,8 +41,8 @@
                 :src="house.images[index].url"
               >
             </div>
-          </Flicking> -->
-        </div>
+          </Flicking> 
+        </div> -->
     </div>
 
 
@@ -70,6 +70,7 @@
         >{{button.text}}</div>
       </div>
 
+      <div class="house__scrollable">
       <div class="house__general-features">
         <div class="house__house-name-and-genius-row">
           <div class="house__house-name">{{house.name || 'Загружается'}}</div>
@@ -79,6 +80,7 @@
             @click="$router.push('/menu/my-state')"
           />
         </div>
+        
         <div class="house__area-and-price-row">
           <div class="house__area">{{house.square}} м<span class="sup">2</span></div> •
           <div class="house__price">
@@ -89,27 +91,28 @@
         <!-- <div class="house__description">{{house.description}}</div> -->
       </div>
 
-      <Prices
-        v-show="subpage === 'prices'"
-        :data="house"
-        :sellers="builders"
-        @openBottomPopup="(title, content) => openBottomPopup(title, content)"
-      />
-      <ConstructionStages
-        v-show="subpage === 'construction-stages'"
-        :data="house"
-        :sellers="builders"
-      />
-      <Information
-        v-show="subpage === 'information'"
-        :data="house"
-        :sellers="builders"
-      />
-      <Discussion
-        v-show="subpage === 'discussion'"
-        :data="house"
-        :sellers="builders"
-      />
+        <Prices
+          v-show="subpage === 'prices'"
+          :data="house"
+          :sellers="builders"
+          @openBottomPopup="(title, content) => openBottomPopup(title, content)"
+        />
+        <!-- <ConstructionStages
+          v-show="subpage === 'construction-stages'"
+          :data="house"
+          :sellers="builders"
+        /> -->
+        <Information
+          v-show="subpage === 'information'"
+          :data="house"
+          :sellers="builders"
+        />
+        <Discussion
+          v-show="subpage === 'discussion'"
+          :data="house"
+          :sellers="builders"
+        />
+    </div>
     </div>
     <div
       class="house__primary-button"
@@ -179,8 +182,8 @@ export default defineComponent({
         goTo: 'prices',
       },
       {
-        text: 'Этапы проекта',
-        goTo: 'construction-stages',
+        text: 'Genius',
+        goTo: 'genius',
       },
       {
         text: 'Информация',
@@ -217,6 +220,7 @@ export default defineComponent({
       }
     },
     dragEnd(event) {
+      console.log('heh')
       if (event.y < 400) {
         this.height = 0
         this.isExpandedHeader = false
@@ -227,6 +231,7 @@ export default defineComponent({
       }
     },
     switchState(event) {
+      console.log('huh')
       if (event.y > 400) {
         this.height = 0
         this.isExpandedHeader = false
@@ -281,9 +286,10 @@ export default defineComponent({
 <style scoped>
 .house {
   height: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: min-content auto;
+  /* display: grid; */
+  /* grid-template-rows: min-content auto; */
+  /* display: flex; */
+  /* flex-direction: column; */
   overflow: hidden;
   background: rgba(245, 245, 245, 0.94);
   transition: all 0.3s;
@@ -293,18 +299,20 @@ export default defineComponent({
   backdrop-filter: blur(26px);
   transition: all 1s ease;
   min-height: 200px;  
-  max-height: calc(100vh - 180px);
+  /* max-height: calc(100% - 180px); */
+  max-height: 100%;
 }
+/*
 .house--expanded-header .house__header {
   height: 200px;
 }
-/* .house--expanded-header .house__body {
+.house--expanded-header .house__body {
   height: 100%;
-} */
+} 
 .house--expanded-body .house__header {
-  height: calc(100vh - 180px);
+  height: calc(100% - 180px);
 }
-/* .house--expanded-header .house__body {
+.house--expanded-header .house__body {
   height: 180px;
 } */
 
@@ -342,19 +350,17 @@ export default defineComponent({
 }
 
 .house__body {
-  height: 100%;
   background: #FFFFFF;
   border-radius: 16px 16px 0px 0px;
-  padding: 0px 14px calc(56px + 14px) 14px;
+  padding: 0px 20px 0px 20px;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
   box-shadow: 0px 0px 20px 0px #0000001A;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-.house__body--closed {
-  height: 180px;
-  bottom: 0;
+  overflow: hidden;
+  max-height: calc(100% - 180px);
+  display: grid;
+  grid-template-rows: repeat(2, min-content) 1fr;
+  height: 100%;
 }
 .gestures-zone {
   padding: 8px 0px 16px 0px;
@@ -391,6 +397,12 @@ export default defineComponent({
   line-height: 120%;
   color: #F9F9F9;
 }
+.house__scrollable {
+  height: 100%;
+  overflow-y: auto;
+  padding-top: calc(48px - 16px);
+  padding-bottom: calc(40px + 49px + 48px);
+}
 .house__general-features {
   margin-bottom: 30px;
 }
@@ -424,12 +436,15 @@ export default defineComponent({
   font-size: 12px;
 }
 .house__navigation-items {
+  height: 32px;
   margin: 0px -14px;
   padding: 0px 14px;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 32px;
   overflow: auto;
   gap: 10px;
-  margin-bottom: 48px;
+  margin-bottom: 16px;
 }
 .house__navigation-item {
   height: 32px;

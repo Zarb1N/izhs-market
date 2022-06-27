@@ -1,5 +1,5 @@
 <template>
-  <teleport to="#overlay">
+  <!-- <teleport to="#overlay"> -->
     <div class="popup" :class="isActive ? 'popup--active' : 'popup--disactive'">
       <div class="popup__wrapper" @click="$emit('close')"></div>
       <div class="popup__card">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-  </teleport>
+  <!-- </teleport> -->
 </template>
 
 <script lang="ts">

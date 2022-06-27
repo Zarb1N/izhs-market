@@ -24,11 +24,16 @@ export default defineComponent({
   }),
   methods: {
     async combineHouseAndBuildersInfo(id: string) {
+      // const [house, builders, equimpents] = await Promise.all([
+      //   this.getHouseInfo(id),
+      //   this.getBuildersInfo(),
+      //   this.getEquipments()
+      // ]);
       const [house, builders, equimpents] = await Promise.all([
-        this.getHouseInfo(id),
-        this.getBuildersInfo(),
-        this.getEquipments()
-      ]);
+        this.generalStore.allHouses.filter(house => house.id.toString() === this.$route.params.id)[0],
+        this.generalStore.builders,
+        this.generalStore.equipments
+      ])
       if (house.price_history) {
         house.price_history.forEach((item: { [key: string]: any | number }) => {
           builders.forEach((builder: { [key: string]: any }) => {
