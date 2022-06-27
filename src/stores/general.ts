@@ -3,11 +3,13 @@ import { Share } from "@capacitor/share";
 import type { IDeviceState } from "@/types/IDeviceState";
 import type { IQuestion } from "@/types/IQuestion";
 import type { ISystem } from "@/types/ISystem";
+import type { IPromocode } from "@/types/IPromocode";
 
 const useStore = defineStore({
   id: "general",
   state() {
     return {
+      promocodes: [] as IPromocode[],
       systems: [] as ISystem[],
       questions: [] as IQuestion[],
       server: "https://xzim-bwxc-viqv.n7.xano.io/api:ek4QHJJA",
@@ -187,6 +189,9 @@ const useStore = defineStore({
     };
   },
   getters: {
+    getPromocodes(): IPromocode[] {
+      return this.promocodes
+    },
     getDeviceState(): IDeviceState {
       return this.deviceState;
     },
@@ -226,6 +231,32 @@ const useStore = defineStore({
       });
       const data: IQuestion[] = await res.json()
       this.questions = data
+    },
+    async searchPromocode(promocode: string) {
+      const res = await fetch(`${this.server}/promocodes/${promocode}`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      })
+      const data: IPromocode = await res.json()
+      return data
+    },
+    async updatePromocodes(body: { device_id: string, promocodes_id: number[] }) {
+      const statesId = this.getDeviceState.id
+      const res = await fetch(`${this.server}/states/${statesId}/promocodes`, {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(body)
+      })
+      const data: IDeviceState = await res.json()
+      this.deviceState = data
+    },
+    async fetchPromocodes() {
+      const res = await fetch(`${this.server}/promocodes`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      })
+      const data: IPromocode[] = await res.json()
+      this.promocodes = data
     },
     async fetchSystem() {
       const res = await fetch(`${this.server}/system`, {
@@ -305,7 +336,7 @@ const useStore = defineStore({
       setTimeout(() => {
         this.errorNotification = false;
       }, 5000);
-      throw(error)
+      throw (error)
     },
   },
 });

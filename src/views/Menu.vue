@@ -59,7 +59,7 @@ export default defineComponent({
       {
         name: 'Промокоды',
         icon: 'promo-codes',
-        goTo: 'contracts',
+        goTo: 'promo-codes',
       },
       {
         name: 'Партнёрам',

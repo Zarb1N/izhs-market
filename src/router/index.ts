@@ -113,6 +113,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('../views/Menu.vue'),
     children: [
       {
+        name: 'Promocodes',
+        path: 'promo-codes',
+        component: () => import('../views/menu/PromocodesPage.vue')
+      },
+      {
         name: 'ИЖС Стандарт',
         path: 'izhs-standart',
         component: () => import('../views/menu/IZHSstadart.vue')
