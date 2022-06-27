@@ -9,14 +9,17 @@
     <div class="s-card__title">{{title}}</div>
     <div class="s-card__description" v-html="description"></div>
     <div class="s-card__quantity">{{quantity}}</div>
-    <div class="s-card__icon">
+    <div 
+      class="s-card__icon"
+      :class="isCoveredIcon ? 's-card__icon--covered' : 's-card__icon--contained'"
+    >
       <img :src="iconPath"/>
     </div>
     <div 
       v-if="set"
       class="s-card__details-btn"
       @click="$emit('goToSetPage', set.id)"
-    >Подробнее</div>
+    >Подробнее {{isCoveredIcon}}</div>
   </div>
 </template>
 
@@ -35,6 +38,7 @@ export default defineComponent({
     'goTo',
     'backgroundImagePath',
     'set',
+    'isCoveredIcon'
   ],
   data: () => ({
     generalStore: useGeneralStore(),
@@ -71,13 +75,23 @@ export default defineComponent({
   margin-bottom: 24px;
   margin-top: 24px;
   background: #F8F8F8;
-  border: 1px solid rgba(9, 9, 9, 0.08);
   border-radius: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.s-card__icon img {
+.s-card__icon--covered {
+  border: none;
+  overflow: hidden;
+}
+.s-card__icon--contained {
+  border: 1px solid rgba(9, 9, 9, 0.08);
+}
+.s-card__icon--covered img {
+  min-height: 18px;
+  min-width: 18px;
+}
+.s-card__icon--contained img {
   max-width: 12px;
   max-height: 12px;
 }

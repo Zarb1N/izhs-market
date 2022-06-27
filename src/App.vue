@@ -120,6 +120,11 @@ export default defineComponent({
         this.getBuilders(),
         this.getEquipments(),
       ])
+      this.generalStore.widgetsList.forEach( widget => {
+        this.generalStore.deviceState.widgets_name.indexOf(widget.id) !== -1
+          ? widget.isDisplayed = true
+          : widget.isDisplayed = false
+      })
       await this.getArchitechtureStyles()
       this.createViewedHousesArray()
       if (this.generalStore.deviceState.applications_houses_id) {

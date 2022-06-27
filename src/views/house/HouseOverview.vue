@@ -20,29 +20,68 @@
           >Live</div>
           <FavouritesButton/>
         </div>
-        <div class="house__header-carousel">
-          <!-- <Flicking
+        <div 
+          class="house__expanded-header"
+          :class="isExpandedHeader ? 'house__expanded-header--shown' : 'house__expanded-header--hidden'"
+        >
+          <Flicking
+            class="house__header-carousel"
             v-if="house.images"
             :options="{
-              circular: true,
               threshold: 0,
               interruptable: false,
+              align: 'center',
+              bound: true,
+              panelsPerView: 1,
             }"
             @will-change="(event) => {currentSlide = event.index}"
           >
             <div
               class="house__header-carousel-slide"
-              v-for="index in Array(house.images.length).keys()"
+              v-for="(image, index) in house.images.filter(image => image)"
               :key="index"
-              @click="() => {$router.push(`/house/${$route.params.id}/gallery`)}"
             >
-              <img
+              <!-- @click="() => {$router.push(`/house/${$route.params.id}/gallery`)}" -->
+
+              <div
                 class="house__header-carousel-image"
-                :src="house.images[index].url"
-              >
+                v-if="image"
+                :style="{backgroundImage: `url(${image.url})`}" 
+              ></div>
             </div>
-          </Flicking> -->
+          </Flicking>
+          <div class="house__running-line">
+            <span>
+              {{house.name}} 
+              {{house.square}} 
+              м<span class="sup">2</span>
+              за {{generalStore.formatNumber(prices.min)}}
+              - {{generalStore.formatNumber(prices.max)}} ₽
+            </span>
+          </div>
         </div>
+        <div 
+          class="house__collapsed-header"
+          :class="isExpandedHeader ? 'house__collapsed-header--hidden' : 'house__collapsed-header--shown'"
+        >
+          <div class="house__gallery-items">
+            <div 
+              class="house__gallery-item"
+              v-for="(image, index) in house.images"
+              :key="index"
+              v-show="image"
+            >
+              <div
+                class="house__gallery-image"
+                v-if="image"
+                :style="{backgroundImage: `url(${image.url})`}" 
+              ></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="house__header-carousel">
+           
+        </div> -->
     </div>
 
 
@@ -67,9 +106,16 @@
               : 'house__navigation-item--unchoosed'
           "
           @click="subpage = button.goTo"
-        >{{button.text}}</div>
+        >
+          <span class="house__navigation-item-text">{{button.text}}</span>
+          <span 
+            class="house__navigation-item-quanity"
+            v-if="button.text === 'Обсуждения'"
+          >{{house.discussions && house.discussions.length}}</span>
+        </div>
       </div>
 
+      <div class="house__scrollable">
       <div class="house__general-features">
         <div class="house__house-name-and-genius-row">
           <div class="house__house-name">{{house.name || 'Загружается'}}</div>
@@ -79,6 +125,7 @@
             @click="$router.push('/menu/my-state')"
           />
         </div>
+        
         <div class="house__area-and-price-row">
           <div class="house__area">{{house.square}} м<span class="sup">2</span></div> •
           <div class="house__price">
@@ -89,27 +136,31 @@
         <!-- <div class="house__description">{{house.description}}</div> -->
       </div>
 
-      <Prices
-        v-show="subpage === 'prices'"
-        :data="house"
-        :sellers="builders"
-        @openBottomPopup="(title, content) => openBottomPopup(title, content)"
-      />
-      <ConstructionStages
-        v-show="subpage === 'construction-stages'"
-        :data="house"
-        :sellers="builders"
-      />
-      <Information
-        v-show="subpage === 'information'"
-        :data="house"
-        :sellers="builders"
-      />
-      <Discussion
-        v-show="subpage === 'discussion'"
-        :data="house"
-        :sellers="builders"
-      />
+        <Prices
+          v-show="subpage === 'prices'"
+          :data="house"
+          :sellers="builders"
+          @openBottomPopup="(title, content) => openBottomPopup(title, content)"
+        />
+        <!-- <ConstructionStages
+          v-show="subpage === 'construction-stages'"
+          :data="house"
+          :sellers="builders"
+        /> -->
+        <Genius
+          v-show="subpage === 'genius'"
+        />
+        <Information
+          v-show="subpage === 'information'"
+          :data="house"
+          :sellers="builders"
+        />
+        <Discussion
+          v-show="subpage === 'discussion'"
+          :data="house"
+          :sellers="builders"
+        />
+    </div>
     </div>
     <div
       class="house__primary-button"
@@ -160,6 +211,7 @@ import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 import FavouritesButton from "@/components/FavouritesButton.vue";
 import BackButton from "@/components/BackButton.vue";
 import BottomPopup from "@/components/BottomPopup.vue";
+import Genius from "./Genius.vue";
 
 export default defineComponent({
   props: [
@@ -169,7 +221,7 @@ export default defineComponent({
   ],
   data: () => ({
     generalStore: useGeneralStore(),
-    isExpandedHeader: true,
+    isExpandedHeader: false,
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
     height: 180,
@@ -179,8 +231,8 @@ export default defineComponent({
         goTo: 'prices',
       },
       {
-        text: 'Этапы проекта',
-        goTo: 'construction-stages',
+        text: 'Genius',
+        goTo: 'genius',
       },
       {
         text: 'Информация',
@@ -217,6 +269,7 @@ export default defineComponent({
       }
     },
     dragEnd(event) {
+      console.log('heh')
       if (event.y < 400) {
         this.height = 0
         this.isExpandedHeader = false
@@ -227,6 +280,7 @@ export default defineComponent({
       }
     },
     switchState(event) {
+      console.log('huh')
       if (event.y > 400) {
         this.height = 0
         this.isExpandedHeader = false
@@ -272,7 +326,8 @@ export default defineComponent({
     IonHeader,
     FavouritesButton,
     BackButton,
-    BottomPopup
+    BottomPopup,
+    Genius
   },
 })
 
@@ -281,9 +336,10 @@ export default defineComponent({
 <style scoped>
 .house {
   height: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: min-content auto;
+  /* display: grid; */
+  /* grid-template-rows: min-content auto; */
+  /* display: flex; */
+  /* flex-direction: column; */
   overflow: hidden;
   background: rgba(245, 245, 245, 0.94);
   transition: all 0.3s;
@@ -293,20 +349,92 @@ export default defineComponent({
   backdrop-filter: blur(26px);
   transition: all 1s ease;
   min-height: 200px;  
-  max-height: calc(100vh - 180px);
+  max-height: calc(100% - 180px);
+  z-index: 0;
+  /* max-height: 100%; */
 }
-.house--expanded-header .house__header {
+.house__expanded-header, .house__collapsed-header {
+  position: absolute;
   height: 200px;
+  width: 100%;
+  z-index: 0;
+  transition: .5s all;
 }
-/* .house--expanded-header .house__body {
+.house__expanded-header--shown, .house__collapsed-header--shown {
+  opacity: 1;
+  pointer-events: all;
+}
+.house__collapsed-header--hidden, .house__expanded-header--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.house__expanded-header {
+  padding: 20px 20px 48px 20px;
+}
+.house__header-carousel {
+  height: 384px;
+  z-index: -1;
+  padding: 0px 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: 24px;
+}
+.house__header-carousel-slide {
+  height: 384px;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-right: 8px;
+}
+.house__header-carousel-image {
+  width: 100%;
+  height: 384px;
+  background-position: center;
+  background-size: cover;
+}
+.house__running-line {
+  font-weight: 750;
+  font-size: 20px;
+  line-height: 120%;
+  color: #090909;
+  white-space: nowrap;
+  animation: running-line 10s linear infinite;
+}
+@keyframes running-line {
+  0% {
+    transform: translateX(375px);
+  }
+  100% {
+    transform: translateX(calc(-375px));
+  }
+
+}
+.house__collapsed-header {
+  height: 100px;
+  padding: 16px 20px;
+}
+.house__gallery-items {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
+  display: grid;
+  gap: 8px;
+  overflow-x: auto;
+  grid-auto-flow: column;
+  justify-content: start;
+}
+.house__gallery-item {
+  height: 68px;
+  width: 68px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.house__gallery-image {
+  background-position: center;
+  background-size: cover;
   height: 100%;
-} */
-.house--expanded-body .house__header {
-  height: calc(100vh - 180px);
 }
-/* .house--expanded-header .house__body {
-  height: 180px;
-} */
+
 
 .house__actions {
   display: grid;
@@ -324,37 +452,21 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
 }
-.house__header-carousel {
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  padding: 20px;
-}
-.house__header-carousel-slide {
-  width: 100%;
-  height: 100%;
-  border-radius: 24px;
-  overflow: hidden;
-}
-.house__header-carousel-image {
-  height: calc(225px + 20px);
-  width: 100%;
-}
+
 
 .house__body {
-  height: 100%;
+  position: relative;
   background: #FFFFFF;
   border-radius: 16px 16px 0px 0px;
-  padding: 0px 14px calc(56px + 14px) 14px;
+  padding: 0px 20px 0px 20px;
   width: 100%;
-  z-index: 1;
+  z-index: 1000;
   box-shadow: 0px 0px 20px 0px #0000001A;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-.house__body--closed {
-  height: 180px;
-  bottom: 0;
+  overflow: hidden;
+  max-height: calc(100% - 180px);
+  display: grid;
+  grid-template-rows: repeat(2, min-content) 1fr;
+  height: 100%;
 }
 .gestures-zone {
   padding: 8px 0px 16px 0px;
@@ -391,6 +503,12 @@ export default defineComponent({
   line-height: 120%;
   color: #F9F9F9;
 }
+.house__scrollable {
+  height: 100%;
+  overflow-y: auto;
+  padding-top: calc(48px - 16px);
+  padding-bottom: calc(40px + 49px + 48px);
+}
 .house__general-features {
   margin-bottom: 30px;
 }
@@ -424,12 +542,15 @@ export default defineComponent({
   font-size: 12px;
 }
 .house__navigation-items {
+  height: 32px;
   margin: 0px -14px;
   padding: 0px 14px;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 32px;
   overflow: auto;
   gap: 10px;
-  margin-bottom: 48px;
+  margin-bottom: 16px;
 }
 .house__navigation-item {
   height: 32px;
@@ -443,6 +564,21 @@ export default defineComponent({
   font-size: 12px;
   line-height: 125%;
   transition: .4s all;
+}
+.house__navigation-item-quanity {
+  height: 16px;
+  width: 15px;
+  border-radius: 8px;
+  background: #F9F9F9;
+  font-weight: 750;
+  font-size: 10px;
+  line-height: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  margin-left: 8px;
+  padding-top: 1px;
 }
 .house__navigation-item--unchoosed {
   color: #090909;

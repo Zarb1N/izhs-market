@@ -4,7 +4,9 @@
       class="card"
       v-for="card in pages"
       :key="card.title"
-      v-show="generalStore.widgetsList.filter(widget => widget.id === card.id)[0].isDisplayed"
+      v-show="
+        !generalStore.widgetsList.filter(widget => widget.id === card.id)[0].isPossibleToHide 
+        || generalStore.widgetsList.filter(widget => widget.id === card.id)[0].isDisplayed"
     >
       <div 
         class="card__body"

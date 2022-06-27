@@ -200,13 +200,16 @@
             <SetCard
               v-for="set in generalStore.countries"
               :key="set.id"
+              :set="set"
               style="width: 200px"
               :iconPath="set.image && set.image.url"
+              :isCoveredIcon="true"
               :title="set.name"
               :quantity="set.country_count"
-              description="Двустрочное <br/> описание"
+              :description="set.description"
+              :backgroundImagePath="set.image_preview && set.image_preview.url"
+              v-show="set.country_count"
               @goToSetPage="(countryId) => {$router.push(`/catalog/countries-set/${countryId}`)}"
-              :set="set"
             />
           </div>
         </div>
@@ -230,10 +233,10 @@
               :iconPath="set.image && set.image.url"
               :title="set.name"
               :quantity="set.builders_count"
-              description="Двустрочное <br/> описание"
-              @goToSetPage="(countryId) => {$router.push(`/catalog/builders-set/${countryId}`)}"
+              :backgroundImagePath="set.image_preview && set.image_preview.url"
               :set="set"
               v-show="set.builders_count"
+              @goToSetPage="(countryId) => {$router.push(`/catalog/builders-set/${countryId}`)}"              
             />
           </div>
         </div>
