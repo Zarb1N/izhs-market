@@ -20,28 +20,67 @@
           >Live</div>
           <FavouritesButton/>
         </div>
-        <!-- <div class="house__header-carousel">
+        <div 
+          class="house__expanded-header"
+          :class="isExpandedHeader ? 'house__expanded-header--shown' : 'house__expanded-header--hidden'"
+        >
           <Flicking
+            class="house__header-carousel"
             v-if="house.images"
             :options="{
-              circular: true,
               threshold: 0,
               interruptable: false,
+              align: 'center',
+              bound: true,
+              panelsPerView: 1,
             }"
             @will-change="(event) => {currentSlide = event.index}"
           >
             <div
               class="house__header-carousel-slide"
-              v-for="index in Array(house.images.length).keys()"
+              v-for="(image, index) in house.images.filter(image => image)"
               :key="index"
-              @click="() => {$router.push(`/house/${$route.params.id}/gallery`)}"
             >
-              <img
+              <!-- @click="() => {$router.push(`/house/${$route.params.id}/gallery`)}" -->
+
+              <div
                 class="house__header-carousel-image"
-                :src="house.images[index].url"
-              >
+                v-if="image"
+                :style="{backgroundImage: `url(${image.url})`}" 
+              ></div>
             </div>
-          </Flicking> 
+          </Flicking>
+          <div class="house__running-line">
+            <span>
+              {{house.name}} 
+              {{house.square}} 
+              м<span class="sup">2</span>
+              за {{generalStore.formatNumber(prices.min)}}
+              - {{generalStore.formatNumber(prices.max)}} ₽
+            </span>
+          </div>
+        </div>
+        <div 
+          class="house__collapsed-header"
+          :class="isExpandedHeader ? 'house__collapsed-header--hidden' : 'house__collapsed-header--shown'"
+        >
+          <div class="house__gallery-items">
+            <div 
+              class="house__gallery-item"
+              v-for="(image, index) in house.images"
+              :key="index"
+              v-show="image"
+            >
+              <div
+                class="house__gallery-image"
+                v-if="image"
+                :style="{backgroundImage: `url(${image.url})`}" 
+              ></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="house__header-carousel">
+           
         </div> -->
     </div>
 
@@ -182,7 +221,7 @@ export default defineComponent({
   ],
   data: () => ({
     generalStore: useGeneralStore(),
-    isExpandedHeader: true,
+    isExpandedHeader: false,
     clickCoordinates: {x: 0, y: 0},
     isContextMenu: false,
     height: 180,
@@ -311,21 +350,91 @@ export default defineComponent({
   transition: all 1s ease;
   min-height: 200px;  
   max-height: calc(100% - 180px);
+  z-index: 0;
   /* max-height: 100%; */
 }
-/*
-.house--expanded-header .house__header {
+.house__expanded-header, .house__collapsed-header {
+  position: absolute;
   height: 200px;
+  width: 100%;
+  z-index: 0;
+  transition: .5s all;
 }
-.house--expanded-header .house__body {
+.house__expanded-header--shown, .house__collapsed-header--shown {
+  opacity: 1;
+  pointer-events: all;
+}
+.house__collapsed-header--hidden, .house__expanded-header--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.house__expanded-header {
+  padding: 20px 20px 48px 20px;
+}
+.house__header-carousel {
+  height: 384px;
+  z-index: -1;
+  padding: 0px 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: 24px;
+}
+.house__header-carousel-slide {
+  height: 384px;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-right: 8px;
+}
+.house__header-carousel-image {
+  width: 100%;
+  height: 384px;
+  background-position: center;
+  background-size: cover;
+}
+.house__running-line {
+  font-weight: 750;
+  font-size: 20px;
+  line-height: 120%;
+  color: #090909;
+  white-space: nowrap;
+  animation: running-line 10s linear infinite;
+}
+@keyframes running-line {
+  0% {
+    transform: translateX(375px);
+  }
+  100% {
+    transform: translateX(calc(-375px));
+  }
+
+}
+.house__collapsed-header {
+  height: 100px;
+  padding: 16px 20px;
+}
+.house__gallery-items {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
+  display: grid;
+  gap: 8px;
+  overflow-x: auto;
+  grid-auto-flow: column;
+  justify-content: start;
+}
+.house__gallery-item {
+  height: 68px;
+  width: 68px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.house__gallery-image {
+  background-position: center;
+  background-size: cover;
   height: 100%;
-} 
-.house--expanded-body .house__header {
-  height: calc(100% - 180px);
 }
-.house--expanded-header .house__body {
-  height: 180px;
-} */
+
 
 .house__actions {
   display: grid;
@@ -343,29 +452,15 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
 }
-.house__header-carousel {
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  padding: 20px;
-}
-.house__header-carousel-slide {
-  width: 100%;
-  height: 100%;
-  border-radius: 24px;
-  overflow: hidden;
-}
-.house__header-carousel-image {
-  height: calc(225px + 20px);
-  width: 100%;
-}
+
 
 .house__body {
+  position: relative;
   background: #FFFFFF;
   border-radius: 16px 16px 0px 0px;
   padding: 0px 20px 0px 20px;
   width: 100%;
-  z-index: 10;
+  z-index: 1000;
   box-shadow: 0px 0px 20px 0px #0000001A;
   overflow: hidden;
   max-height: calc(100% - 180px);
