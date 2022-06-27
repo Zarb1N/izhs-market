@@ -108,6 +108,9 @@
           :data="house"
           :sellers="builders"
         /> -->
+        <Genius
+          v-show="subpage === 'genius'"
+        />
         <Information
           v-show="subpage === 'information'"
           :data="house"
@@ -169,6 +172,7 @@ import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
 import FavouritesButton from "@/components/FavouritesButton.vue";
 import BackButton from "@/components/BackButton.vue";
 import BottomPopup from "@/components/BottomPopup.vue";
+import Genius from "./Genius.vue";
 
 export default defineComponent({
   props: [
@@ -283,7 +287,8 @@ export default defineComponent({
     IonHeader,
     FavouritesButton,
     BackButton,
-    BottomPopup
+    BottomPopup,
+    Genius
   },
 })
 
