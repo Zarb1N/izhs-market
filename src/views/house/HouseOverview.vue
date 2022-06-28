@@ -33,6 +33,7 @@
               align: 'center',
               bound: true,
               panelsPerView: 1,
+              inputType: ['pointer', 'mouse', 'touch'],
             }"
             @will-change="(event) => {currentSlide = event.index}"
           >
@@ -109,7 +110,7 @@
         >
           <span class="house__navigation-item-text">{{button.text}}</span>
           <span 
-            class="house__navigation-item-quanity"
+            class="house__navigation-item-quantity"
             v-if="button.text === 'Обсуждения'"
           >{{house.discussions && house.discussions.length}}</span>
         </div>
@@ -460,7 +461,7 @@ export default defineComponent({
   border-radius: 16px 16px 0px 0px;
   padding: 0px 20px 0px 20px;
   width: 100%;
-  z-index: 1000;
+  z-index: 10;
   box-shadow: 0px 0px 20px 0px #0000001A;
   overflow: hidden;
   max-height: calc(100% - 180px);
@@ -565,9 +566,9 @@ export default defineComponent({
   line-height: 125%;
   transition: .4s all;
 }
-.house__navigation-item-quanity {
+.house__navigation-item-quantity {
   height: 16px;
-  width: 15px;
+  width: 16px;
   border-radius: 8px;
   background: #F9F9F9;
   font-weight: 750;

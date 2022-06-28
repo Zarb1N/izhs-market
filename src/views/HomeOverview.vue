@@ -428,7 +428,6 @@ export default defineComponent({
   background: #F5F5F5;
   backdrop-filter: blur(26px);
   padding: 0px 20px;
-  padding-bottom: 50px;
 }
 .home__add-us-to-your-projects {
   background: #FFFFFF;

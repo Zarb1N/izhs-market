@@ -2,16 +2,15 @@
   <div class="house-d">
     <div
       class="house-d__manager"
-      v-if="staffInfo && data.discussions"
+      v-if="data.discussions"
     >
       <img
         class="house-d__manager-image"
-        :src="staffInfo.image.url"
-        v-if="staffInfo.image"
+        :src="generalStore.getImageURL('default-woman-4.png')"
       />
       <div class="house-d__manager-text-info">
-        <div class="house-d__manager-name">{{staffInfo.name}}</div>
-        <div class="house-d__manager-hint">{{staffInfo.description}}</div>
+        <div class="house-d__manager-name">Екатерина Алферова</div>
+        <div class="house-d__manager-hint">Публикую для вас самые интересные обсуждения клиентов по проекту {{data.name}}</div>
       </div>
     </div>
     <div
@@ -24,7 +23,7 @@
       >
         <div class="house-d__question">
           <div class="house-d__question-header">
-            <div class="house-d__questioner-name"></div>
+            <div class="house-d__questioner-name">{{disc.name}}</div>
           <div class="house-d__question-date">
             {{disc.question_date && disc.question_date.split('-').reverse().join('.')}}
           </div>
@@ -89,9 +88,9 @@ export default defineComponent({
 .house-d__manager {
   min-height: 46px;
   display: grid;
-  grid-template-columns: 38px auto;
+  grid-template-columns: 40px auto;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 .house-d__manager-image {
   width: 38px;
@@ -99,15 +98,17 @@ export default defineComponent({
   border-radius: 10px;
 }
 .house-d__manager-name {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 18px;
-  margin-bottom: 2px;
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 120%;
+  color: #090909;
+  margin-bottom: 8px;
 }
 .house-d__manager-hint {
-  font-weight: normal;
-  font-size: 10px;
-  line-height: 13px;
+  font-weight: 750;
+  font-size: 12px;
+  line-height: 120%;
+color: #2D2D2D;
 }
 
 

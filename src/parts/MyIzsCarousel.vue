@@ -72,6 +72,7 @@
         />
       </div>
     </div>
+    <!--
     <div 
       class="settings"
       @click="appState.isSelectingWidgetsPopup = true"
@@ -81,6 +82,7 @@
         src="@/assets/icons/gear.svg"
       />
     </div>
+    -->
   </div>
 </template>
 
