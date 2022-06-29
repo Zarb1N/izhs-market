@@ -1,39 +1,15 @@
 <template>
   <IonContent>
     <div class="menu__general">
-      <div class="menu__profile" :style="getStyle">
-        <div class="menu__user-info">
-          <img v-if="!getDeviceState.image" class="menu__background" src="@/assets/empty-avatar.svg" alt="empty-avatar">
-          <div class="menu__user-header">
-            <div class="menu__user-name">
-              <img v-if="!initialState.name" src="@/assets/add-icon.svg" alt="add-icon" @click="showNameEditPopup" />
-              <img v-else-if="initialState.name && isProfileEdit" width="19" src="@/assets/edit.svg" alt="add-icon"
-                @click="showNameEditPopup" />
-              <p>{{ computedName }}</p>
-            </div>
-            <div class="menu__phone-number">
-              <img v-if="!initialState.number" src="@/assets/add-icon.svg" alt="add-icon"
-                @click="showNumberEditPopup" />
-              <img v-else-if="initialState.number && isProfileEdit" width="19" src="@/assets/edit.svg" alt="add-icon"
-                @click="showNumberEditPopup" />
-              <p>{{ computedNumber }}</p>
-            </div>
-            <div class="menu__user-status">
-              <img src="@/assets/status-icon.svg" alt="status">
-              <p class="menu__user-status-text">статус</p>
-            </div>
-          </div>
-          <div class="menu__genius-state">
-            <p v-if="!isProfileEdit" class="menu__title">Мой ИЖС</p>
-            <button v-else @click="onSaveChanges" class="button button-small">Сохранить</button>
-            <img v-if="!getDeviceState.image" @click="onAddPhoto" src="@/assets/add_photo.svg" alt="add_photo">
-            <img v-else-if="getDeviceState.image && !isProfileEdit" @click="editProfile" src="@/assets/edit.svg"
-              alt="edit-icon">
-            <img v-else @click="onAddPhoto" src="@/assets/edit-photo.svg" alt="edit-icon">
-          </div>
+      <div class="status-bar"></div>
+      <section class="menu-page__header">
+        <p v-if="!isProfileEdit" class="menu__title">Мой ИЖС</p>
+        <div class="menu__user-status">
+          <img src="@/assets/status-icon.svg" alt="status">
+          <p class="menu__user-status-text">статус</p>
         </div>
-      </div>
-      <div class="menu__buttons">
+      </section>
+      <section class="menu-page__body">
         <section @click="redirectToStatusPage" class="menu__status">
           <p>{{ status }}</p>
           <img src="@/assets/status-large.svg" alt="status">
@@ -42,26 +18,7 @@
           <MenuButton :is-link="true" v-for="(btn, index) in buttons" :key="index" :data="btn"
             @click="() => { $router.push(`/menu/${btn.goTo}`) }" />
         </section>
-      </div>
-      <CenterPopup :is-active="isEditNamePopupShown" @close="isEditNamePopupShown = false">
-        <template #title>
-          <h1 class="menu__popup-title">Ваше имя</h1>
-        </template>
-        <div class="menu__popup-body">
-          <input class="input-field" placeholder="Введите имя" type="text" v-model="initialState.name">
-          <button @click="onSave(initialState.name, 'name')" class="button">Сохранить</button>
-        </div>
-      </CenterPopup>
-      <CenterPopup :is-active="isEditNumberPopupShown" @close="isEditNumberPopupShown = false">
-        <template #title>
-          <h1 class="menu__popup-title">Ваш номер телефона</h1>
-        </template>
-        <div class="menu__popup-body">
-          <input class="input-field" placeholder="Введите номер телефона" v-maska="'+7 ### ###-##-##'" type="tel"
-            v-model="initialState.number">
-          <button @click="onSave(initialState.number, 'number')" class="button">Сохранить</button>
-        </div>
-      </CenterPopup>
+      </section>
     </div>
   </IonContent>
 </template>
@@ -172,6 +129,22 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 </script>
 
 <style scoped>
+
+.menu-page__body {
+  display: grid;
+  padding: 24px 20px 48px;
+}
+
+.status-bar {
+  height: 44px;
+}
+
+.menu-page__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+}
+
 .menu__popup-body {
   margin-top: 16px;
   display: grid;
@@ -237,7 +210,7 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 
 .menu__status {
   padding: 16px;
-  background: #FFFFFF;
+  background: #090909;
   border-radius: 16px;
   display: flex;
   align-items: flex-start;
@@ -246,9 +219,10 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 }
 
 .menu__status p {
+  font-weight: 750;
   font-size: 12px;
-  line-height: 125%;
-  color: #2D2D2D;
+  line-height: 15px;
+  color: #F9F9F9;
   font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
@@ -259,8 +233,8 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 .menu__user-status-text {
   font-weight: 750;
   font-size: 14px;
-  line-height: 120%;
-  color: #F9F9F9;
+  line-height: 17px;
+  color: #090909;
   font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
@@ -284,10 +258,6 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
   display: flex;
   align-items: center;
   gap: 4px;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  grid-column-start: 2;
-  grid-column-end: 3;
 }
 
 .menu__user-header {
@@ -303,12 +273,11 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 }
 
 .menu__title {
-  font-size: 26px;
   font-weight: 750;
+  font-size: 26px;
   line-height: 31px;
-  letter-spacing: 0px;
-  color: #F9F9F9;
-  font-variation-settings: 'wdth' 151, 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
+  color: #090909;
+  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
 }
 
 .menu__genius-state {
@@ -332,8 +301,7 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
 }
 
 .menu__general {
-  display: grid;
-  grid-template-rows: minmax(120px, 400px) auto;
+  background: #F5F5F5;
 }
 
 .menu__profile {
@@ -344,30 +312,5 @@ const onSave = async (val: string, key: keyof IDeviceState) => {
   z-index: 1;
   top: 0;
   left: 0;
-}
-
-.menu__buttons {
-  position: sticky;
-  margin-top: -36px;
-  background: #F5F5F5;
-  border-radius: 24px 24px 0px 0px;
-  padding: 20px 20px 0 20px;
-  z-index: 100;
-  grid-row: 2 / 3;
-  max-height: calc(100vh - 120px - 90px);
-  overflow: hidden;
-  display: grid;
-}
-
-.menu__buttons::before {
-  content: '';
-  position: absolute;
-  background: #E0E0E0;
-  width: 40px;
-  height: 4px;
-  border-radius: 2px;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

@@ -97,6 +97,11 @@ const onBack = () => router.back()
 </script>
 
 <style scoped>
+.system-page {
+  background: #F5F5F5;
+  min-height: 100%;
+}
+
 .divider {
   background: #E0E0E0;
   opacity: 0.5;
