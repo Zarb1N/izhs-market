@@ -19,7 +19,7 @@
       v-if="set"
       class="s-card__details-btn"
       @click="$emit('goToSetPage', set.id)"
-    >Подробнее {{isCoveredIcon}}</div>
+    >Подробнее</div>
   </div>
 </template>
 

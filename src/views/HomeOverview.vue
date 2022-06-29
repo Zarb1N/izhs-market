@@ -267,7 +267,6 @@
           >Просмотреть подборку</div>
         </div>
       </div>
-      
     </IonContent>
   </IonPage>
 </template>

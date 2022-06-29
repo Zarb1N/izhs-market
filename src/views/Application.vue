@@ -23,7 +23,7 @@
               >
                 <img
                   class="application__builder-logo"
-                  :src="builders[key][0].builder_info.image.url"
+                  :src="builders[key][0].builder_info.image && builders[key][0].builder_info.image.url"
                 />
                 <div class="application__builder-name">
                   {{ builders[key][0].builder_info.name }}
@@ -33,7 +33,6 @@
           </div>
           <img
             class="application__main-info-image"
-            :src="house && house.images && house.images[0].url"
           />
         </div>
         <div class="application__divider--horizontal"></div>

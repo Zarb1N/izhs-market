@@ -5,7 +5,7 @@
   >
     <div class="card__header">
       <div class="card__seller-icon">
-        <img :src="seller[0].builder_info.image.url"/>
+        <img :src="seller[0].builder_info.image && seller[0].builder_info.image.url"/>
       </div>
 
       

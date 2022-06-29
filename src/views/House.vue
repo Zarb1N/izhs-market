@@ -46,10 +46,8 @@ export default defineComponent({
               item.equipment_info = equip
             }
           })
-          console.log(item)
         })
       }
-      console.log(house)
       this.generalStore.houseInfo = house
       if (this.generalStore.houseInfo.price_history) {
         const prices = this.generalStore.houseInfo.price_history.map( (item: {[key: string]: string | number}) => item.price)
@@ -124,7 +122,6 @@ export default defineComponent({
   mounted() {
     this.combineHouseAndBuildersInfo(this.$route.params.id.toString())
     this.generalStore.deviceState.viewed_houses_id && this.markHouseAsViewed(Number(this.$route.params.id))
-    console.log(this.generalStore.houseInfo)
   },
   created() {
   },

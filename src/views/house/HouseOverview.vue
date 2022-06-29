@@ -109,10 +109,16 @@
           @click="subpage = button.goTo"
         >
           <span class="house__navigation-item-text">{{button.text}}</span>
-          <span 
+          <!-- <span 
             class="house__navigation-item-quantity"
             v-if="button.text === 'Обсуждения'"
-          >{{house.discussions && house.discussions.length}}</span>
+          >{{house.discussions && house.discussions.length}}</span> -->
+          <span 
+            class="house__navigation-item-quantity"
+            v-show="button.quantity"
+          >
+            {{button.quantity}}
+          </span>
         </div>
       </div>
 
@@ -136,7 +142,6 @@
         </div>
         <!-- <div class="house__description">{{house.description}}</div> -->
       </div>
-
         <Prices
           v-show="subpage === 'prices'"
           :data="house"
@@ -161,13 +166,19 @@
           :data="house"
           :sellers="builders"
         />
+        <Reviews
+          v-show="subpage === 'reviews'"
+          :data="house"
+          :sellers="builders"
+           @openBottomPopup="(title, content) => openBottomPopup(title, content)"
+        />
     </div>
     </div>
     <div
       class="house__primary-button"
       v-show="!isApplicationHouse"
-      @click="$router.push(`/house/${$route.params.id}/application`)"
-    >Продолжить с экономией 427 000 ₽</div>
+      @click="isHouseApplicationPopup = true"
+    >Продолжить с экономией {{finalProfit ? generalStore.formatNumber(finalProfit).replace('-', '') : 0}} ₽</div>
 
 
     <BottomPopup 
@@ -177,23 +188,13 @@
       <template v-slot:title><div class="house__popup-title">{{bottomPopupTitle}}</div></template>
       <div class="house__popup-paragraph">{{bottomPopupContent}}</div>
     </BottomPopup>
-    <!-- <ContextMenu
-      tabindex="0"
-      ref="contextMenu"
-      :style="{
-        'top': `${clickCoordinates.y}px`,
-        'left': `${clickCoordinates.x}px`,
-        'transform': `translate(${clickCoordinates.x < windowWidth / 2 ? '0' : '-100%'})`
-      }"
-      v-show="isContextMenu"
-      :options="
-        generalStore.deviceState.favourites_houses_id.indexOf(Number($route.params.id)) === -1
-          ? generalStore.housePreviewContextActions
-          : generalStore.favouriteHousePreviewContextActions
-      "
-      @blur="isContextMenu = false"
-      @close="isContextMenu = false"
-    /> -->
+    <HouseApplicationPopup
+      :cashback="cashback"
+      :finalProfit="finalProfit"
+      :isActive="isHouseApplicationPopup"
+      :house="house"
+      @close="isHouseApplicationPopup = false"
+    />
   </div>
 </template>
 
@@ -213,12 +214,15 @@ import FavouritesButton from "@/components/FavouritesButton.vue";
 import BackButton from "@/components/BackButton.vue";
 import BottomPopup from "@/components/BottomPopup.vue";
 import Genius from "./Genius.vue";
+import Reviews from "./Reviews.vue";
+import HouseApplicationPopup from "@/parts/HouseApplicationPopup.vue";
 
 export default defineComponent({
   props: [
     'house',
     'prices',
-    'builders'
+    'builders',
+    'cashback'
   ],
   data: () => ({
     generalStore: useGeneralStore(),
@@ -242,13 +246,21 @@ export default defineComponent({
       {
         text: 'Обсуждения',
         goTo: 'discussion',
+        quantity: 0,
       },
+      {
+        text: 'Отзывы',
+        goTo: 'reviews',
+        quantity: 0,
+      }
     ] as Array<{[key: string]: string}>,
     currentSlide: 0,
     subpage: 'prices',
     isBottomPopup: false,
     bottomPopupContent: '',
-    bottomPopupTitle: ''
+    bottomPopupTitle: '',
+    finalProfit: 0,
+    isHouseApplicationPopup: false,
   }),
   methods: {
     openContextMenu(event : any, id : string) {
@@ -313,6 +325,26 @@ export default defineComponent({
     },
   },
   mounted() {
+    if (this.house.discussions) {
+      this.navigationItems.filter(item => item.goTo === 'discussion')[0].quantity = this.house.discussions.length
+    }
+  },
+
+  watch: {
+    'this.house.discussions': {
+      handler(newValue) {
+        if (this.house.discussions) {
+          this.navigationItems.filter(item => item.goTo === 'discussion')[0].quantity = this.house.discussions.length
+        }
+      },
+      deep: true
+    },
+    'cashback': {
+      handler(newValue) {
+        this.finalProfit = this.cashback.map(benefit => benefit.cashback).reduce((acc, curr) => acc += curr)
+      },
+      deep: true
+    }
   },
   components: {
     Flicking,
@@ -328,7 +360,9 @@ export default defineComponent({
     FavouritesButton,
     BackButton,
     BottomPopup,
-    Genius
+    Genius,
+    Reviews,
+    HouseApplicationPopup,
   },
 })
 
@@ -505,6 +539,7 @@ export default defineComponent({
   color: #F9F9F9;
 }
 .house__scrollable {
+  max-width: 100%;
   height: 100%;
   overflow-y: auto;
   padding-top: calc(48px - 16px);

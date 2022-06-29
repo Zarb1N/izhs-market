@@ -181,11 +181,7 @@ export default defineComponent({
   background: white;
   z-index: 100;
   height: 42px;
-  padding-top: 44px;
   box-sizing: content-box;
-  display: grid;
-  grid-template-columns: min-content;
-
 }
 .set__back-btn {
   display: grid;

@@ -80,7 +80,7 @@ export default defineComponent({
   backdrop-filter: blur(80px);
   border-radius: 16px 16px 0px 0px;
   width: 100%;
-  padding: 20px;
+  padding: 20px 20px 40px 20px;
   position: absolute;
   transition: 0.3s all;
   top: 100%;
@@ -95,5 +95,9 @@ export default defineComponent({
 
 .popup__close-btn {
   grid-column: 2 / 3;
+}
+.popup__gestures-area {
+  height: 34px;
+  width: 100%;
 }
 </style>

@@ -43,7 +43,10 @@
           >
             <img 
               :src="generalStore.builders.filter(builder => builder.id === id)[0].image.url"
-              v-if="generalStore.builders.filter(builder => builder.id === id).length"
+              v-if="
+                generalStore.builders.filter(builder => builder.id === id).length
+                && generalStore.builders.filter(builder => builder.id === id)[0].image
+              "
             />
           </div>
         </div>

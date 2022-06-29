@@ -118,7 +118,7 @@ export default defineComponent({
 <style scoped>
 .set {
   width: 100%;
-  padding: 30px 0px 100px 0px;
+  padding: 30px 0px 0px 0px;
 
 }
 .set__header {
@@ -129,8 +129,6 @@ export default defineComponent({
   z-index: 100;
   height: 42px;
   box-sizing: content-box;
-  display: grid;
-  grid-template-columns: min-content;
 
 }
 .set__back-btn {
