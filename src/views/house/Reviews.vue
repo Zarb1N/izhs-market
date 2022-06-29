@@ -218,7 +218,9 @@ export default defineComponent({
             // += this.sellers[sellerId].feedbacks.customers.reduce( (acc, curr) => acc.estimation_customer + curr.estimation_customer)
           })
           this.quantityOfReviews = reviews.length
-          this.averageRate = rates.reduce( (acc, curr) => acc + curr) / rates.length
+          if (rates.length) {
+            this.averageRate = rates.reduce( (acc, curr) => acc + curr) / rates.length
+          }
         }
       },
       deep: true

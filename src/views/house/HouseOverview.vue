@@ -62,6 +62,7 @@
               interruptable: false,
               bound: true,
               inputType: ['pointer', 'mouse', 'touch'],
+              align: 'next'
             }"
             @will-change="(event) => {currentSlide = event.index}"
           >
@@ -695,7 +696,6 @@ export default defineComponent({
   font-size: 12px;
 }
 .house__navigation-items {
-  height: 32px;
   margin: 0px -14px;
   padding: 0px 14px;
   display: grid;
@@ -703,9 +703,10 @@ export default defineComponent({
   grid-template-rows: 32px;
   overflow: auto;
   gap: 10px;
-  margin-bottom: 16px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
   position: sticky;
-  top: 99px;
+  top: 100px;
   z-index: 100;
   background: rgba(245, 245, 245, 1);
 }
