@@ -1,6 +1,9 @@
 <template>
   <div class="house-p">
-    <div class="house-p__description paragraph">{{data.description}}</div>
+    <div 
+      class="house-p__description paragraph"
+      v-html="data.description"
+    ></div>
     <div
       class="house-p__about-prices-btn paragraph"
       @click="$emit(
@@ -89,6 +92,10 @@ export default defineComponent({
 <style scoped>
 .house-p__description {
   margin-bottom: 10px;
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 120%;
+  color: #2D2D2D;
 }
 .house-p__about-prices-btn {
   font-weight: 750;
