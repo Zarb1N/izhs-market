@@ -1,29 +1,23 @@
 <template>
-  <div 
-    class="house without-scrollbar"
-    :class="isExpandedHeader ? 'house--expanded-header' : 'house--expanded-body'"
-  >
-      <div 
-        class="house__header"
-        ref="header"
-        :style="{height: height + 'px'}"
-      >
-        <div class="status-bar"></div>
-        <div class="house__actions">
-          <BackButton/>
-          <div 
-            class="house__live-btn"
-            @click="openBottomPopup(
-              'Live',
-              `Застройщик разместит камеру и можно наблюдать за стройкой`
-            )"
-          >Live</div>
-          <FavouritesButton/>
-        </div>
+  <div class="house without-scrollbar">
+    <div class="house__header">
+      <div class="status-bar"></div>
+      <div class="house__actions">
+        <BackButton/>
         <div 
-          class="house__expanded-header"
-          :class="isExpandedHeader ? 'house__expanded-header--shown' : 'house__expanded-header--hidden'"
-        >
+          class="house__live-btn"
+          @click="openBottomPopup(
+            'Live',
+            `Застройщик разместит камеру и можно наблюдать за стройкой`
+          )"
+        >Live</div>
+        <FavouritesButton/>
+      </div>
+    </div>
+    <div 
+      class="house__body"
+    >
+      <div class="house__summary">
           <Flicking
             class="house__header-carousel"
             v-if="house.images"
@@ -60,42 +54,79 @@
               - {{generalStore.formatNumber(prices.max)}} ₽
             </span>
           </div>
-        </div>
-        <div 
-          class="house__collapsed-header"
-          :class="isExpandedHeader ? 'house__collapsed-header--hidden' : 'house__collapsed-header--shown'"
-        >
-          <div class="house__gallery-items">
+          <Flicking
+            class="house__header-information-cards"
+            v-if="house.images"
+            :options="{
+              threshold: 0,
+              interruptable: false,
+              bound: true,
+              inputType: ['pointer', 'mouse', 'touch'],
+            }"
+            @will-change="(event) => {currentSlide = event.index}"
+          >
             <div 
-              class="house__gallery-item"
-              v-for="(image, index) in house.images"
+              class="house__header-information-card house__header-builder-card"
+              v-for="(sellerId, index) in Object.keys(builders)"
               :key="index"
-              v-show="image"
             >
-              <div
-                class="house__gallery-image"
-                v-if="image"
-                :style="{backgroundImage: `url(${image.url})`}" 
-              ></div>
+              <div class="house__header-builder-card-rate-zone">
+                <div class="house__header-builder-card-rate-stars">
+                  <img
+                    class="review__star-icon--orange"
+                    v-for="star in Math.floor(sellersRates.filter(seller => seller.sellerId == sellerId)[0].rate)"
+                    :key="star"
+                    :src="generalStore.getImageURL('icons/star--orange.svg')"
+                  />
+                  <img
+                    class="review__star-icon--gray"
+                    v-for="star in (5 - Math.floor(sellersRates.filter(seller => seller.sellerId == sellerId)[0].rate))"
+                    :key="star"
+                    :src="generalStore.getImageURL('icons/star--gray.svg')"
+                  />
+                </div>
+                <div class="house__header-builder-card-rate">{{sellersRates.filter(seller => seller.sellerId == sellerId)[0].rate}}</div>
+                
+              </div>
+              <div class="house__header-builder-card-image">
+                <img 
+                  :src="builders[sellerId][0].builder_info.image && builders[sellerId][0].builder_info.image.url"
+                />
+              </div>
+              <div class="house__header-builder-card-name">{{builders[sellerId][0].builder_info.name}}</div>
             </div>
-          </div>
+            
+            <div 
+              class="house__header-information-card house__header-country-card"
+              :key="'country'"
+            >
+              <div class="house__header-country-card-title">Архитектура</div>
+              <div 
+                class="house__header-country-card-image"
+                :style="{backgroundImage: `url(${country.image && country.image.url})`}"
+              >
+              
+              </div>
+              <div class="house__header-country-card-name">{{country.name}}</div>
+            </div>
+            
+            <div 
+              class="house__header-information-card house__header-genius-card"
+              :key="'genius'"
+            >
+              <div class="house__header-genius-card-title">Genius - <br/> все инженеры <br/> и Росреестр <br/> за 0 ₽</div>
+              <div 
+                class="house__header-genius-card-description"
+              >
+                Успейте <br/> активировать <br/> до 25 августа
+              </div>
+              <img 
+                class="house__header-genius-card-image"
+                :src="generalStore.getImageURL('genius.svg')"
+              />
+            </div>
+          </Flicking>
         </div>
-        <!-- <div class="house__header-carousel">
-           
-        </div> -->
-    </div>
-
-
-    <div class="house__body">
-      <div 
-        class="gestures-zone"
-        @click="(e) => switchState(e)"
-        @drag="(e) => dragging(e)"
-        @dragend="(e) => dragEnd(e)"
-        draggable="true"
-      >
-        <div class="gestures-line"></div>
-      </div>
       <div class="house__navigation-items without-scrollbar">
         <div
           class="house__navigation-item"
@@ -222,6 +253,7 @@ export default defineComponent({
     'house',
     'prices',
     'builders',
+    'sellers',
     'cashback'
   ],
   data: () => ({
@@ -251,7 +283,7 @@ export default defineComponent({
       {
         text: 'Отзывы',
         goTo: 'reviews',
-        quantity: 0,
+        quantity: 0 as number,
       }
     ] as Array<{[key: string]: string}>,
     currentSlide: 0,
@@ -261,6 +293,7 @@ export default defineComponent({
     bottomPopupTitle: '',
     finalProfit: 0,
     isHouseApplicationPopup: false,
+    sellersRates: [] as Array<{}>,
   }),
   methods: {
     openContextMenu(event : any, id : string) {
@@ -293,7 +326,6 @@ export default defineComponent({
       }
     },
     switchState(event) {
-      console.log('huh')
       if (event.y > 400) {
         this.height = 0
         this.isExpandedHeader = false
@@ -303,11 +335,15 @@ export default defineComponent({
         this.isExpandedHeader = true
       }
     },
+    scroll(event) {
+      this.isExpandedHeader = !this.isExpandedHeader
+    },
     openBottomPopup(title: string, content: string) {
       this.isBottomPopup = true
       this.bottomPopupContent = content
       this.bottomPopupTitle = title
-    }
+    },
+
     
   },
   computed: {
@@ -323,6 +359,10 @@ export default defineComponent({
       }
       return false
     },
+    country() {
+      return this.generalStore.countries.filter(country => country.id === this.house.country_id)[0]
+    },
+
   },
   mounted() {
     if (this.house.discussions) {
@@ -342,6 +382,26 @@ export default defineComponent({
     'cashback': {
       handler(newValue) {
         this.finalProfit = this.cashback.map(benefit => benefit.cashback).reduce((acc, curr) => acc += curr)
+      },
+      deep: true
+    },
+    sellers: {
+      handler(newValue) {
+        this.navigationItems.filter(item => item.goTo === 'reviews')[0].quantity = 0
+        Object.keys(this.sellers).forEach( sellerId => {
+          let seller = this.sellers[sellerId]
+          let rateInfo = {sellerId, rate: 0}
+          let rates = [] as Array<number>
+          console.log(seller[0].builder_info)
+          seller[0].builder_info.feedbacks.customers.forEach(review => {
+            rates.push(review.estimation_customer)
+          })
+          if (rates.length) {
+            rateInfo.rate = rates.reduce((acc, curr) => acc += curr) / rates.length
+            this.navigationItems.filter(item => item.goTo === 'reviews')[0].quantity += rates.length
+          }
+          this.sellersRates.push(rateInfo)
+        })
       },
       deep: true
     }
@@ -371,44 +431,31 @@ export default defineComponent({
 <style scoped>
 .house {
   height: 100%;
-  /* display: grid; */
-  /* grid-template-rows: min-content auto; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  overflow: hidden;
   background: rgba(245, 245, 245, 0.94);
   transition: all 0.3s;
+  overflow-y: auto;
+  display: grid;
 }
 .house__header {
+  position: fixed;
+  top: 0;
+  z-index: 50;
   width: 100%;
-  backdrop-filter: blur(26px);
   transition: all 1s ease;
-  min-height: 200px;  
+  min-height: 100px;  
   max-height: calc(100% - 180px);
-  z-index: 0;
+  background: rgba(245, 245, 245, 1);
   /* max-height: 100%; */
 }
-.house__expanded-header, .house__collapsed-header {
-  position: absolute;
-  height: 200px;
-  width: 100%;
-  z-index: 0;
-  transition: .5s all;
-}
-.house__expanded-header--shown, .house__collapsed-header--shown {
-  opacity: 1;
-  pointer-events: all;
-}
-.house__collapsed-header--hidden, .house__expanded-header--hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.house__expanded-header {
-  padding: 20px 20px 48px 20px;
+
+.house__summary {
+  overflow: hidden;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
 }
 .house__header-carousel {
   height: 384px;
-  z-index: -1;
   padding: 0px 20px;
   margin-left: -20px;
   margin-right: -20px;
@@ -428,21 +475,100 @@ export default defineComponent({
   background-size: cover;
 }
 .house__running-line {
+  width: min-content;
   font-weight: 750;
   font-size: 20px;
   line-height: 120%;
   color: #090909;
   white-space: nowrap;
   animation: running-line 10s linear infinite;
+  margin-bottom: 40px;
+  position: relative;
 }
 @keyframes running-line {
   0% {
-    transform: translateX(375px);
+    transform: translateX(calc(100% + 20px));
   }
   100% {
-    transform: translateX(calc(-375px));
+    transform: translateX(calc(-100% - 20px));
   }
-
+}
+.house__header-information-cards {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0px 20px;
+  margin-bottom: 48px;
+}
+.house__header-information-card {
+  width: 167px;
+  height: 257px;
+  border-radius: 16px;
+  padding: 16px;
+  margin-right: 1px;
+}
+.house__header-builder-card, .house__header-country-card {
+  background: #FFFFFF;
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  gap: 16px;
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 130%;
+  color: #090909;
+}
+.house__header-builder-card-rate-zone {
+  display: flex;
+  align-items: center;
+}
+.house__header-builder-card-rate-stars {
+  display: grid;
+  grid-template-columns: repeat(5, 16px);
+  gap: 4px;
+}
+.house__header-builder-card-rate {
+  padding-top: 1px;
+  margin-left: 8px;
+}
+.house__header-builder-card-image {
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+} 
+.house__header-builder-card-image img {
+  max-height: 80px;
+  max-width: 80px;
+}
+.house__header-country-card-image {
+  height: 80px;
+  width: 80px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  align-self: flex-end;
+}
+.house__header-genius-card {
+  background: #090909;
+  display: grid;
+  grid-template-rows: min-content min-content auto;
+}
+.house__header-genius-card-title {
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 130%;
+  color: #F9F9F9;
+  margin-bottom: 20px;
+}
+.house__header-genius-card-description {
+  font-weight: 750;
+  font-size: 10px;
+  line-height: 120%;
+  color: #E0E0E0;
+}
+.house__header-genius-card-image {
+  align-self: flex-end;
 }
 .house__collapsed-header {
   height: 100px;
@@ -491,35 +617,15 @@ export default defineComponent({
 
 .house__body {
   position: relative;
-  background: #FFFFFF;
   border-radius: 16px 16px 0px 0px;
-  padding: 0px 20px 0px 20px;
+  padding: 100px 20px 0px 20px;
   width: 100%;
   z-index: 10;
-  box-shadow: 0px 0px 20px 0px #0000001A;
-  overflow: hidden;
   max-height: calc(100% - 180px);
   display: grid;
   grid-template-rows: repeat(2, min-content) 1fr;
   height: 100%;
-}
-.gestures-zone {
-  padding: 8px 0px 16px 0px;
-  margin-left: -20px;
-  margin-right: -20px;
-}
-.gestures-line {
-  justify-self: center;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-.gestures-line::after {
-  content: '';
-  width: 40px;
-  height: 4px;
-  border-radius: 2px;
-  background: #E0E0E0;
+  max-width: 100%;
 }
 .house__primary-button {
   position: fixed;
@@ -541,7 +647,6 @@ export default defineComponent({
 .house__scrollable {
   max-width: 100%;
   height: 100%;
-  overflow-y: auto;
   padding-top: calc(48px - 16px);
   padding-bottom: calc(40px + 49px + 48px);
 }
@@ -587,6 +692,10 @@ export default defineComponent({
   overflow: auto;
   gap: 10px;
   margin-bottom: 16px;
+  position: sticky;
+  top: 99px;
+  z-index: 100;
+  background: rgba(245, 245, 245, 1);
 }
 .house__navigation-item {
   height: 32px;

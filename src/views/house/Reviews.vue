@@ -211,7 +211,6 @@ export default defineComponent({
           let reviews = []
           let rates = [] as Array<number>
           Object.keys(this.sellers).forEach( sellerId => {
-            console.log(this.sellers[sellerId])
             this.sellers[sellerId][0].builder_info.feedbacks.customers.forEach( customer => {
               reviews.push(customer)
               rates.push(customer.estimation_customer)
@@ -301,9 +300,15 @@ export default defineComponent({
   line-height: 120%;
   color: #090909;
 }
-.reviews__summary-stars {
-  display: flex;
+.reviews__summary-stars, .review__rate {
+  display: grid;
+  grid-template-columns: repeat(5, min-content);
+  gap: 4px;
   align-items: center;
+}
+.review__rate > img {
+  height: 14px;
+  width: 14px;
 }
 .reviews__categories {
   display: grid;

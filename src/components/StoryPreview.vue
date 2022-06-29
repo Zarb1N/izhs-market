@@ -5,7 +5,7 @@
   >
     <div
       class="s-preview__content"
-      :style="{background: `linear-gradient(360deg, #000000 -7.89%, rgba(0, 0, 0, 0) 82.9%), url(${(data && data.image) && data.image.url})`}"
+      :style="{background: `url(${(data && data.image) && data.image.url})`}"
     >
       <div class="s-preview__text-zone">
         <div

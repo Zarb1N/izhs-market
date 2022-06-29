@@ -4,6 +4,7 @@
       :house="generalStore.houseInfo"
       :prices="prices"
       :builders="builders"
+      :sellers="builders"
       :cashback="cashback"
     />
   </IonPage>

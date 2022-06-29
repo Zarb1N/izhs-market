@@ -29,7 +29,7 @@
               popup__point-value--underline
             "
             @click="$router.push('/menu/promo-codes')"
-          >Промокодов: {{generalStore.deviceState.promocodes_id.length}}</div>
+          >Промокодов: {{generalStore.deviceState.promocodes_id && generalStore.deviceState.promocodes_id.length}}</div>
         </div>  
         <div 
           class="popup__point"
@@ -100,6 +100,7 @@ export default defineComponent({
           promocodes: this.generalStore.deviceState.promocodes_id
         })
       })
+      /*
       const res = await fetch(`${this.generalStore.server}/states/${this.generalStore.deviceId}`, {
         method: 'PATCH',
         headers: {'Content-type': 'application/json'},
@@ -110,6 +111,7 @@ export default defineComponent({
       })
       const data = await res.json()
       this.generalStore.deviceState = data
+      */
       this.$emit('close')
     },
   },
