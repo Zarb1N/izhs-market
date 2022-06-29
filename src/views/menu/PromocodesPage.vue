@@ -18,7 +18,7 @@
           </section>
           <button class="button" type="submit">Применить</button>
         </form>
-        <section v-if="getPromocodes.length">
+        <!-- <section v-if="getPromocodes.length">
           <h2 class="promocodes__subtitle">Добавленные промокоды:</h2>
           <ul class="promocodes__list">
             <li v-for="promocode in getPromocodes" :key="promocode.id" class="promocodes__list-item">
@@ -26,8 +26,8 @@
               <p>{{ promocode.description }}</p>
             </li>
           </ul>
-        </section>
-        <section v-else class="promocodes__empty">
+        </section> -->
+        <section class="promocodes__empty">
           <img src="@/assets/tag-icon.svg" alt="tag-icon">
           <h3>Пока ничего не добавлено</h3>
         </section>
@@ -62,8 +62,6 @@ const onSubmit = async () => {
   try {
     await searchPromocode(promocode.value)
     error.value = true
-    // const newState = { device_id: String(getDeviceState.value.id), promocodes_id: [...getDeviceState.value.promocodes_id, res.id] }
-    // await updatePromocodes(newState)
   } catch (error) {
     console.error(error);
   }

@@ -95,7 +95,7 @@ const onBack = () => router.back()
 <style scoped>
 .standart__popup-subtitle {
   margin-top: 16px;
-  margin-bottom: 53px;
+  margin-bottom: 33px;
   font-weight: 750;
   font-size: 12px;
   line-height: 15px;

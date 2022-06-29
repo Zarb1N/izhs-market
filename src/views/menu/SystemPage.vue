@@ -145,7 +145,7 @@ const onBack = () => router.back()
 
 .status-bar__modal-body {
   margin-top: 32px;
-  margin-bottom: 38px;
+  margin-bottom: 18px;
   display: grid;
 }
 
