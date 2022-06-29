@@ -77,7 +77,11 @@ export default defineComponent({
     align-items: center;
     color: #707982;
     text-decoration: none;
-    gap: 1px;
+    gap: 6px;
+    font-weight: 750;
+    font-size: 10px;
+    line-height: 100%;
+    color: #090909;
   }
   .tabbar__item--choosed {
     background: linear-gradient(90deg, #C5ACFF 0%, #FBC2EB 100%);
