@@ -612,6 +612,18 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 750;
+  font-size: 10px;
+  line-height: 120%;
+  color: #6A6A6A;
+}
+.house__live-btn::before {
+  content: '';
+  height: 6px;
+  width: 6px;
+  background: #D9D9D9;
+  margin-right: 6px;
+  border-radius: 3px;
 }
 
 

@@ -113,7 +113,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 68px 14px 100px 14px;
+  padding: 68px 20px 20px 20px;
 
 }
 
@@ -171,7 +171,7 @@ export default defineComponent({
 <style>
 .set {
   width: 100%;
-  padding: 30px 0px 100px 0px;
+  padding: 30px 0px 20px 0px;
 
 }
 .set__header {

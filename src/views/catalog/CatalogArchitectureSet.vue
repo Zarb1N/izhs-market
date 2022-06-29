@@ -118,8 +118,7 @@ export default defineComponent({
 <style scoped>
 .set {
   width: 100%;
-  padding: 30px 0px 0px 0px;
-
+  padding: 30px 0px 20px 0px;
 }
 .set__header {
   width: 100%;
@@ -129,7 +128,6 @@ export default defineComponent({
   z-index: 100;
   height: 42px;
   box-sizing: content-box;
-
 }
 .set__back-btn {
   display: grid;
@@ -162,7 +160,6 @@ export default defineComponent({
   line-height: 120%;
   color: #090909;
   margin-bottom: 16px;
-
 }
 .set__houses {
   width: 100%;
