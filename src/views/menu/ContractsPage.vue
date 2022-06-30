@@ -8,7 +8,7 @@
       </div>
       <section class="contracts__body">
         <h1 class="contracts__title">{{ title }}</h1>
-        <p class="contracts__subtitle">Акцептуйте 2 оферты, чтобы использовать ИЖС Genius и строить дом</p>
+        <p class="contracts__subtitle">Акцептуйте 2 оферты, чтобы использовать ИЖС Genius<br> и строить дом</p>
         <div class="contracts__questions">
           <section class="contracts__question">
             <img src="@/assets/documents.svg" alt="documents">

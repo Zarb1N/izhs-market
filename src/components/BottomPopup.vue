@@ -1,5 +1,5 @@
 <template>
-  <!-- <teleport to="#overlay"> -->
+  <teleport v-if="isMounted" to="#overlay">
     <div class="popup" :class="isActive ? 'popup--active' : 'popup--disactive'">
       <div class="popup__wrapper" @click="$emit('close')"></div>
       <div class="popup__card">
@@ -12,20 +12,27 @@
         </div>
       </div>
     </div>
-  <!-- </teleport> -->
+  </teleport>
 </template>
 
 <script lang="ts">
-import { useGeneralStore } from "@/stores/general";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
-  props: [
-    'isActive',
-  ],
-  data: () => ({
-    generalStore: useGeneralStore(),
-  })
+  props: {
+    isActive: {
+      type: Boolean,
+    }
+  },
+  data() {
+    return {
+      isMounted: false
+    }
+  },
+  mounted() {
+    this.isMounted = true
+  },
+  emits: ["close"],
 })
 </script>
 

@@ -273,29 +273,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import FeaturesCards from '@/parts/FeaturesCards.vue'
 import StoryPreview from '@/components/StoryPreview.vue'
 import ProductPreview from '@/components/ProductPreview.vue'
 import { useGeneralStore } from '@/stores/general'
-import ModalWindow from '../components/ModalWindow.vue'
-import RegionChoosing from '../parts/RegionChoosing.vue'
-import ContextMenu from '../components/ContextMenu.vue'
-import Services from '../parts/Services.vue'
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { IonRouterOutlet, IonContent, IonPage } from '@ionic/vue';
+import { StatusBar } from '@capacitor/status-bar';
+import { IonContent, IonPage } from '@ionic/vue';
 import FavouritesButton from '../components/FavouritesButton.vue'
-import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
 import MyIzsCarousel from '../parts/MyIzsCarousel.vue'
 import GeniusCarousel from '../parts/GeniusCarousel.vue'
 import SetCard from '@/components/SetCard.vue'
-import BottomPopup from '@/components/BottomPopup.vue'
 import { useAppState } from '@/stores/appState'
 import LandscapeCarousel from '@/parts/LandscapeCarousel.vue'
 import ServicesCarousel from '@/parts/ServicesCarousel.vue'
 import SetSmallCard from '@/components/SetSmallCard.vue'
-import CenterPopup from '@/components/CenterPopup.vue'
-import SelectingWidgetsPopup from '@/parts/SelectingWidgetsPopup.vue'
 
 declare interface IHouse {
   readonly id : string | number
@@ -303,7 +294,7 @@ declare interface IHouse {
 }
 
 export default defineComponent({
-  name: 'Home',
+  name: 'HomeOverview',
   data: () => ({
     allHouses: [] as Array<IHouse>,
     selectedHouses: [] as Array<{[key: string]: any}>,
@@ -392,27 +383,17 @@ export default defineComponent({
     StatusBar.show()
   },
   components: {
-    FeaturesCards,
     StoryPreview,
     Product: ProductPreview,
-    Popup: ModalWindow,
-    RegionChoosing,
-    ContextMenu,
-    Services,
     IonPage,
     IonContent,
-    IonRouterOutlet,
     FavouritesButton,
-    Flicking,
     MyIzsCarousel,
     GeniusCarousel,
     SetCard,
-    BottomPopup,
     LandscapeCarousel,
     ServicesCarousel,
     SetSmallCard,
-    CenterPopup,
-    SelectingWidgetsPopup,
   }
 })
 </script>

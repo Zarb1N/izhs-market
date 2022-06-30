@@ -32,14 +32,14 @@
 
 <script lang="ts">
 import { useGeneralStore } from "@/stores/general";
-import { defineComponent, ref } from "@vue/runtime-core";
+import { defineComponent } from "@vue/runtime-core";
 // @ts-ignore
 import Stories from "vue3-insta-stories";
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { IonRouterOutlet, IonContent, IonPage, IonHeader } from "@ionic/vue";
+import { StatusBar } from '@capacitor/status-bar';
+import { IonContent, IonPage } from "@ionic/vue";
 
 export default defineComponent({
-  name: 'Story',
+  name: 'StoryPage',
   /*
   setup() {
     const stories_component = ref(null);
@@ -52,9 +52,6 @@ export default defineComponent({
     generalStore: useGeneralStore(),
     stories: [] as Array<{[key: string]: any}>
   }),
-  computed: {
-
-  },
   methods: {
     chooseStory() {
       const choosedStory = this.generalStore.allStories.filter( (story : {[key: string]: any}) => {
@@ -79,8 +76,6 @@ export default defineComponent({
     Stories,
     IonPage,
     IonContent,
-    IonRouterOutlet,
-    IonHeader,
   },
   mounted() {
     if (this.generalStore.allStories.length) {
@@ -116,8 +111,6 @@ export default defineComponent({
 }
 .timeline {
   width: calc(375px - 10px);
-}
-.slide {
 }
 .slide__close-btn {
   position: absolute;

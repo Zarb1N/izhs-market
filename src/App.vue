@@ -30,18 +30,12 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
 import Tabbar from '@/components/Tabbar.vue';
 import { useGeneralStore } from '@/stores/general'
 import { useAppState } from '@/stores/appState'
 import {
-  IonTabBar,
-  IonTabButton,
   IonTabs,
   IonContent,
-  IonLabel,
-  IonIcon,
-  IonPage,
   IonRouterOutlet,
   IonApp,
 } from '@ionic/vue';
@@ -50,7 +44,7 @@ import { App } from '@capacitor/app'
 import { Device } from '@capacitor/device'
 import FullscreenLoader from './components/FullscreenLoader.vue'
 
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { StatusBar } from '@capacitor/status-bar';
 import router from './router'
 
 import ErrorNotification from './components/ErrorNotification.vue'
@@ -58,7 +52,6 @@ import UpdateNotification from './components/UpdateNotification.vue'
 import RequiredUpdateNotification from './components/RequiredUpdateNotification.vue'
 import BottomPopup from '@/components/BottomPopup.vue'
 import HelpContacts from '@/components/HelpContacts.vue'
-import CenterPopup from '@/components/CenterPopup.vue'
 import AddUsToProject from '@/parts/AddUsToProject.vue'
 import RegionChoosing from '@/parts/RegionChoosing.vue'
 import ServiceApplication from '@/parts/ServiceApplication.vue'
@@ -302,12 +295,7 @@ export default defineComponent({
     Tabbar,
     FullscreenLoader,
     IonContent,
-    IonLabel,
     IonTabs,
-    IonTabBar,
-    IonTabButton,
-    IonIcon,
-    IonPage,
     IonRouterOutlet,
     IonApp,
     ErrorNotification,
@@ -315,7 +303,6 @@ export default defineComponent({
     RequiredUpdateNotification,
     BottomPopup,
     HelpContacts,
-    CenterPopup,
     AddUsToProjectPopups: AddUsToProject,
     RegionChoosing,
     ServiceApplication,
