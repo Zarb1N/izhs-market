@@ -1,5 +1,8 @@
 <template>
-  <div class="house without-scrollbar">
+  <div 
+    class="house without-scrollbar"
+    ref="house"
+  >
     <div class="house__header">
       <div class="status-bar"></div>
       <div class="house__actions">
@@ -154,7 +157,10 @@
         </div>
       </div>
 
-      <div class="house__scrollable">
+      <div 
+        class="house__scrollable"
+        :style="{minHeight: `${minHeightForSubpages}px`}"
+      >
       <div class="house__general-features">
         <div class="house__house-name-and-genius-row">
           <div class="house__house-name">{{house.name || 'Загружается'}}</div>
@@ -295,6 +301,7 @@ export default defineComponent({
     finalProfit: 0,
     isHouseApplicationPopup: false,
     sellersRates: [] as Array<{}>,
+    minHeightForSubpages: 0
   }),
   methods: {
     openContextMenu(event : any, id : string) {
@@ -369,6 +376,8 @@ export default defineComponent({
     if (this.house.discussions) {
       this.navigationItems.filter(item => item.goTo === 'discussion')[0].quantity = this.house.discussions.length
     }
+    this.minHeightForSubpages = this.$refs.house.clientHeight - 100 - 10 - 40
+
   },
 
   watch: {
@@ -659,7 +668,6 @@ export default defineComponent({
 }
 .house__scrollable {
   max-width: 100%;
-  height: 100%;
   padding-top: calc(48px - 16px);
   padding-bottom: calc(40px + 49px + 48px);
 }
@@ -697,16 +705,15 @@ export default defineComponent({
 }
 .house__navigation-items {
   margin: 0px -14px;
-  padding: 0px 14px;
+  padding: 2px 14px 8px 14px;
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: 32px;
   overflow: auto;
   gap: 10px;
-  padding-bottom: 8px;
   margin-bottom: 8px;
   position: sticky;
-  top: 100px;
+  top: 98px;
   z-index: 100;
   background: rgba(245, 245, 245, 1);
 }
