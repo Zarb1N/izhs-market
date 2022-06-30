@@ -144,7 +144,11 @@
                 :src="generalStore.getImageURL('icons/star--gray.svg')"
               />
             </div>
-            <div class="review__date">{{review.date}}</div>
+            <div class="review__date">{{
+              [review.date.split('-').reverse()[0],
+              generalStore.months[Number(review.date.split('-').reverse()[1])],
+              review.date.split('-').reverse()[2]].join(' ')  
+            }}</div>
           </div>
           <div class="review__body">
             <div 
@@ -218,7 +222,9 @@ export default defineComponent({
             // += this.sellers[sellerId].feedbacks.customers.reduce( (acc, curr) => acc.estimation_customer + curr.estimation_customer)
           })
           this.quantityOfReviews = reviews.length
-          this.averageRate = rates.reduce( (acc, curr) => acc + curr) / rates.length
+          if (rates.length) {
+            this.averageRate = rates.reduce( (acc, curr) => acc + curr) / rates.length
+          }
         }
       },
       deep: true

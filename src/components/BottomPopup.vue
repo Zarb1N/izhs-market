@@ -87,17 +87,29 @@ export default defineComponent({
   backdrop-filter: blur(80px);
   border-radius: 16px 16px 0px 0px;
   width: 100%;
-  padding: 20px 20px 40px 20px;
+  padding: 0px 20px 40px 20px;
   position: absolute;
   transition: 0.3s all;
   top: 100%;
+  max-height: calc(100% - 100px);
+  overflow: auto;
 
 }
-
+.popup__body {
+  height: 100%;
+  position: relative;
+  bottom: 0;
+}
 .popup__header {
+  background: #F9F9F9;
   display: grid;
   grid-template-columns: auto 32px;
   align-items: center;
+  position: sticky;
+  top: 0px;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 20px 20px 0px 20px;
 }
 
 .popup__close-btn {

@@ -123,6 +123,7 @@ export default defineComponent({
   mounted() {
     this.combineHouseAndBuildersInfo(this.$route.params.id.toString())
     this.generalStore.deviceState.viewed_houses_id && this.markHouseAsViewed(Number(this.$route.params.id))
+    console.log(this.generalStore.houseInfo)
   },
   created() {
   },

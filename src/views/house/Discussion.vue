@@ -25,7 +25,10 @@
           <div class="house-d__question-header">
             <div class="house-d__questioner-name">{{disc.name}}</div>
           <div class="house-d__question-date">
-            {{disc.question_date && disc.question_date.split('-').reverse().join('.')}}
+            {{[disc.question_date.split('-').reverse()[0],
+              generalStore.months[Number(disc.question_date.split('-').reverse()[1])],
+              disc.question_date.split('-').reverse()[2]].join(' ')
+            }}
           </div>
           </div>
           <div class="house-d__question-content">{{disc.question}}</div>
@@ -156,6 +159,7 @@ color: #2D2D2D;
 .house-d__answer {
   display: flex;
   flex-direction: column;
+  color: #2D2D2D;
 }
 .house-d__answer-wrapper {
   border-radius: 0px 10px 10px 10px;

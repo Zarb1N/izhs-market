@@ -71,10 +71,10 @@ export default defineComponent({
           {
             name: 'Проверьте участок',
             state: false,
-            description: 'Узнайте градостроительные и юридические риски до покупки',
+            description: 'Узнайте градостроительные и <br/> юридические риски до покупки',
             links: [
               {
-                text: 'Кадастрое заключение',
+                text: 'Кадастровое заключение',
               }
             ]
           },
@@ -93,7 +93,7 @@ export default defineComponent({
           {
             name: 'Проверьте почву',
             state: false,
-            description: 'Выберите фундамент исходя из структуры грунтов участка',
+            description: 'Выберите фундамент исходя из <br/> структуры грунтов участка',
             links: [
               {
                 text: 'Отчет по геологии',
@@ -103,7 +103,7 @@ export default defineComponent({
           {
             name: 'Установите границы',
             state: false,
-            description: 'Узнайте, не захватил ли сосед часть участка',
+            description: 'Узнайте, не захватил ли сосед <br/> часть участка',
             links: [
               {
                 text: 'Акт выноса границ',
@@ -125,6 +125,15 @@ export default defineComponent({
               }
             ]
           },
+           {
+            name: 'Контролируйте качество ',
+            state: false,
+            links: [
+              {
+                text: 'Технадзорные отчеты',
+              }
+            ]
+          },
           {
             name: 'Оформите в собственность',
             state: false,
@@ -135,15 +144,6 @@ export default defineComponent({
               {
                 text: 'Выписка из Росреестра',
               },
-            ]
-          },
-          {
-            name: 'Контролируйте качество ',
-            state: false,
-            links: [
-              {
-                text: 'Технадзорные отчеты',
-              }
             ]
           },
         ]

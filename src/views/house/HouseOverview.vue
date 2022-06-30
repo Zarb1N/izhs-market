@@ -1,5 +1,8 @@
 <template>
-  <div class="house without-scrollbar">
+  <div 
+    class="house without-scrollbar"
+    ref="house"
+  >
     <div class="house__header">
       <div class="status-bar"></div>
       <div class="house__actions">
@@ -23,7 +26,7 @@
             v-if="house.images"
             :options="{
               threshold: 0,
-              interruptable: false,
+              interruptable: true,
               align: 'center',
               bound: true,
               panelsPerView: 1,
@@ -54,16 +57,8 @@
               - {{generalStore.formatNumber(prices.max)}} ₽
             </span>
           </div>
-          <Flicking
+          <div
             class="house__header-information-cards"
-            v-if="house.images"
-            :options="{
-              threshold: 0,
-              interruptable: false,
-              bound: true,
-              inputType: ['pointer', 'mouse', 'touch'],
-            }"
-            @will-change="(event) => {currentSlide = event.index}"
           >
             <div 
               class="house__header-information-card house__header-builder-card"
@@ -88,10 +83,10 @@
                 <div class="house__header-builder-card-rate">{{sellersRates.filter(seller => seller.sellerId == sellerId)[0].rate}}</div>
                 
               </div>
-              <div class="house__header-builder-card-image">
-                <img 
-                  :src="builders[sellerId][0].builder_info.image && builders[sellerId][0].builder_info.image.url"
-                />
+              <div 
+                class="house__header-builder-card-image"
+                :style="{backgroundImage: `url(${builders[sellerId][0].builder_info.image && builders[sellerId][0].builder_info.image.url})`}"
+              >
               </div>
               <div class="house__header-builder-card-name">{{builders[sellerId][0].builder_info.name}}</div>
             </div>
@@ -125,7 +120,7 @@
                 :src="generalStore.getImageURL('genius.svg')"
               />
             </div>
-          </Flicking>
+          </div>
         </div>
       <div class="house__navigation-items without-scrollbar">
         <div
@@ -153,7 +148,10 @@
         </div>
       </div>
 
-      <div class="house__scrollable">
+      <div 
+        class="house__scrollable"
+        :style="{minHeight: `${minHeightForSubpages}px`}"
+      >
       <div class="house__general-features">
         <div class="house__house-name-and-genius-row">
           <div class="house__house-name">{{house.name || 'Загружается'}}</div>
@@ -294,6 +292,7 @@ export default defineComponent({
     finalProfit: 0,
     isHouseApplicationPopup: false,
     sellersRates: [] as Array<{}>,
+    minHeightForSubpages: 0
   }),
   methods: {
     openContextMenu(event : any, id : string) {
@@ -360,6 +359,10 @@ export default defineComponent({
       return false
     },
     country() {
+      console.log(this.house)
+      console.log(this.house.country_id)
+      console.log(this.generalStore.countries)
+      console.log(this.generalStore.countries.filter(country => country.id === this.house.country_id))
       return this.generalStore.countries.filter(country => country.id === this.house.country_id)[0]
     },
 
@@ -368,6 +371,8 @@ export default defineComponent({
     if (this.house.discussions) {
       this.navigationItems.filter(item => item.goTo === 'discussion')[0].quantity = this.house.discussions.length
     }
+    this.minHeightForSubpages = this.$refs.house.clientHeight - 100 - 10 - 40
+
   },
 
   watch: {
@@ -494,6 +499,9 @@ export default defineComponent({
   }
 }
 .house__header-information-cards {
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: auto;
   margin-left: -20px;
   margin-right: -20px;
   padding: 0px 20px;
@@ -532,10 +540,10 @@ export default defineComponent({
 .house__header-builder-card-image {
   height: 80px;
   width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   align-self: flex-end;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
 } 
 .house__header-builder-card-image img {
   max-height: 80px;
@@ -658,7 +666,6 @@ export default defineComponent({
 }
 .house__scrollable {
   max-width: 100%;
-  height: 100%;
   padding-top: calc(48px - 16px);
   padding-bottom: calc(40px + 49px + 48px);
 }
@@ -695,17 +702,16 @@ export default defineComponent({
   font-size: 12px;
 }
 .house__navigation-items {
-  height: 32px;
   margin: 0px -14px;
-  padding: 0px 14px;
+  padding: 2px 14px 8px 14px;
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: 32px;
   overflow: auto;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   position: sticky;
-  top: 99px;
+  top: 98px;
   z-index: 100;
   background: rgba(245, 245, 245, 1);
 }
