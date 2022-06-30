@@ -38,8 +38,10 @@
               offer.date.split('-').reverse()[2]].join(' ')
             }}</div>
           </div>
-          <div class="card__offer-body ">
-            {{offer.equipment_info.description}}
+          <div 
+            class="card__offer-body"
+            v-html="offer.equipment_info.description"
+          >
           </div>
         </div>
       </div>
