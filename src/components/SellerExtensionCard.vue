@@ -4,8 +4,10 @@
     :style="{backgroundColor: backgroundColor}"
   >
     <div class="card__header">
-      <div class="card__seller-icon">
-        <img :src="seller[0].builder_info.image && seller[0].builder_info.image.url"/>
+      <div 
+        class="card__seller-icon"
+        :style="{backgroundImage: `url(${seller[0].builder_info.image && seller[0].builder_info.image.url})`}"
+      >
       </div>
 
       
@@ -30,7 +32,11 @@
           <div class="card__offer-header">
             <div class="card__offer-name">{{offer.equipment_info.name}}</div>
             <div class="card__offer-price ruble-character">{{generalStore.formatNumber(offer.price)}} </div> •
-            <div class="card__offer-date">{{offer.date}}</div>
+            <div class="card__offer-date">{{
+              [offer.date.split('-').reverse()[0],
+              months[Number(offer.date.split('-').reverse()[1])],
+              offer.date.split('-').reverse()[2]].join(' ')
+            }}</div>
           </div>
           <div class="card__offer-body ">
             {{offer.equipment_info.description}}
@@ -38,10 +44,10 @@
         </div>
       </div>
       <div class="card__employee">
-        <img
+        <div  
           class="card__employee-image"
-          :src="generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].image.url"
-        />
+          :style="{backgroundImage: `url(${generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].image.url})`}"
+        ></div>
         <div class="card__employee-info">
           <div class="card__employee-name">С уважением, <br/> {{generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].name}}</div>
           <div class="card__employee-post ">{{generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0] && generalStore.staff.filter( (employee: {[key: string]: any}) => employee.id === seller[0].builder_info.staff_id)[0].role}}</div>
@@ -63,7 +69,21 @@ export default defineComponent({
   data: () => ({
     isOpen: false,
     priceRange: [] as Array<number>,
-    generalStore: useGeneralStore()
+    generalStore: useGeneralStore(),
+    months: {
+      1: 'января',
+      2: 'февраля',
+      3: 'марта',
+      4: 'апреля',
+      5: 'мая',
+      6: 'июня',
+      7: 'июля',
+      8: 'августа',
+      9: 'сентября',
+      10: 'октября',
+      11: 'ноября',
+      12: 'декабря'
+    }
   }),
   methods: {
     calculatePriceRange() {
@@ -110,10 +130,10 @@ export default defineComponent({
   height: 40px;
   width: 40px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   background: white;
   border-radius: 20px;
+  background-position: center;
+  background-size: cover;
 }
 .card__seller-icon img {
   max-height: 24px;
@@ -211,6 +231,8 @@ export default defineComponent({
   height: 40px;
   width: 40px;
   border-radius: 20px;
+  background-size: cover;
+  background-position: center;
 }
 .card__employee-name {
   font-weight: 750;

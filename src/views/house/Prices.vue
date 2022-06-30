@@ -9,7 +9,7 @@
       @click="$emit(
         'openBottomPopup', 
         'О ценах и комплектациях',
-        `Можно использовать однуиз комплектации или что-то изменить, 
+        `Можно использовать одну из комплектации или что-то изменить, 
         цены могут немного меняться, так как меняются цены на материалы`
       )"
     >
@@ -91,7 +91,7 @@ export default defineComponent({
 
 <style scoped>
 .house-p__description {
-  margin-bottom: 10px;
+  margin-bottom: 24px;
   font-weight: 750;
   font-size: 14px;
   line-height: 120%;

@@ -1,0 +1,6 @@
+{
+	"appId": "izs.market",
+	"appName": "izs.market",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

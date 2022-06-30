@@ -50,7 +50,9 @@
             />
           </div>
         </div>
-        <img class="product__country"/>
+        <div
+          class="product__country"
+        ></div>
       </div>
       <div class="product__area">{{data.square}} м<sup>2</sup></div>
       <div 

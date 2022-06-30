@@ -90,6 +90,8 @@ export default defineComponent({
 }
 .popup__body {
   height: 100%;
+  position: relative;
+  bottom: 0;
 }
 .popup__header {
   background: #F9F9F9;

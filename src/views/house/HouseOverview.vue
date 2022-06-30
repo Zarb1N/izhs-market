@@ -57,17 +57,8 @@
               - {{generalStore.formatNumber(prices.max)}} ₽
             </span>
           </div>
-          <Flicking
+          <div
             class="house__header-information-cards"
-            v-if="house.images"
-            :options="{
-              threshold: 0,
-              interruptable: true,
-              bound: true,
-              inputType: ['pointer', 'mouse', 'touch'],
-              align: 'next'
-            }"
-            @will-change="(event) => {currentSlide = event.index}"
           >
             <div 
               class="house__header-information-card house__header-builder-card"
@@ -92,10 +83,10 @@
                 <div class="house__header-builder-card-rate">{{sellersRates.filter(seller => seller.sellerId == sellerId)[0].rate}}</div>
                 
               </div>
-              <div class="house__header-builder-card-image">
-                <img 
-                  :src="builders[sellerId][0].builder_info.image && builders[sellerId][0].builder_info.image.url"
-                />
+              <div 
+                class="house__header-builder-card-image"
+                :style="{backgroundImage: `url(${builders[sellerId][0].builder_info.image && builders[sellerId][0].builder_info.image.url})`}"
+              >
               </div>
               <div class="house__header-builder-card-name">{{builders[sellerId][0].builder_info.name}}</div>
             </div>
@@ -129,7 +120,7 @@
                 :src="generalStore.getImageURL('genius.svg')"
               />
             </div>
-          </Flicking>
+          </div>
         </div>
       <div class="house__navigation-items without-scrollbar">
         <div
@@ -368,6 +359,10 @@ export default defineComponent({
       return false
     },
     country() {
+      console.log(this.house)
+      console.log(this.house.country_id)
+      console.log(this.generalStore.countries)
+      console.log(this.generalStore.countries.filter(country => country.id === this.house.country_id))
       return this.generalStore.countries.filter(country => country.id === this.house.country_id)[0]
     },
 
@@ -504,6 +499,9 @@ export default defineComponent({
   }
 }
 .house__header-information-cards {
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: auto;
   margin-left: -20px;
   margin-right: -20px;
   padding: 0px 20px;
@@ -542,10 +540,10 @@ export default defineComponent({
 .house__header-builder-card-image {
   height: 80px;
   width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   align-self: flex-end;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
 } 
 .house__header-builder-card-image img {
   max-height: 80px;

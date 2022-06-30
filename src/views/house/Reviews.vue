@@ -144,7 +144,11 @@
                 :src="generalStore.getImageURL('icons/star--gray.svg')"
               />
             </div>
-            <div class="review__date">{{review.date}}</div>
+            <div class="review__date">{{
+              [review.date.split('-').reverse()[0],
+              generalStore.months[Number(review.date.split('-').reverse()[1])],
+              review.date.split('-').reverse()[2]].join(' ')  
+            }}</div>
           </div>
           <div class="review__body">
             <div 
