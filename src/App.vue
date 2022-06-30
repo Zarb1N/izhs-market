@@ -11,6 +11,7 @@
         </template>
         <HelpContacts />
       </BottomPopup>
+      <RequestPopup :is-active="appState.isRequestPopup" />
       <AddUsToProjectPopups :isActive="appState.isAddingProjectApplication"
         @close="appState.isAddingProjectApplication = false" />
       <RegionChoosing :isActive="appState.isRegionChoosing" @close="appState.isRegionChoosing = false" />
@@ -56,6 +57,7 @@ import AddUsToProject from '@/parts/AddUsToProject.vue'
 import RegionChoosing from '@/parts/RegionChoosing.vue'
 import ServiceApplication from '@/parts/ServiceApplication.vue'
 import SelectingWidgetsPopup from '@/parts/SelectingWidgetsPopup.vue'
+import RequestPopup from './parts/RequestPopup.vue'
 
 
 App.addListener('backButton', () => {
@@ -307,6 +309,7 @@ export default defineComponent({
     RegionChoosing,
     ServiceApplication,
     SelectingWidgetsPopup,
+    RequestPopup
   }
 })
 </script>

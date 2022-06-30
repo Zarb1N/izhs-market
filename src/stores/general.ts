@@ -9,6 +9,7 @@ const useStore = defineStore({
   id: "general",
   state() {
     return {
+      requestPhoneNumber: '',
       promocodes: [] as IPromocode[],
       systems: [] as ISystem[],
       questions: [] as IQuestion[],
@@ -217,6 +218,15 @@ const useStore = defineStore({
     }
   },
   actions: {
+    async sendRequestByPhoneNumber (number: string) {
+      const res = await fetch(`${this.server}/applicationsservices`, {
+        method: 'PUT',
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ phone_number: number })
+      })
+      const data = await res.json()
+      return data
+    },
     formatNumber: (val: number, decimalsNumber = 0) => {
       let formattedNumber: string | number;
       if (val) {

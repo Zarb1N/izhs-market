@@ -58,7 +58,7 @@
         <input 
           class="popup__input"
           placeholder="Введите номер телефона"
-          v-maska="'+7 ### ###-##-##'"
+          v-maska="'+# ### ###-##-##'"
           v-model="phoneNumber"
         />
         <div 
