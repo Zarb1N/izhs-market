@@ -26,7 +26,7 @@
             v-if="house.images"
             :options="{
               threshold: 0,
-              interruptable: false,
+              interruptable: true,
               align: 'center',
               bound: true,
               panelsPerView: 1,
@@ -62,7 +62,7 @@
             v-if="house.images"
             :options="{
               threshold: 0,
-              interruptable: false,
+              interruptable: true,
               bound: true,
               inputType: ['pointer', 'mouse', 'touch'],
               align: 'next'
