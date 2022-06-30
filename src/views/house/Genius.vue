@@ -32,7 +32,8 @@
             <div 
               class="genius-card__description"
               v-show="point.description"
-            >{{point.description}}</div>
+              v-html="point.description"
+            ></div>
             <div class="genius-card__point-links">
               <div 
                 class="genius-card__point-link"
