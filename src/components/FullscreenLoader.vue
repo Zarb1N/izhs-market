@@ -1,20 +1,41 @@
 <template>
   <div class="loader">
-    <div class="loader-6 center"><span></span></div>
+    <div class="full-screen-loader">
+      <img src="@/assets/full-screen-loader.svg" class="full-screen-loader__logo" />
+      <p class="full-screen-loader__title">Строительство через приложение проходит быстрее и легче</p>
+    </div>
+    <!-- <div class="loader-6 center"><span></span></div> -->
   </div>
 </template>
-<script lang="ts">
-import { useGeneralStore } from "@/stores/general";
-import { defineComponent } from "@vue/runtime-core";
-
-export default defineComponent({
-  data: () => ({
-    generalStore: useGeneralStore(),
-  })
-})
-</script>
 
 <style scoped>
+.full-screen-loader__title {
+  font-weight: 750;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #F9F9F9;
+  font-variation-settings: 'GRAD' 0, 'slnt' 0, 'XTRA' 499, 'XOPQ' 96, 'YOPQ' 79, 'YTLC' 514, 'YTUC' 712, 'YTAS' 750, 'YTDE' -203, 'YTFI' 738;
+  position: absolute;
+  bottom: 114px;
+  max-width: 250px;
+  left: 63px;
+}
+
+.full-screen-loader__logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.full-screen-loader {
+  background: #1F75FE;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+
 .center {
   display: block;
   position: absolute;

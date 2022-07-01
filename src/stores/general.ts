@@ -51,15 +51,15 @@ const useStore = defineStore({
           },
         },
       ],
-      isTabbar: false as boolean,
+      isTabbar: false,
       filters: {
         architecture: [],
         compilations: [],
       },
-      isLoading: true as boolean,
+      isLoading: true,
       allStories: [] as Array<any>,
       choosedHouseId: 0 as number,
-      isContextMenu: false as boolean,
+      isContextMenu: false,
       clickCoordinates: {
         x: 0,
         y: 0,
@@ -218,7 +218,7 @@ const useStore = defineStore({
     }
   },
   actions: {
-    async sendRequestByPhoneNumber (number: string) {
+    async sendRequestByPhoneNumber(number: string) {
       const res = await fetch(`${this.server}/applicationsservices`, {
         method: 'PUT',
         headers: { "Content-type": "application/json" },
