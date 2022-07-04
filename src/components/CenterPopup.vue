@@ -4,7 +4,7 @@
     <div class="popup__card">
       <div class="popup__header" v-show="showHeader">
         <slot name="title" class="popup__title"></slot>
-        <img class="popup__close-btn" src="@/assets/icons/x-mark-in-circle.svg" @click="$emit('close')" />
+        <img v-if="!isCloseButtonHide" class="popup__close-btn" src="@/assets/icons/x-mark-in-circle.svg" @click="$emit('close')" />
       </div>
       <div class="popup__body">
         <slot></slot>
@@ -18,6 +18,7 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   props: [
+    'isCloseButtonHide',
     'isActive',
     'isHeader', /* true by default */
   ],
