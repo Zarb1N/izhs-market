@@ -8,14 +8,14 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { IonRouterOutlet, IonContent, IonPage, IonHeader } from '@ionic/vue';
+import { IonRouterOutlet, IonContent, IonPage } from '@ionic/vue';
 
 export default defineComponent({
+  name: 'HomeView',
   components: {
     IonPage,
     IonContent,
     IonRouterOutlet,
-    IonHeader,
   }
 })
 
