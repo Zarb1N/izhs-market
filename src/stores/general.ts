@@ -4,11 +4,13 @@ import type { IDeviceState } from "@/types/IDeviceState";
 import type { IQuestion } from "@/types/IQuestion";
 import type { ISystem } from "@/types/ISystem";
 import type { IPromocode } from "@/types/IPromocode";
+import type { ISet } from "@/types/ISet";
 
 const useStore = defineStore({
   id: "general",
   state() {
     return {
+      sets: [] as ISet[],
       requestPhoneNumber: '',
       promocodes: [] as IPromocode[],
       systems: [] as ISystem[],
@@ -204,6 +206,9 @@ const useStore = defineStore({
     }
   },
   getters: {
+    getSets(): ISet[] {
+      return this.sets
+    },
     getPromocodes(): IPromocode[] {
       return this.promocodes
     },
@@ -218,6 +223,14 @@ const useStore = defineStore({
     }
   },
   actions: {
+    async fetchSets() {
+      const res = await fetch(`${this.server}/sets`, {
+        method: 'GET',
+        headers: { "Content-type": "application/json" },
+      })
+      const data = await res.json()
+      this.sets = data
+    },
     async sendRequestByPhoneNumber(number: string) {
       const res = await fetch(`${this.server}/applicationsservices`, {
         method: 'PUT',

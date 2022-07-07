@@ -8,8 +8,7 @@
       <div class="services-card" :style="{ backgroundColor: card.backgroundColor }" v-for="(card, index) of cards"
         :key="index">
         <img class="services-card__image" :src="generalStore.getImageURL('features-cards/' + card.background + '.png')">
-        <div class="services-card__description" :style="{ color: card.textColor }"
-          v-html="card.description"></div>
+        <div class="services-card__description" :style="{ color: card.textColor }" v-html="card.description"></div>
         <section class="services-card__price-badge" :style="card.badgeLayer">
           <div class="services-card__price" v-show="card.price">{{ card.price }}</div>
           <div class="services-card__badge" :style="card.badgeStyle" v-html="card.badge" />
