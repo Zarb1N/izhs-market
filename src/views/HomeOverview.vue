@@ -97,6 +97,13 @@
           <ServicesCarousel />
         </div>
 
+        <div class="home__footer">
+          <h2 class="home-section__title">Вы смотрели</h2>
+          <p class="home-section__description">Найдите проект в истории просмотров</p>
+          <img src="@/assets/empty-watch.svg" alt="empty-watch">
+          <button class="button">Перейти в каталог</button>
+        </div>
+
         <!-- <div class="home__section home-section" v-if="generalStore.viewedHouses.length">
           <div class="home-section__header">
             <div class="home-section__title">Вы смотрели</div>
@@ -211,7 +218,6 @@ import { IonContent, IonPage } from '@ionic/vue';
 import FavouritesButton from '../components/FavouritesButton.vue'
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-// import MyIzsCarousel from '../parts/MyIzsCarousel.vue'
 import GeniusCarousel from '../parts/GeniusCarousel.vue'
 import SetCard from '@/components/SetCard.vue'
 import { useAppState } from '@/stores/appState'
@@ -349,6 +355,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.home__footer>img {
+  margin-bottom: 24px;
+}
+
 .main-title {
   font-weight: 750;
   font-size: 20px;
@@ -378,6 +388,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 52px;
 }
 
 .genius-card__subtitle {
@@ -445,7 +456,7 @@ export default defineComponent({
 .home {
   background: #F5F5F5;
   backdrop-filter: blur(26px);
-  padding: 0px 20px;
+  padding: 0px 20px 56px;
 }
 
 .home__add-us-to-your-projects {
