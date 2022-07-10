@@ -85,7 +85,7 @@
               </div>
               <div 
                 class="house__header-builder-card-image"
-                :style="{backgroundImage: `url(${builders[sellerId][0].builder_info.image && builders[sellerId][0].builder_info.image.url})`}"
+                :style="{backgroundImage: `url(${builders[sellerId][0].builder_info?.image && builders[sellerId][0].builder_info?.image.url})`}"
               >
               </div>
               <div class="house__header-builder-card-name">{{builders[sellerId][0].builder_info.name}}</div>
@@ -98,11 +98,11 @@
               <div class="house__header-country-card-title">Архитектура</div>
               <div 
                 class="house__header-country-card-image"
-                :style="{backgroundImage: `url(${country.image && country.image.url})`}"
+                :style="{backgroundImage: `url(${country?.image && country?.image.url})`}"
               >
               
               </div>
-              <div class="house__header-country-card-name">{{country.name}}</div>
+              <div class="house__header-country-card-name">{{country?.name}}</div>
             </div>
             
             <div 
