@@ -2,6 +2,7 @@
   <IonApp id="vue-app">
     <IonContent id="vue-app__content" scroll-y="false">
       <ErrorNotification :isActive="generalStore.errorNotification" />
+      <PreloaderPage v-show="generalStore.isPreloaderShown" />
       <FullscreenLoader v-show="generalStore.isLoading" />
       <UpdateNotification :isActive="isUpdate" @close="isUpdate = false" />
       <RequiredUpdateNotification :isActive="isMandatoryUpdate" />
@@ -58,6 +59,7 @@ import RegionChoosing from '@/parts/RegionChoosing.vue'
 import ServiceApplication from '@/parts/ServiceApplication.vue'
 import SelectingWidgetsPopup from '@/parts/SelectingWidgetsPopup.vue'
 import RequestPopup from './parts/RequestPopup.vue'
+import PreloaderPage from './components/PreloaderPage.vue'
 
 
 App.addListener('backButton', () => {
@@ -309,8 +311,9 @@ export default defineComponent({
     RegionChoosing,
     ServiceApplication,
     SelectingWidgetsPopup,
-    RequestPopup
-  }
+    RequestPopup,
+    PreloaderPage
+}
 })
 </script>
 

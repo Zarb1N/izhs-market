@@ -1,4 +1,5 @@
 import type { IImage } from "@/types/IDeviceState"
+import type { ISimpleImage } from "@/types/ICustomer"
 
 export interface IHouse {
   id: number
@@ -10,7 +11,7 @@ export interface IHouse {
   staff_id_discussions: number
   sets_id: number
   publish: boolean
-  image_preview: { url: string }
+  image_preview: ISimpleImage
   images: [null, IImage]
   price_history: IPriceHistory[]
   discussions: IDiscussion[]

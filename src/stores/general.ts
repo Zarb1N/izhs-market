@@ -1,3 +1,4 @@
+import type { ICountry } from '@/types/ICountry';
 import { defineStore } from "pinia";
 import { Share } from "@capacitor/share";
 import type { IDeviceState } from "@/types/IDeviceState";
@@ -5,11 +6,15 @@ import type { IQuestion } from "@/types/IQuestion";
 import type { ISystem } from "@/types/ISystem";
 import type { IPromocode } from "@/types/IPromocode";
 import type { ISet } from "@/types/ISet";
+import type { IBuilder } from '@/types/IBuilder';
+import type { IArchitecture } from '@/types/IArchitecture';
+import type { IHouse } from '@/types/IHouse';
 
 const useStore = defineStore({
   id: "general",
   state() {
     return {
+      isPreloaderShown: false,
       sets: [] as ISet[],
       requestPhoneNumber: '',
       promocodes: [] as IPromocode[],
@@ -18,7 +23,7 @@ const useStore = defineStore({
       server: "https://xzim-bwxc-viqv.n7.xano.io/api:ek4QHJJA",
       telegramSupport: "https://t.me/zarb1n",
       whatsappSupport: "https://wa.me/qr/QQ4VTH3AZSIFM1",
-      allHouses: [] as Array<{ [key: string]: any }>,
+      allHouses: [] as IHouse[],
       deviceId: "" as any,
       deviceInfo: {} as { [key: string]: any },
       appVersion: 1,
@@ -54,8 +59,9 @@ const useStore = defineStore({
         },
       ],
       isTabbar: false,
+      architecture: [] as IArchitecture[],
       filters: {
-        architecture: [],
+        architecture: [] as IArchitecture[],
         compilations: [],
       },
       isLoading: true,
@@ -75,12 +81,12 @@ const useStore = defineStore({
       houseInfo: {} as { [key: string]: any },
       services: [],
       servicesGroups: [],
-      countries: [],
-      viewedHouses: [] as Array<{}>,
-      widgets: [] as Array<{}>,
-      builders: [] as Array<{}>,
-      housesWithoutPrice: [] as Array<{}>,
-      equipments: [] as Array<{}>,
+      countries: [] as ICountry[],
+      viewedHouses: [],
+      widgets: [],
+      builders: [] as IBuilder[],
+      housesWithoutPrice: [],
+      equipments: [],
       widgetsList: [
         {
           id: 'state',
@@ -206,6 +212,9 @@ const useStore = defineStore({
     }
   },
   getters: {
+    getArchitecture(): IArchitecture[] {
+      return this.architecture
+    },
     getSets(): ISet[] {
       return this.sets
     },
@@ -223,6 +232,14 @@ const useStore = defineStore({
     }
   },
   actions: {
+    async fetchArchitecture() {
+      const res = await fetch(`${this.server}/architecture`, {
+        method: 'GET',
+        headers: { "Content-type": "application/json" },
+      })
+      const data = await res.json()
+      this.architecture = data
+    },
     async fetchSets() {
       const res = await fetch(`${this.server}/sets`, {
         method: 'GET',

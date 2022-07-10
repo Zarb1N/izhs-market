@@ -92,7 +92,7 @@ export default defineComponent({
       const clubs = await res.json()
       clubs.forEach( (club : {[key: string]: any}) => {
          if (clubIds.indexOf(club.id) !== -1 ) {
-           club.cashbacks_list.forEach( (item : {}) => {
+           club.cashbacks_list.forEach((item: {}) => {
              this.cashback.push(item)
            })
          }
@@ -124,8 +124,6 @@ export default defineComponent({
     this.combineHouseAndBuildersInfo(this.$route.params.id.toString())
     this.generalStore.deviceState.viewed_houses_id && this.markHouseAsViewed(Number(this.$route.params.id))
     console.log(this.generalStore.houseInfo)
-  },
-  created() {
   },
   components: {
     IonPage,
